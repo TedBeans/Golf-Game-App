@@ -1,0 +1,17 @@
+[
+  {
+    "match": ["missouri bluffs"],
+    "name": "The Missouri Bluffs Golf Club",
+    "city": "St. Charles, MO",
+    "par": 71,
+    "checked": false,
+    "note": "Ratings from public listings (GolfPass, Golf Advisor, 18Birdies). Black slope shows as 131 on most and 132 on one; verify against the club scorecard.",
+    "tees": [
+      { "name": "Black", "rating": 73.2, "slope": 131, "par": 71, "yards": 7047 },
+      { "name": "Gold", "rating": 72.0, "slope": 129, "par": 71, "yards": 6610 },
+      { "name": "Blue", "rating": 69.3, "slope": 120, "par": 71, "yards": 6205 },
+      { "name": "White", "rating": 67.1, "slope": 113, "par": 71, "yards": 5807 },
+      { "name": "Green", "rating": 69.5, "slope": 117, "par": 71, "yards": 5191 }
+    ]
+  }
+]

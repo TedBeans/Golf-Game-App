@@ -1,5 +1,7 @@
 export type Player = { id: string; name: string; index: number }; // WHS-style handicap index
 
+export type Tee = { name: string; slope: number; rating: number; par?: number; yards?: number };
+
 export type Course = {
   id: string;
   name: string;
@@ -8,6 +10,8 @@ export type Course = {
   lon?: number;
   osm?: { type: "way" | "relation" | "node"; id: number };
   tee?: string;
+  teePar?: number; // 18-hole par for the chosen tee (rating - par needs this)
+  tees?: Tee[]; // known tees for this course, when we have them
   pars: number[]; // 18
   strokeIndex: number[]; // 18, 1 = hardest
   yards?: (number | null)[];

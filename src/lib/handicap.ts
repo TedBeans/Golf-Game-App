@@ -34,7 +34,7 @@ export function courseHandicaps(round: Round): Record<string, number> {
   const par = round.course.pars.slice(0, round.holes).reduce((a, b) => a + b, 0);
   const out: Record<string, number> = {};
   for (const p of round.players) {
-    let ch = p.courseHcp ?? courseHandicap(p.index, round.holes === 9 ? par * 2 : par, round.course.slope, round.course.rating);
+    let ch = p.courseHcp ?? courseHandicap(p.index, round.course.teePar ?? (round.holes === 9 ? par * 2 : par), round.course.slope, round.course.rating);
     if (p.courseHcp === undefined && round.holes === 9) ch = Math.round(ch / 2);
     out[p.id] = ch;
   }

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { Game, MatchGame, Round } from "../src/lib/types";
 import { CATALOG, SCORING, fixedSegments } from "../src/lib/catalog";
 import { computeGame, computeRound } from "../src/lib/engine";
-import { courseHandicap, playingHandicaps, strokesOnHole } from "../src/lib/handicap";
+import { courseHandicap, courseHandicaps, playingHandicaps, strokesOnHole } from "../src/lib/handicap";
 import { settle } from "../src/lib/money";
 import { balances } from "../src/lib/ledger";
 import { demoRound } from "../src/lib/demo";
@@ -178,4 +178,20 @@ describe("rounds and ledger", () => {
     expect(results.every((x) => !x.warnings?.length)).toBe(true);
     expect(sum(net)).toBeCloseTo(0, 5);
   });
+});
+
+import { findCatalog } from "../src/lib/tees";
+describe("tee catalog", () => {
+  it("finds Missouri Bluffs and uses tee par for course handicap", () => {
+    const c = findCatalog("The Missouri Bluffs Golf Club")!;
+    expect(c.tees.map((t) => t.name)).toContain("Blue");
+    const blue = c.tees.find((t) => t.name === "Blue")!;
+    const r = demoRound();
+    r.holes = 18;
+    r.course = { ...r.course, slope: blue.slope, rating: blue.rating, teePar: blue.par };
+    // 10.0 * 120/113 + (69.3 - 71) = 8.9 -> 9
+    r.players = [{ id: "a", name: "A", index: 10 }, { id: "b", name: "B", index: 0 }];
+    expect(courseHandicaps(r).a).toBe(9);
+  });
+  it("returns null for unknown courses", () => expect(findCatalog("Nowhere Links")).toBeNull());
 });

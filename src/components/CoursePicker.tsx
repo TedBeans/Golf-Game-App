@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Course } from "@/lib/types";
 import { blankCourse, DEFAULT_PARS, DEFAULT_SI, type NearbyCourse } from "@/lib/courses";
 import { totalPar } from "@/lib/handicap";
+import { findCatalog } from "@/lib/tees";
 import { Field, NumInput, Seg } from "./ui";
 
 type Props = { course: Course | null; holes: 9 | 18; onCourse: (c: Course) => void; onHoles: (h: 9 | 18) => void };
@@ -48,6 +49,16 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
   }
 
   const upd = (patch: Partial<Course>) => course && onCourse({ ...course, ...patch });
+  const known = useMemo(() => findCatalog(course?.name), [course?.name]);
+  const [manualTee, setManualTee] = useState(false);
+  const teeValue = manualTee ? "__manual" : known?.tees.find((t) => t.name === course?.tee && t.slope === course?.slope)?.name ?? "";
+  function chooseTee(v: string) {
+    if (!known) return;
+    if (v === "__manual") { setManualTee(true); upd({ tees: known.tees, teePar: undefined }); return; }
+    const t = known.tees.find((x) => x.name === v);
+    setManualTee(false);
+    if (t) upd({ tees: known.tees, tee: t.name, slope: t.slope, rating: t.rating, teePar: t.par ?? known.par });
+  }
   const siOk = !course || new Set(course.strokeIndex.slice(0, 18)).size === 18;
 
   return (
@@ -84,12 +95,28 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
       {course && (
         <div className="card">
           <Field label="Course"><input className="input" value={course.name} placeholder="Course name" onChange={(e) => upd({ name: e.target.value })} /></Field>
-          <div className="row" style={{ alignItems: "flex-end" }}>
-            <div className="grow"><Field label="Tees"><input className="input" value={course.tee ?? ""} placeholder="Blue" onChange={(e) => upd({ tee: e.target.value })} /></Field></div>
-            <div style={{ width: 92 }}><Field label="Slope"><NumInput className="num" value={course.slope} placeholder="113" onChange={(n) => upd({ slope: n })} /></Field></div>
-            <div style={{ width: 92 }}><Field label="Rating"><NumInput className="num" value={course.rating} placeholder="72.0" onChange={(n) => upd({ rating: n })} /></Field></div>
-          </div>
-          <div className="small faint" style={{ marginTop: 8 }}>Slope and rating turn each player's index into a course handicap. Leave them blank to use the index as is.</div>
+          {known && !manualTee ? (
+            <>
+              <Field label="Tees">
+                <select className="input" value={teeValue} onChange={(e) => chooseTee(e.target.value)}>
+                  <option value="" disabled>Choose tees</option>
+                  {known.tees.map((t) => <option key={t.name} value={t.name}>{t.name} · {t.rating} / {t.slope}{t.yards ? ` · ${t.yards.toLocaleString()} yds` : ""}</option>)}
+                  <option value="__manual">Other (enter manually)</option>
+                </select>
+              </Field>
+              <div className="small faint" style={{ marginTop: 8 }}>Rating / slope for each tee are filled in for you.{known.checked ? "" : " Unverified, so check them against the scorecard."}</div>
+            </>
+          ) : (
+            <>
+              <div className="row" style={{ alignItems: "flex-end" }}>
+                <div className="grow"><Field label="Tees"><input className="input" value={course.tee ?? ""} placeholder="Blue" onChange={(e) => upd({ tee: e.target.value })} /></Field></div>
+                <div style={{ width: 92 }}><Field label="Slope"><NumInput className="num" value={course.slope} placeholder="113" onChange={(n) => upd({ slope: n })} /></Field></div>
+                <div style={{ width: 92 }}><Field label="Rating"><NumInput className="num" value={course.rating} placeholder="72.0" onChange={(n) => upd({ rating: n })} /></Field></div>
+              </div>
+              <div className="small faint" style={{ marginTop: 8 }}>Slope and rating turn each player's index into a course handicap. Leave them blank to use the index as is.</div>
+              {known && <button className="btn quiet sm" style={{ marginTop: 8 }} onClick={() => setManualTee(false)}>Pick from known tees</button>}
+            </>
+          )}
           <Field label="Holes"><Seg value={String(holes)} options={[{ value: "18", label: "18 holes" }, { value: "9", label: "9 holes" }]} onChange={(v) => onHoles(v === "9" ? 9 : 18)} /></Field>
           <div className="row between" style={{ marginTop: 14 }}>
             <div className="small sub">Par {totalPar(course.pars, holes)} · {course.parsFromMap ? "pars from map data" : "default pars, check them"}</div>
