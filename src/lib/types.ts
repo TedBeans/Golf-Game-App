@@ -1,8 +1,4 @@
-export type Player = {
-  id: string;
-  name: string;
-  handicap: number; // course handicap in strokes (whole number)
-};
+export type Player = { id: string; name: string; index: number }; // WHS-style handicap index
 
 export type Course = {
   id: string;
@@ -11,100 +7,86 @@ export type Course = {
   lat?: number;
   lon?: number;
   osm?: { type: "way" | "relation" | "node"; id: number };
+  tee?: string;
   pars: number[]; // 18
   strokeIndex: number[]; // 18, 1 = hardest
+  yards?: (number | null)[];
+  slope?: number;
+  rating?: number;
   parsFromMap?: boolean;
 };
 
-export type GameType =
-  | "skins"
-  | "nassau"
-  | "strokeplay"
-  | "stableford"
-  | "wolf"
-  | "bingo"
-  | "vegas";
+export type RoundPlayer = Player & { courseHcp?: number }; // courseHcp = manual override (strokes)
 
-export type ScoreBasis = "net" | "gross";
-
-export type GameConfig = {
+export type Element = {
   id: string;
-  type: GameType;
-  label?: string;
-  /** Dollar value. Meaning depends on the game (per skin, per bet, per stroke, per point...). */
-  stake: number;
-  basis: ScoreBasis;
-  /** Which players take part (defaults to everybody). */
-  playerIds: string[];
-  // Skins
-  carryover?: boolean;
-  // Vegas
-  teamA?: string[];
-  teamB?: string[];
-  // Nassau
-  nassauFront?: boolean;
-  nassauBack?: boolean;
-  nassauOverall?: boolean;
+  kind: "bestBall" | "combined";
+  /** total: lower team total over the segment wins. holes: team that wins more holes wins. */
+  method: "total" | "holes";
+  points: number;
 };
 
-/** Side bets: one entry per contest (closest to pin, long drive, greenie, custom...) */
-export type SideBet = {
+export type Segment = { id: string; label: string; from: number; to: number }; // to exclusive
+
+export type MatchPreset = "sixes" | "nassau" | "match" | "bestball" | "twopoint" | "custom";
+
+export type MatchGame = {
   id: string;
-  label: string;
-  amount: number; // every other player pays this to the winner
-  winnerId: string | null;
-  hole?: number; // 1-18, optional
+  type: "match";
+  preset: MatchPreset;
+  name: string;
+  /** rotate = Sixes style (4 players, partners change each segment); fixed = teamA vs teamB */
+  format: "rotate" | "fixed";
+  order: string[]; // rotate order (4)
+  teamA: string[];
+  teamB: string[];
+  segments: Segment[];
+  elements: Element[];
+  stake: number; // $ per point, per player
+  ties: "push" | "split";
 };
 
-export type WolfPick = {
-  /** "lone", "blind" or a partner's player id */
-  choice: "lone" | "blind" | string;
+export type SkinsGame = { id: string; type: "skins"; name: string; playerIds: string[]; stake: number; carryover: boolean; holes: number[] };
+export type StrokeGame = { id: string; type: "stroke"; name: string; playerIds: string[]; stake: number; holes: number[] }; // stake = buy-in; winner takes pot
+export type StablefordGame = { id: string; type: "stableford"; name: string; playerIds: string[]; stake: number; holes: number[] }; // $ per point, pairwise
+export type WolfGame = {
+  id: string; type: "wolf"; name: string; playerIds: string[]; stake: number; holes: number[];
+  teamPts: number; lonePts: number; packPts: number; blindMult: number;
 };
+export type VegasGame = { id: string; type: "vegas"; name: string; teamA: string[]; teamB: string[]; stake: number; holes: number[] };
+export type BingoGame = { id: string; type: "bingo"; name: string; playerIds: string[]; stake: number; holes: number[] };
+
+export type Game = MatchGame | SkinsGame | StrokeGame | StablefordGame | WolfGame | VegasGame | BingoGame;
+export type GameType = Game["type"];
+
+export type SideBet = { id: string; label: string; amount: number; winnerId: string | null; hole?: number };
 
 export type Round = {
   id: string;
   createdAt: number;
-  date: string; // YYYY-MM-DD
+  date: string;
   course: Course;
   holes: 9 | 18;
-  playerIds: string[]; // order matters (wolf rotation, scorecard order)
-  /** Snapshot of players so history survives edits. */
-  players: Player[];
-  handicapMode: "full" | "offLow" | "none";
-  /** scores[playerId][holeIndex] = strokes or null */
+  players: RoundPlayer[];
   scores: Record<string, (number | null)[]>;
-  games: GameConfig[];
-  /** wolf picks per hole index (by game id) */
-  wolf: Record<string, (WolfPick | null)[]>;
-  /** bingo bango bongo: bingo[gameId][holeIndex] = {bingo, bango, bongo} player ids */
+  games: Game[];
+  wolf: Record<string, ({ choice: string } | null)[]>;
   bingo: Record<string, ({ bingo?: string; bango?: string; bongo?: string } | null)[]>;
   sideBets: SideBet[];
   status: "active" | "final";
+  demo?: boolean;
 };
 
-export type Payment = {
-  id: string;
-  date: number;
-  fromId: string; // payer
-  toId: string; // receiver
-  amount: number;
-  note?: string;
-};
-
-export type AppState = {
-  version: 1;
-  players: Player[]; // friend roster
-  rounds: Round[];
-  payments: Payment[];
-};
+export type Payment = { id: string; date: number; fromId: string; toId: string; amount: number };
+export type AppState = { version: 2; players: Player[]; rounds: Round[]; payments: Payment[] };
 
 export type GameResult = {
   gameId: string;
   title: string;
-  /** zero-sum: positive = wins, negative = owes */
-  net: Record<string, number>;
-  lines: string[]; // human readable breakdown
-  /** optional mini table for display */
+  subtitle?: string;
+  net: Record<string, number>; // zero-sum, +ve wins
+  status: string; // one-line live status
+  lines: string[];
   table?: { headers: string[]; rows: (string | number)[][] };
   warnings?: string[];
 };

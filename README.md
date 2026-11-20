@@ -1,32 +1,25 @@
-# Golf Game
+# Press — golf gambling tracker
 
-Mobile-first web app for running gambling games on the golf course with your friends. Pick a course near you, keep score hole by hole, run several games at once, and see the running balance and who owes who.
+Mobile-first app for running side games on the course and settling up afterwards. Built with Next.js (App Router) and deployable to Vercel with no environment variables.
 
-## Features
-- **Courses near you**: uses your location or a city/ZIP search (OpenStreetMap data via Overpass). Pars and stroke index are pulled from the map when tagged; otherwise editable defaults. You can also type a course in manually.
-- **Games** (run any combination at the same time): Skins (optional carryover), Nassau, Stroke play ($/stroke), Stableford ($/point), Wolf, Bingo Bango Bongo, Vegas, plus side bets (closest to pin, long drive, greenies, custom).
-- **Scoring**: net or gross per game; full handicaps, play off the low handicap, or none. 9 or 18 holes.
-- **Money**: per-round totals, lifetime balances, the fewest payments that square everyone up, and a payment log so "mark paid" reduces what's owed.
-- **Backup**: data is stored in the browser (localStorage). Export/import JSON from the Players page.
+## What it does
+- **Courses near you** – search by location, city or ZIP (OpenStreetMap), or enter a course by hand with tee, slope, rating and hole pars/stroke indexes.
+- **Handicaps: off the low man only.** Course handicap = index × slope/113 + (rating − par); the lowest plays to 0 and everyone else gets the difference. Strokes fall by stroke index. All scoring is net.
+- **Scoring elements** – build each team game from pieces: best ball, combined score, match play (holes won), or the **two-point game** (1 pt combined score + 1 pt best ball, handicaps included). Sixes rotate partners every segment; Nassau, match and team games use fixed teams.
+- **Other games** – Skins (carryover), stroke play pot, Stableford, Wolf, Vegas, Bingo Bango Bongo, side bets.
+- **Money** – every round is zero-sum, shows who pays who in the fewest payments, and a running ledger tracks balances and recorded payments.
+- Recap text to share, JSON export/import, and a demo round to try everything.
 
-## Game rules as implemented
-| Game | Stake means | Settlement |
-|---|---|---|
-| Skins | $ per skin, from each other player | Unique low score wins; ties carry (optional) |
-| Nassau | $ per bet (front, back, overall) | Lowest total wins from each other player; ties push |
-| Stroke play | $ per stroke | Every pair settles the stroke difference |
-| Stableford | $ per point | Every pair settles the point difference |
-| Wolf | $ per point | Partner win = 1 pt each; lone win = 3; lone loss = 1 each to the pack; blind doubles. Pairs settle point difference |
-| Bingo Bango Bongo | $ per point | Every pair settles the point difference |
-| Vegas | $ per point, per player | Team scores combine low-high; difference is the swing. No birdie flip |
+## Data
+Everything is stored in the browser (localStorage). Use Export/Import on the Players tab to move data between phones. There is no backend or live sharing yet.
 
 ## Develop
-```bash
+```
 npm install
 npm run dev      # http://localhost:3000
-npm test         # game and settlement logic
-npm run build
+npm test         # engine tests (vitest)
+npm run typecheck
 ```
 
 ## Deploy
-Import the repo in Vercel (framework: Next.js, no env vars needed) or run `npx vercel`.
+Import the repo in Vercel and deploy. No configuration needed.

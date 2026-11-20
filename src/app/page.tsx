@@ -1,78 +1,90 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
-import { balances, nameMap, outstandingTransfers } from "@/lib/ledger";
-import { computeRound } from "@/lib/games";
-import { Net, Transfers } from "@/components/Money";
+import { balances, nameMap, owes } from "@/lib/ledger";
+import { computeRound } from "@/lib/engine";
+import { demoRound } from "@/lib/demo";
+import { money } from "@/lib/money";
+import { Net } from "@/components/ui";
 
 export default function Home() {
-  const { state, ready, addPayment } = useStore();
-  if (!ready) return <div className="empty">Loading...</div>;
+  const router = useRouter();
+  const { state, ready, saveRound } = useStore();
+  if (!ready) return <div className="empty">Loading…</div>;
   const names = nameMap(state);
-  const bal = balances(state);
-  const transfers = outstandingTransfers(state);
+  const transfers = owes(state);
   const active = state.rounds.filter((r) => r.status === "active");
-  const past = state.rounds.filter((r) => r.status === "final").slice(0, 5);
+  const past = state.rounds.filter((r) => r.status === "final");
+  const hasBalances = Object.keys(balances(state)).length > 0;
+
+  const holesIn = (r: (typeof state.rounds)[number]) => Math.min(...r.players.map((p) => (r.scores[p.id] ?? []).filter((x) => typeof x === "number").length));
+  const tryDemo = () => { const d = demoRound(); saveRound(d); router.push(`/round/${d.id}`); };
 
   return (
     <>
-      <h1>Golf Game</h1>
-      <Link href="/new" className="btn" style={{ width: "100%", textAlign: "center", padding: ".9rem" }}>+ Start a new round</Link>
+      <div className="top"><span className="brand">PRESS<i>.</i></span></div>
+      <h1 className="title">Play for<br />something.</h1>
+      <p className="sub" style={{ margin: "10px 0 20px" }}>Sixes, Nassau, skins, wolf and more. Keep score and the money settles itself.</p>
+      <Link href="/new" className="btn block" style={{ padding: 18, fontSize: 17 }}>Start a round</Link>
 
       {active.length > 0 && (
         <>
-          <h2>In progress</h2>
-          {active.map((r) => {
-            const done = Math.min(...r.playerIds.map((id) => (r.scores[id] ?? []).filter((x) => typeof x === "number").length));
-            return (
-              <Link key={r.id} href={`/round/${r.id}`} className="card" style={{ display: "block", color: "inherit" }}>
-                <div className="row between">
-                  <b>{r.course.name}</b>
-                  <span className="badge">{done}/{r.holes} holes</span>
-                </div>
-                <div className="muted">{r.players.map((p) => p.name).join(", ")} · {r.games.length} game{r.games.length === 1 ? "" : "s"}</div>
-              </Link>
-            );
-          })}
+          <div className="h2">In progress</div>
+          <div className="stack8">
+            {active.map((r) => {
+              const { net } = computeRound(r);
+              return (
+                <Link key={r.id} href={`/round/${r.id}`} className="card tap">
+                  <div className="row between">
+                    <div style={{ fontWeight: 800, fontSize: 17 }}>{r.course.name || "Round"}{r.demo && <span className="pill" style={{ marginLeft: 8 }}>Demo</span>}</div>
+                    <span className="pill live">Thru {holesIn(r)}</span>
+                  </div>
+                  <div className="row wrap small" style={{ marginTop: 10, gap: 14 }}>
+                    {r.players.map((p) => <span key={p.id}><span className="sub">{p.name}</span> <Net v={net[p.id] ?? 0} /></span>)}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </>
       )}
 
-      <h2>Who owes who</h2>
-      <div className="card">
-        <Transfers transfers={transfers} names={names} onPaid={(t) => addPayment({ fromId: t.from, toId: t.to, amount: t.amount })} />
-      </div>
-
-      {Object.keys(bal).length > 0 && (
-        <div className="card">
-          <h3>Running balance</h3>
-          <table>
-            <tbody>
-              {Object.entries(bal).sort((a, b) => b[1] - a[1]).map(([id, v]) => (
-                <tr key={id}><td>{names[id] ?? "?"}</td><td style={{ textAlign: "right" }}><Net value={v} /></td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {hasBalances && (
+        <>
+          <div className="h2">Who owes who</div>
+          <div className="card">
+            {transfers.length === 0 ? <div className="sub">Everyone is square.</div> : transfers.slice(0, 4).map((t, i) => (
+              <div key={i} className="owe"><div><b>{names[t.from]}</b> <span className="sub">pays</span> <b>{names[t.to]}</b></div><div className="amt">{money(t.amount)}</div></div>
+            ))}
+            <Link href="/ledger" className="btn ghost block" style={{ marginTop: 6 }}>Open balances</Link>
+          </div>
+        </>
       )}
 
       {past.length > 0 && (
         <>
-          <h2>Recent rounds</h2>
-          {past.map((r) => {
-            const { net } = computeRound(r);
-            return (
-              <Link key={r.id} href={`/round/${r.id}`} className="card" style={{ display: "block", color: "inherit" }}>
-                <div className="row between"><b>{r.course.name}</b><span className="muted">{r.date}</span></div>
-                <div className="row wrapx small">
-                  {r.players.map((p) => <span key={p.id}>{p.name} <Net value={net[p.id] ?? 0} /></span>)}
-                </div>
-              </Link>
-            );
-          })}
+          <div className="h2">Past rounds</div>
+          <div className="stack8">
+            {past.slice(0, 6).map((r) => {
+              const { net } = computeRound(r);
+              return (
+                <Link key={r.id} href={`/round/${r.id}`} className="card tap">
+                  <div className="row between"><b>{r.course.name}</b><span className="small faint">{r.date}</span></div>
+                  <div className="row wrap small" style={{ marginTop: 8, gap: 14 }}>{r.players.map((p) => <span key={p.id}><span className="sub">{p.name}</span> <Net v={net[p.id] ?? 0} /></span>)}</div>
+                </Link>
+              );
+            })}
+          </div>
         </>
       )}
 
-      {state.rounds.length === 0 && <div className="empty">No rounds yet. Add your friends under Players, then start a round.</div>}
+      {state.rounds.length === 0 && (
+        <div className="card flat center" style={{ marginTop: 28 }}>
+          <div className="sub" style={{ marginBottom: 12 }}>Want to see it first?</div>
+          <button className="btn ghost" onClick={tryDemo}>Try a demo round</button>
+        </div>
+      )}
     </>
   );
 }

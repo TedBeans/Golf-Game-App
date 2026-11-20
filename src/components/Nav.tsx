@@ -1,23 +1,22 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { IconCoin, IconFlag, IconUsers } from "./ui";
 
 const items = [
-  { href: "/", label: "Home" },
-  { href: "/new", label: "New round" },
-  { href: "/ledger", label: "Balances" },
-  { href: "/players", label: "Players" },
+  { href: "/", label: "PLAY", Icon: IconFlag },
+  { href: "/ledger", label: "BALANCES", Icon: IconCoin },
+  { href: "/players", label: "PLAYERS", Icon: IconUsers },
 ];
 
 export default function Nav() {
   const path = usePathname();
+  const on = (h: string) => (h === "/" ? path === "/" || path.startsWith("/new") || path.startsWith("/round") : path.startsWith(h));
   return (
-    <nav className="nav">
-      {items.map((i) => (
-        <Link key={i.href} href={i.href} className={(i.href === "/" ? path === "/" : path.startsWith(i.href)) ? "on" : ""}>
-          {i.label}
-        </Link>
+    <nav className="nav"><div className="in">
+      {items.map(({ href, label, Icon }) => (
+        <Link key={href} href={href} className={on(href) ? "on" : ""}><Icon />{label}</Link>
       ))}
-    </nav>
+    </div></nav>
   );
 }

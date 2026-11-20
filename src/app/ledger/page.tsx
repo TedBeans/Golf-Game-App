@@ -1,65 +1,76 @@
 "use client";
 import { useState } from "react";
 import { useStore } from "@/lib/store";
-import { balances, nameMap, outstandingTransfers, rosterFor, winningsByPlayer } from "@/lib/ledger";
-import { money } from "@/lib/scoring";
-import { Net, Transfers } from "@/components/Money";
+import { balances, everyone, nameMap, owes, winnings } from "@/lib/ledger";
+import { money } from "@/lib/money";
+import { Avatar, NumInput, Net } from "@/components/ui";
 
 export default function Ledger() {
   const { state, ready, addPayment, deletePayment } = useStore();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [amt, setAmt] = useState("");
-  if (!ready) return <div className="empty">Loading...</div>;
+  const [amt, setAmt] = useState<number | undefined>(undefined);
+  if (!ready) return <div className="empty">Loading…</div>;
   const names = nameMap(state);
   const bal = balances(state);
-  const won = winningsByPlayer(state);
-  const roster = rosterFor(state);
-  const transfers = outstandingTransfers(state);
+  const won = winnings(state);
+  const people = everyone(state).filter((p) => won[p.id] !== undefined || bal[p.id] !== undefined);
+  const transfers = owes(state);
 
   return (
     <>
-      <h1>Balances</h1>
-      <div className="card">
-        <h3>Who owes who</h3>
-        <Transfers transfers={transfers} names={names} onPaid={(t) => addPayment({ fromId: t.from, toId: t.to, amount: t.amount })} />
-        <p className="muted small" style={{ marginBottom: 0 }}>Fewest payments that square everyone up across all rounds.</p>
-      </div>
+      <div className="top"><span className="brand">PRESS<i>.</i></span></div>
+      <h1 className="title" style={{ marginBottom: 18 }}>Balances</h1>
 
       <div className="card">
-        <h3>Totals</h3>
-        <div className="scroll"><table>
-          <thead><tr><th>Player</th><th className="c">Won/lost</th><th className="c">Outstanding</th></tr></thead>
-          <tbody>
-            {roster.filter((p) => won[p.id] !== undefined).sort((a, b) => (bal[b.id] ?? 0) - (bal[a.id] ?? 0)).map((p) => (
-              <tr key={p.id}><td>{p.name}</td><td className="c"><Net value={won[p.id] ?? 0} /></td><td className="c"><Net value={bal[p.id] ?? 0} /></td></tr>
+        <div className="label">Who owes who</div>
+        {transfers.length === 0 ? <div className="sub" style={{ padding: "8px 0" }}>Everyone is square.</div> : transfers.map((t, i) => (
+          <div key={i} className="owe">
+            <div className="row"><Avatar name={names[t.from] ?? "?"} /><div><b>{names[t.from]}</b> <span className="sub">pays</span> <b>{names[t.to]}</b><div className="amt">{money(t.amount)}</div></div></div>
+            <button className="btn ghost sm" onClick={() => addPayment({ fromId: t.from, toId: t.to, amount: t.amount })}>Mark paid</button>
+          </div>
+        ))}
+        <div className="small faint" style={{ marginTop: 6 }}>The fewest payments that square everyone, across every round you've played. Demo rounds don't count.</div>
+      </div>
+
+      {people.length > 0 && (
+        <>
+          <div className="h2">Standings</div>
+          <div className="card divide" style={{ padding: "4px 16px" }}>
+            {[...people].sort((a, b) => (bal[b.id] ?? 0) - (bal[a.id] ?? 0)).map((p) => (
+              <div key={p.id} className="prow">
+                <Avatar name={p.name} /><div className="grow"><b>{p.name}</b><div className="small faint">Won/lost <Net v={won[p.id] ?? 0} /></div></div>
+                <div style={{ textAlign: "right" }}><Net v={bal[p.id] ?? 0} className="big" /><div className="small faint">outstanding</div></div>
+              </div>
             ))}
-          </tbody>
-        </table></div>
-      </div>
+          </div>
+        </>
+      )}
 
+      <div className="h2">Record a payment</div>
       <div className="card">
-        <h3>Record a payment</h3>
-        <div className="row wrapx">
-          <select style={{ flex: 1 }} value={from} onChange={(e) => setFrom(e.target.value)}><option value="">Who paid</option>{roster.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
-          <select style={{ flex: 1 }} value={to} onChange={(e) => setTo(e.target.value)}><option value="">Paid to</option>{roster.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
-          <input style={{ width: 100 }} inputMode="decimal" placeholder="$" value={amt} onChange={(e) => setAmt(e.target.value)} />
+        <div className="row">
+          <select className="input" value={from} onChange={(e) => setFrom(e.target.value)}><option value="">Who paid</option>{people.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
+          <select className="input" value={to} onChange={(e) => setTo(e.target.value)}><option value="">Paid to</option>{people.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>
         </div>
-        <div style={{ marginTop: ".6rem" }}>
-          <button disabled={!from || !to || from === to || !(parseFloat(amt) > 0)} onClick={() => { addPayment({ fromId: from, toId: to, amount: parseFloat(amt) }); setAmt(""); }}>Save payment</button>
+        <div className="row" style={{ marginTop: 10 }}>
+          <NumInput prefix="$" value={amt} min={0} onChange={setAmt} placeholder="Amount" />
+          <button className="btn" disabled={!from || !to || from === to || !(amt && amt > 0)} onClick={() => { addPayment({ fromId: from, toId: to, amount: amt! }); setAmt(undefined); }}>Save</button>
         </div>
       </div>
 
       {state.payments.length > 0 && (
-        <div className="card">
-          <h3>Payment history</h3>
-          {state.payments.map((p) => (
-            <div key={p.id} className="row between" style={{ padding: ".3rem 0", borderBottom: "1px solid var(--line)" }}>
-              <div>{names[p.fromId] ?? "?"} paid {names[p.toId] ?? "?"} <b>{money(p.amount)}</b><div className="muted small">{new Date(p.date).toLocaleDateString()}</div></div>
-              <button className="sm danger" onClick={() => deletePayment(p.id)}>Undo</button>
-            </div>
-          ))}
-        </div>
+        <>
+          <div className="h2">Payment history</div>
+          <div className="card divide" style={{ padding: "4px 16px" }}>
+            {state.payments.map((p) => (
+              <div key={p.id} className="prow">
+                <div className="grow"><b>{names[p.fromId] ?? "?"}</b> <span className="sub">paid</span> <b>{names[p.toId] ?? "?"}</b> <b>{money(p.amount)}</b><div className="small faint">{new Date(p.date).toLocaleDateString()}</div></div>
+                <button className="btn quiet sm" onClick={() => deletePayment(p.id)}>Undo</button>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </>
   );
