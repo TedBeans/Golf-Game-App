@@ -1,7 +1,10 @@
 import data from "../data/courses.json";
 import type { Tee } from "./types";
 
-export type CatalogCourse = { match: string[]; name: string; city?: string; par: number; checked?: boolean; note?: string; tees: Tee[] };
+export type CatalogCourse = { match: string[]; name: string; city?: string; par: number; lat?: number; lon?: number; sources?: string[]; checked?: boolean; note?: string; tees: Tee[] };
+
+export const teeKey = (t: Tee) => `${t.name}|${t.gender ?? "M"}`;
+export const teeLabel = (t: Tee) => `${t.name}${t.gender === "W" ? " (W)" : ""}`;
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
 
 /** Look a course up in the bundled tee database by (fuzzy) name. */

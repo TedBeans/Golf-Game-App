@@ -185,13 +185,13 @@ describe("tee catalog", () => {
   it("finds Missouri Bluffs and uses tee par for course handicap", () => {
     const c = findCatalog("The Missouri Bluffs Golf Club")!;
     expect(c.tees.map((t) => t.name)).toContain("Blue");
-    const blue = c.tees.find((t) => t.name === "Blue")!;
+    const blue = c.tees.find((t) => t.name === "Blue" && t.gender === "M")!;
     const r = demoRound();
     r.holes = 18;
     r.course = { ...r.course, slope: blue.slope, rating: blue.rating, teePar: blue.par };
-    // 10.0 * 120/113 + (69.3 - 71) = 8.9 -> 9
+    // 10.0 * 135/113 + (70.5 - 71) = 11.4 -> 11
     r.players = [{ id: "a", name: "A", index: 10 }, { id: "b", name: "B", index: 0 }];
-    expect(courseHandicaps(r).a).toBe(9);
+    expect(courseHandicaps(r).a).toBe(11);
   });
   it("returns null for unknown courses", () => expect(findCatalog("Nowhere Links")).toBeNull());
 });

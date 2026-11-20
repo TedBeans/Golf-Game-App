@@ -1,17 +1,108 @@
 [
   {
-    "match": ["missouri bluffs"],
-    "name": "The Missouri Bluffs Golf Club",
-    "city": "St. Charles, MO",
+    "match": [
+      "missouri bluffs",
+      "missouri bluffs golf club",
+      "the missouri bluffs"
+    ],
+    "name": "Missouri Bluffs Golf Club",
+    "city": "St Charles, MO",
     "par": 71,
-    "checked": false,
-    "note": "Ratings from public listings (GolfPass, Golf Advisor, 18Birdies). Black slope shows as 131 on most and 132 on one; verify against the club scorecard.",
+    "lat": 38.69741,
+    "lon": -90.675813,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6212",
+      "https://api.golfcore.org/v1/courses/missouri-bluffs-gc"
+    ],
     "tees": [
-      { "name": "Black", "rating": 73.2, "slope": 131, "par": 71, "yards": 7047 },
-      { "name": "Gold", "rating": 72.0, "slope": 129, "par": 71, "yards": 6610 },
-      { "name": "Blue", "rating": 69.3, "slope": 120, "par": 71, "yards": 6205 },
-      { "name": "White", "rating": 67.1, "slope": 113, "par": 71, "yards": 5807 },
-      { "name": "Green", "rating": 69.5, "slope": 117, "par": 71, "yards": 5191 }
-    ]
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 73.3,
+        "slope": 141,
+        "par": 71,
+        "yards": 6863,
+        "conflicts": [
+          "Golfify, GolfNow and GolfPass say rating 73.2, slope 131, 7047 yards",
+          "GolfCore hole-by-hole yards for Black sum to 7047, not its stated 6863 total"
+        ]
+      },
+      {
+        "name": "Gold",
+        "gender": "M",
+        "rating": 72.1,
+        "slope": 138,
+        "par": 71,
+        "yards": 6588,
+        "conflicts": [
+          "Golfify and GolfNow say rating 72.0, slope 129, 6610 yards"
+        ]
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 70.5,
+        "slope": 135,
+        "par": 71,
+        "yards": 6180,
+        "conflicts": [
+          "Golfify and GolfNow say rating 69.3, slope 120, 6205 yards",
+          "Offcourse and ForeTee say Blue slope 119"
+        ]
+      },
+      {
+        "name": "Blue",
+        "gender": "W",
+        "rating": 76.4,
+        "slope": 144,
+        "par": 71,
+        "yards": 6180
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 68.3,
+        "slope": 127,
+        "par": 71,
+        "yards": 5759,
+        "conflicts": [
+          "Golfify and GolfNow say rating 67.1, slope 113, 5807 yards"
+        ]
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 73.5,
+        "slope": 134,
+        "par": 71,
+        "yards": 5759,
+        "conflicts": [
+          "Golf Handicapp lists White for ladies at rating 73.7, slope 131, 5807 yards"
+        ]
+      },
+      {
+        "name": "Green",
+        "gender": "M",
+        "rating": 63.9,
+        "slope": 111,
+        "par": 71,
+        "yards": 4974,
+        "conflicts": [
+          "Golfify lists Green at rating 69.5, slope 117, 5191 yards, which appears to be a women's rating"
+        ]
+      },
+      {
+        "name": "Green",
+        "gender": "W",
+        "rating": 69.3,
+        "slope": 121,
+        "par": 71,
+        "yards": 4974,
+        "conflicts": [
+          "Offcourse and ForeTee list Green for ladies at rating 69.2, slope 115, 5191 yards"
+        ]
+      }
+    ],
+    "checked": false
   }
 ]

@@ -1,6 +1,6 @@
 export type Player = { id: string; name: string; index: number }; // WHS-style handicap index
 
-export type Tee = { name: string; slope: number; rating: number; par?: number; yards?: number };
+export type Tee = { name: string; gender?: "M" | "W"; slope: number; rating: number; par?: number; yards?: number; conflicts?: string[] };
 
 export type Course = {
   id: string;

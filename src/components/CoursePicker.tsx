@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import type { Course } from "@/lib/types";
 import { blankCourse, DEFAULT_PARS, DEFAULT_SI, type NearbyCourse } from "@/lib/courses";
 import { totalPar } from "@/lib/handicap";
-import { findCatalog } from "@/lib/tees";
+import { findCatalog, teeKey, teeLabel } from "@/lib/tees";
 import { Field, NumInput, Seg } from "./ui";
 
 type Props = { course: Course | null; holes: 9 | 18; onCourse: (c: Course) => void; onHoles: (h: 9 | 18) => void };
@@ -51,13 +51,13 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
   const upd = (patch: Partial<Course>) => course && onCourse({ ...course, ...patch });
   const known = useMemo(() => findCatalog(course?.name), [course?.name]);
   const [manualTee, setManualTee] = useState(false);
-  const teeValue = manualTee ? "__manual" : known?.tees.find((t) => t.name === course?.tee && t.slope === course?.slope)?.name ?? "";
+  const teeValue = manualTee ? "__manual" : known?.tees.find((t) => teeLabel(t) === course?.tee && t.slope === course?.slope) ? teeKey(known.tees.find((t) => teeLabel(t) === course?.tee && t.slope === course?.slope)!) : "";
   function chooseTee(v: string) {
     if (!known) return;
     if (v === "__manual") { setManualTee(true); upd({ tees: known.tees, teePar: undefined }); return; }
-    const t = known.tees.find((x) => x.name === v);
+    const t = known.tees.find((x) => teeKey(x) === v);
     setManualTee(false);
-    if (t) upd({ tees: known.tees, tee: t.name, slope: t.slope, rating: t.rating, teePar: t.par ?? known.par });
+    if (t) upd({ tees: known.tees, tee: teeLabel(t), slope: t.slope, rating: t.rating, teePar: t.par ?? known.par });
   }
   const siOk = !course || new Set(course.strokeIndex.slice(0, 18)).size === 18;
 
@@ -100,10 +100,11 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
               <Field label="Tees">
                 <select className="input" value={teeValue} onChange={(e) => chooseTee(e.target.value)}>
                   <option value="" disabled>Choose tees</option>
-                  {known.tees.map((t) => <option key={t.name} value={t.name}>{t.name} · {t.rating} / {t.slope}{t.yards ? ` · ${t.yards.toLocaleString()} yds` : ""}</option>)}
+                  {known.tees.map((t) => <option key={teeKey(t)} value={teeKey(t)}>{teeLabel(t)} · {t.rating} / {t.slope}{t.yards ? ` · ${t.yards.toLocaleString()} yds` : ""}</option>)}
                   <option value="__manual">Other (enter manually)</option>
                 </select>
               </Field>
+              {(() => { const t = known.tees.find((x) => teeKey(x) === teeValue); return t?.conflicts?.length ? <div className="warn" style={{ marginTop: 8 }}>Sources disagree on this tee: {t.conflicts.join(" · ")}</div> : null; })()}
               <div className="small faint" style={{ marginTop: 8 }}>Rating / slope for each tee are filled in for you.{known.checked ? "" : " Unverified, so check them against the scorecard."}</div>
             </>
           ) : (
