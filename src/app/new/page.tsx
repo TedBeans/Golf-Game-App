@@ -33,7 +33,8 @@ export default function NewRound() {
   const [holes, setHoles] = useState<9 | 18>(18);
   const [games, setGames] = useState<Game[]>([]);
   const [nName, setNName] = useState("");
-  const [nIdx, setNIdx] = useState<number | undefined>(undefined);
+  const [nIdxText, setNIdxText] = useState("");
+  const nIdx = (() => { const n = parseFloat(nIdxText.replace(/^\+/, "")); return isNaN(n) ? undefined : nIdxText.startsWith("+") ? -n : n; })();
 
   const roster = state.players;
   const players: RoundPlayer[] = useMemo(
@@ -52,7 +53,7 @@ export default function NewRound() {
   const quickAdd = () => {
     if (!nName.trim()) return;
     const p = addPlayer(nName, nIdx ?? 0);
-    setPicked((c) => [...c, p.id]); setNName(""); setNIdx(undefined);
+    setPicked((c) => [...c, p.id]); setNName(""); setNIdxText("");
   };
 
   const canNext = step === 0 ? players.length >= 2 : step === 1 ? !!course && course.name.trim().length > 0 && !!course.holesConfirmed : true;
@@ -92,7 +93,7 @@ export default function NewRound() {
         <div>
           <div className="addbar">
             <input className="nm" placeholder="Player name" value={nName} onChange={(e) => setNName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && quickAdd()} />
-            <input className="ix" inputMode="decimal" placeholder="Index" value={nIdx ?? ""} onChange={(e) => { const v = e.target.value; setNIdx(v === "" || isNaN(parseFloat(v)) ? undefined : parseFloat(v)); }} onKeyDown={(e) => e.key === "Enter" && quickAdd()} />
+            <input className="ix" inputMode="decimal" placeholder="Index" value={nIdxText} onChange={(e) => { const v = e.target.value.replace(",", "."); if (/^\+?\d{0,2}\.?\d{0,1}$/.test(v) || v === "") setNIdxText(v); }} onKeyDown={(e) => e.key === "Enter" && quickAdd()} />
             <button className="go" onClick={quickAdd} disabled={!nName.trim()} aria-label="Add player">+</button>
           </div>
 
