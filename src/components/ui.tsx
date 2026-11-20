@@ -116,3 +116,30 @@ export function Picker({ value, options, onChange, placeholder = "Choose", title
     </>
   );
 }
+
+
+/** Themed confirmation sheet (replaces window.confirm). */
+export function ConfirmSheet({ open, title, body, confirmLabel = "Delete", danger = true, onConfirm, onClose }: {
+  open: boolean; title: string; body?: string; confirmLabel?: string; danger?: boolean; onConfirm: () => void; onClose: () => void;
+}) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+  if (!open) return null;
+  return (
+    <div className="sheet-wrap" onClick={onClose}>
+      <div className="sheet" role="dialog" onClick={(e) => e.stopPropagation()} style={{ padding: "8px 16px calc(16px + env(safe-area-inset-bottom))" }}>
+        <div className="sheet-grip" />
+        <div style={{ fontWeight: 800, fontSize: 19, letterSpacing: "-.02em", margin: "6px 0 6px" }}>{title}</div>
+        {body && <div className="sub" style={{ marginBottom: 18 }}>{body}</div>}
+        <div className="stack8">
+          <button className={"btn" + (danger ? " delete" : "")} style={{ width: "100%" }} onClick={onConfirm}>{confirmLabel}</button>
+          <button className="btn ghost" style={{ width: "100%" }} onClick={onClose}>Cancel</button>
+        </div>
+      </div>
+    </div>
+  );
+}

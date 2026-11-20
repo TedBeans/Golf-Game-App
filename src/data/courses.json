@@ -103,99 +103,3871 @@
         ]
       }
     ],
-    "checked": true,
+    "checked": false,
     "holes": [
       {
         "hole": 1,
         "par": 5,
-        "si": 7
+        "si": 7,
+        "yards": {
+          "Black": 549,
+          "Gold": 517,
+          "Blue": 480,
+          "White": 450,
+          "Green": 434
+        }
       },
       {
         "hole": 2,
         "par": 3,
-        "si": 17
+        "si": 17,
+        "yards": {
+          "Black": 212,
+          "Gold": 210,
+          "Blue": 190,
+          "White": 171,
+          "Green": 154
+        }
       },
       {
         "hole": 3,
         "par": 4,
-        "si": 11
+        "si": 11,
+        "yards": {
+          "Black": 421,
+          "Gold": 381,
+          "Blue": 368,
+          "White": 335,
+          "Green": 303
+        }
       },
       {
         "hole": 4,
         "par": 4,
-        "si": 9
+        "si": 9,
+        "yards": {
+          "Black": 413,
+          "Gold": 399,
+          "Blue": 383,
+          "White": 349,
+          "Green": 327
+        }
       },
       {
         "hole": 5,
         "par": 5,
-        "si": 1
+        "si": 1,
+        "yards": {
+          "Black": 584,
+          "Gold": 551,
+          "Blue": 544,
+          "White": 517,
+          "Green": 492
+        }
       },
       {
         "hole": 6,
         "par": 3,
-        "si": 15
+        "si": 15,
+        "yards": {
+          "Black": 221,
+          "Gold": 201,
+          "Blue": 176,
+          "White": 140,
+          "Green": 115
+        }
       },
       {
         "hole": 7,
         "par": 4,
-        "si": 3
+        "si": 3,
+        "yards": {
+          "Black": 456,
+          "Gold": 426,
+          "Blue": 387,
+          "White": 359,
+          "Green": 310
+        }
       },
       {
         "hole": 8,
         "par": 3,
-        "si": 13
+        "si": 13,
+        "yards": {
+          "Black": 205,
+          "Gold": 183,
+          "Blue": 166,
+          "White": 154,
+          "Green": 128
+        }
       },
       {
         "hole": 9,
         "par": 4,
-        "si": 5
+        "si": 5,
+        "yards": {
+          "Black": 442,
+          "Gold": 414,
+          "Blue": 401,
+          "White": 392,
+          "Green": 248
+        }
       },
       {
         "hole": 10,
         "par": 4,
-        "si": 4
+        "si": 4,
+        "yards": {
+          "Black": 436,
+          "Gold": 414,
+          "Blue": 398,
+          "White": 376,
+          "Green": 272
+        }
       },
       {
         "hole": 11,
         "par": 4,
-        "si": 14
+        "si": 14,
+        "yards": {
+          "Black": 342,
+          "Gold": 320,
+          "Blue": 295,
+          "White": 283,
+          "Green": 261
+        }
       },
       {
         "hole": 12,
         "par": 4,
-        "si": 2
+        "si": 2,
+        "yards": {
+          "Black": 474,
+          "Gold": 445,
+          "Blue": 430,
+          "White": 418,
+          "Green": 303
+        }
       },
       {
         "hole": 13,
         "par": 4,
-        "si": 12
+        "si": 12,
+        "yards": {
+          "Black": 372,
+          "Gold": 332,
+          "Blue": 300,
+          "White": 270,
+          "Green": 244
+        }
       },
       {
         "hole": 14,
         "par": 3,
-        "si": 18
+        "si": 18,
+        "yards": {
+          "Black": 198,
+          "Gold": 167,
+          "Blue": 146,
+          "White": 128,
+          "Green": 120
+        }
       },
       {
         "hole": 15,
         "par": 5,
-        "si": 8
+        "si": 8,
+        "yards": {
+          "Black": 529,
+          "Gold": 502,
+          "Blue": 470,
+          "White": 442,
+          "Green": 386
+        }
       },
       {
         "hole": 16,
         "par": 4,
-        "si": 10
+        "si": 10,
+        "yards": {
+          "Black": 443,
+          "Gold": 416,
+          "Blue": 383,
+          "White": 363,
+          "Green": 327
+        }
       },
       {
         "hole": 17,
         "par": 3,
-        "si": 16
+        "si": 16,
+        "yards": {
+          "Black": 208,
+          "Gold": 186,
+          "Blue": 161,
+          "White": 137,
+          "Green": 121
+        }
       },
       {
         "hole": 18,
         "par": 5,
-        "si": 6
+        "si": 6,
+        "yards": {
+          "Black": 542,
+          "Gold": 524,
+          "Blue": 502,
+          "White": 475,
+          "Green": 429
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "gateway national"
+    ],
+    "name": "Gateway National Golf Links",
+    "city": "Madison, IL",
+    "par": 71,
+    "lat": 38.660379,
+    "lon": -90.139179,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6245",
+      "https://api.golfcore.org/v1/courses/gateway-national-gl"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 74.2,
+        "slope": 131,
+        "par": 71,
+        "yards": 7092
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 72.1,
+        "slope": 126,
+        "par": 71,
+        "yards": 6623
+      },
+      {
+        "name": "Arch",
+        "gender": "M",
+        "rating": 70.8,
+        "slope": 122,
+        "par": 71,
+        "yards": 6377
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 69.6,
+        "slope": 120,
+        "par": 71,
+        "yards": 6154
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 75.3,
+        "slope": 129,
+        "par": 71,
+        "yards": 6154
+      },
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 66.8,
+        "slope": 112,
+        "par": 71,
+        "yards": 5623
+      },
+      {
+        "name": "Yellow",
+        "gender": "W",
+        "rating": 72.4,
+        "slope": 122,
+        "par": 71,
+        "yards": 5623
+      },
+      {
+        "name": "Red",
+        "gender": "M",
+        "rating": 64.7,
+        "slope": 104,
+        "par": 71,
+        "yards": 5187
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 69.7,
+        "slope": 118,
+        "par": 71,
+        "yards": 5187
       }
     ],
-    "holesSource": "Club scorecard as listed on GolfPass and 18Birdies (men's handicap row)"
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Black": 401,
+          "Blue": 376,
+          "Arch": 376,
+          "White": 354,
+          "Yellow": 302,
+          "Red": 302
+        }
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Black": 462,
+          "Blue": 422,
+          "Arch": 397,
+          "White": 397,
+          "Yellow": 329,
+          "Red": 329
+        }
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "si": 1,
+        "yards": {
+          "Black": 655,
+          "Blue": 630,
+          "Arch": 566,
+          "White": 566,
+          "Yellow": 475,
+          "Red": 475
+        }
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Black": 194,
+          "Blue": 180,
+          "Arch": 153,
+          "White": 153,
+          "Yellow": 153,
+          "Red": 130
+        }
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "si": 3,
+        "yards": {
+          "Black": 475,
+          "Blue": 452,
+          "Arch": 421,
+          "White": 421,
+          "Yellow": 351,
+          "Red": 351
+        }
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "si": 5,
+        "yards": {
+          "Black": 556,
+          "Blue": 530,
+          "Arch": 530,
+          "White": 500,
+          "Yellow": 500,
+          "Red": 455
+        }
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "si": 15,
+        "yards": {
+          "Black": 200,
+          "Blue": 180,
+          "Arch": 160,
+          "White": 160,
+          "Yellow": 160,
+          "Red": 145
+        }
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "si": 11,
+        "yards": {
+          "Black": 417,
+          "Blue": 408,
+          "Arch": 408,
+          "White": 378,
+          "Yellow": 300,
+          "Red": 300
+        }
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "si": 9,
+        "yards": {
+          "Black": 427,
+          "Blue": 390,
+          "Arch": 390,
+          "White": 360,
+          "Yellow": 360,
+          "Red": 310
+        }
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "si": 12,
+        "yards": {
+          "Black": 315,
+          "Blue": 271,
+          "Arch": 271,
+          "White": 251,
+          "Yellow": 251,
+          "Red": 202
+        }
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "si": 6,
+        "yards": {
+          "Black": 442,
+          "Blue": 416,
+          "Arch": 394,
+          "White": 394,
+          "Yellow": 330,
+          "Red": 330
+        }
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Black": 147,
+          "Blue": 131,
+          "Arch": 131,
+          "White": 115,
+          "Yellow": 115,
+          "Red": 90
+        }
+      },
+      {
+        "hole": 13,
+        "par": 5,
+        "si": 2,
+        "yards": {
+          "Black": 557,
+          "Blue": 533,
+          "Arch": 533,
+          "White": 520,
+          "Yellow": 520,
+          "Red": 462
+        }
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "si": 14,
+        "yards": {
+          "Black": 236,
+          "Blue": 200,
+          "Arch": 185,
+          "White": 185,
+          "Yellow": 155,
+          "Red": 155
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Black": 454,
+          "Blue": 428,
+          "Arch": 408,
+          "White": 408,
+          "Yellow": 330,
+          "Red": 330
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Black": 384,
+          "Blue": 354,
+          "Arch": 354,
+          "White": 325,
+          "Yellow": 325,
+          "Red": 274
+        }
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "si": 16,
+        "yards": {
+          "Black": 225,
+          "Blue": 195,
+          "Arch": 173,
+          "White": 173,
+          "Yellow": 173,
+          "Red": 156
+        }
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "si": 8,
+        "yards": {
+          "Black": 545,
+          "Blue": 527,
+          "Arch": 527,
+          "White": 494,
+          "Yellow": 494,
+          "Red": 391
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "annbriar"
+    ],
+    "name": "Annbriar Golf Course",
+    "city": "Waterloo, IL",
+    "par": 72,
+    "lat": 38.353302,
+    "lon": -90.196718,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6217",
+      "https://api.golfcore.org/v1/courses/annbriar-golf-course"
+    ],
+    "tees": [
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 73.1,
+        "slope": 135,
+        "par": 72,
+        "yards": 6860
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 71.5,
+        "slope": 131,
+        "par": 72,
+        "yards": 6517
+      },
+      {
+        "name": "Blue/White",
+        "gender": "M",
+        "rating": 70.1,
+        "slope": 129,
+        "par": 72,
+        "yards": 6258
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 68.5,
+        "slope": 124,
+        "par": 72,
+        "yards": 5946
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 74.1,
+        "slope": 131,
+        "par": 72,
+        "yards": 5946
+      },
+      {
+        "name": "White/Green",
+        "gender": "M",
+        "rating": 67.4,
+        "slope": 120,
+        "par": 72,
+        "yards": 5735
+      },
+      {
+        "name": "White/Green",
+        "gender": "W",
+        "rating": 72.9,
+        "slope": 129,
+        "par": 72,
+        "yards": 5735
+      },
+      {
+        "name": "Green",
+        "gender": "M",
+        "rating": 66.1,
+        "slope": 114,
+        "par": 72,
+        "yards": 5446
+      },
+      {
+        "name": "Green",
+        "gender": "W",
+        "rating": 71.3,
+        "slope": 125,
+        "par": 72,
+        "yards": 5446
+      },
+      {
+        "name": "Green/Red",
+        "gender": "W",
+        "rating": 69.1,
+        "slope": 122,
+        "par": 72,
+        "yards": 5087
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 67.2,
+        "slope": 116,
+        "par": 72,
+        "yards": 4768
+      },
+      {
+        "name": "Orange",
+        "gender": "W",
+        "rating": 64.9,
+        "slope": 108,
+        "par": 70,
+        "yards": 4338
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Yellow": 361,
+          "Blue": 337,
+          "Blue/White": 304,
+          "White": 304,
+          "White/Green": 304,
+          "Green": 281,
+          "Green/Red": 281,
+          "Red": 225,
+          "Orange": 225
+        }
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Yellow": 435,
+          "Blue": 395,
+          "Blue/White": 364,
+          "White": 364,
+          "White/Green": 364,
+          "Green": 340,
+          "Green/Red": 289,
+          "Red": 289,
+          "Orange": 289
+        }
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "si": 14,
+        "yards": {
+          "Yellow": 385,
+          "Blue": 373,
+          "Blue/White": 373,
+          "White": 343,
+          "White/Green": 343,
+          "Green": 310,
+          "Green/Red": 275,
+          "Red": 275,
+          "Orange": 209
+        }
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "si": 6,
+        "yards": {
+          "Yellow": 193,
+          "Blue": 190,
+          "Blue/White": 174,
+          "White": 174,
+          "White/Green": 174,
+          "Green": 155,
+          "Green/Red": 116,
+          "Red": 116,
+          "Orange": 116
+        }
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "si": 2,
+        "yards": {
+          "Yellow": 535,
+          "Blue": 496,
+          "Blue/White": 489,
+          "White": 489,
+          "White/Green": 463,
+          "Green": 463,
+          "Green/Red": 463,
+          "Red": 434,
+          "Orange": 334
+        }
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "si": 8,
+        "yards": {
+          "Yellow": 388,
+          "Blue": 378,
+          "Blue/White": 349,
+          "White": 349,
+          "White/Green": 349,
+          "Green": 313,
+          "Green/Red": 287,
+          "Red": 287,
+          "Orange": 237
+        }
+      },
+      {
+        "hole": 7,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Yellow": 165,
+          "Blue": 155,
+          "Blue/White": 138,
+          "White": 138,
+          "White/Green": 138,
+          "Green": 118,
+          "Green/Red": 118,
+          "Red": 75,
+          "Orange": 75
+        }
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Yellow": 426,
+          "Blue": 415,
+          "Blue/White": 400,
+          "White": 400,
+          "White/Green": 354,
+          "Green": 354,
+          "Green/Red": 283,
+          "Red": 283,
+          "Orange": 283
+        }
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "si": 12,
+        "yards": {
+          "Yellow": 495,
+          "Blue": 475,
+          "Blue/White": 475,
+          "White": 427,
+          "White/Green": 427,
+          "Green": 401,
+          "Green/Red": 401,
+          "Red": 384,
+          "Orange": 339
+        }
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Yellow": 408,
+          "Blue": 382,
+          "Blue/White": 361,
+          "White": 361,
+          "White/Green": 361,
+          "Green": 342,
+          "Green/Red": 310,
+          "Red": 310,
+          "Orange": 266
+        }
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "si": 5,
+        "yards": {
+          "Yellow": 398,
+          "Blue": 404,
+          "Blue/White": 404,
+          "White": 352,
+          "White/Green": 352,
+          "Green": 328,
+          "Green/Red": 266,
+          "Red": 271,
+          "Orange": 271
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 15,
+        "yards": {
+          "Yellow": 368,
+          "Blue": 353,
+          "Blue/White": 321,
+          "White": 321,
+          "White/Green": 321,
+          "Green": 299,
+          "Green/Red": 299,
+          "Red": 258,
+          "Orange": 258
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Yellow": 383,
+          "Blue": 356,
+          "Blue/White": 356,
+          "White": 309,
+          "White/Green": 309,
+          "Green": 283,
+          "Green/Red": 283,
+          "Red": 238,
+          "Orange": 238
+        }
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "si": 9,
+        "yards": {
+          "Yellow": 506,
+          "Blue": 492,
+          "Blue/White": 467,
+          "White": 467,
+          "White/Green": 424,
+          "Green": 424,
+          "Green/Red": 424,
+          "Red": 368,
+          "Orange": 368
+        }
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "si": 11,
+        "yards": {
+          "Yellow": 172,
+          "Blue": 151,
+          "Blue/White": 133,
+          "White": 133,
+          "White/Green": 133,
+          "Green": 126,
+          "Green/Red": 126,
+          "Red": 109,
+          "Orange": 109
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Yellow": 466,
+          "Blue": 446,
+          "Blue/White": 446,
+          "White": 388,
+          "White/Green": 314,
+          "Green": 314,
+          "Green/Red": 292,
+          "Red": 292,
+          "Orange": 242
+        }
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Yellow": 173,
+          "Blue": 147,
+          "Blue/White": 132,
+          "White": 132,
+          "White/Green": 132,
+          "Green": 122,
+          "Green/Red": 122,
+          "Red": 102,
+          "Orange": 102
+        }
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "si": 3,
+        "yards": {
+          "Yellow": 603,
+          "Blue": 572,
+          "Blue/White": 572,
+          "White": 495,
+          "White/Green": 473,
+          "Green": 473,
+          "Green/Red": 452,
+          "Red": 452,
+          "Orange": 377
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "stonewolf"
+    ],
+    "name": "Stonewolf Golf Club",
+    "city": "Fairview Heights, IL",
+    "par": 72,
+    "lat": 38.617365,
+    "lon": -89.994875,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6206",
+      "https://api.golfcore.org/v1/courses/stonewolf-golf-club"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 73.6,
+        "slope": 141,
+        "par": 72,
+        "yards": 6869
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 72.2,
+        "slope": 134,
+        "par": 72,
+        "yards": 6510
+      },
+      {
+        "name": "Blue/White",
+        "gender": "M",
+        "rating": 71.2,
+        "slope": 132,
+        "par": 72,
+        "yards": 6270,
+        "conflicts": [
+          "GHIN shows a 71.4 / 129 tee at this course with no matching NCRDB row"
+        ]
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 70.3,
+        "slope": 128,
+        "par": 72,
+        "yards": 6074
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 75.5,
+        "slope": 140,
+        "par": 72,
+        "yards": 6074
+      },
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 67.9,
+        "slope": 121,
+        "par": 72,
+        "yards": 5590
+      },
+      {
+        "name": "Yellow",
+        "gender": "W",
+        "rating": 72.7,
+        "slope": 130,
+        "par": 72,
+        "yards": 5590
+      },
+      {
+        "name": "Yellow/Red",
+        "gender": "M",
+        "rating": 64.6,
+        "slope": 110,
+        "par": 71,
+        "yards": 5044
+      },
+      {
+        "name": "Yellow/Red",
+        "gender": "W",
+        "rating": 69.7,
+        "slope": 120,
+        "par": 71,
+        "yards": 5044
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 68.3,
+        "slope": 119,
+        "par": 71,
+        "yards": 4786
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Black": 412,
+          "Blue": 389,
+          "Blue/White": 347,
+          "White": 347,
+          "Yellow": 310,
+          "Yellow/Red": 310,
+          "Red": 267
+        }
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Black": 336,
+          "Blue": 318,
+          "Blue/White": 318,
+          "White": 284,
+          "Yellow": 270,
+          "Yellow/Red": 270,
+          "Red": 248
+        }
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "si": 5,
+        "yards": {
+          "Black": 584,
+          "Blue": 568,
+          "Blue/White": 568,
+          "White": 542,
+          "Yellow": 526,
+          "Yellow/Red": 458,
+          "Red": 458
+        }
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "si": 15,
+        "yards": {
+          "Black": 196,
+          "Blue": 178,
+          "Blue/White": 157,
+          "White": 157,
+          "Yellow": 144,
+          "Yellow/Red": 138,
+          "Red": 138
+        }
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "si": 3,
+        "yards": {
+          "Black": 451,
+          "Blue": 427,
+          "Blue/White": 403,
+          "White": 403,
+          "Yellow": 371,
+          "Yellow/Red": 295,
+          "Red": 295
+        }
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "si": 11,
+        "yards": {
+          "Black": 515,
+          "Blue": 505,
+          "Blue/White": 481,
+          "White": 481,
+          "Yellow": 471,
+          "Yellow/Red": 392,
+          "Red": 392
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 9,
+        "yards": {
+          "Black": 378,
+          "Blue": 360,
+          "Blue/White": 360,
+          "White": 339,
+          "Yellow": 310,
+          "Yellow/Red": 310,
+          "Red": 285
+        }
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Black": 153,
+          "Blue": 145,
+          "Blue/White": 145,
+          "White": 137,
+          "Yellow": 110,
+          "Yellow/Red": 110,
+          "Red": 84
+        }
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Black": 445,
+          "Blue": 423,
+          "Blue/White": 402,
+          "White": 402,
+          "Yellow": 350,
+          "Yellow/Red": 320,
+          "Red": 320
+        }
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Black": 429,
+          "Blue": 395,
+          "Blue/White": 361,
+          "White": 361,
+          "Yellow": 298,
+          "Yellow/Red": 294,
+          "Red": 294
+        }
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Black": 181,
+          "Blue": 168,
+          "Blue/White": 143,
+          "White": 143,
+          "Yellow": 126,
+          "Yellow/Red": 126,
+          "Red": 117
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Black": 317,
+          "Blue": 309,
+          "Blue/White": 309,
+          "White": 293,
+          "Yellow": 278,
+          "Yellow/Red": 103,
+          "Red": 103
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 6,
+        "yards": {
+          "Black": 398,
+          "Blue": 379,
+          "Blue/White": 363,
+          "White": 363,
+          "Yellow": 345,
+          "Yellow/Red": 286,
+          "Red": 286
+        }
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "si": 10,
+        "yards": {
+          "Black": 513,
+          "Blue": 485,
+          "Blue/White": 485,
+          "White": 464,
+          "Yellow": 440,
+          "Yellow/Red": 440,
+          "Red": 402
+        }
+      },
+      {
+        "hole": 15,
+        "par": 3,
+        "si": 14,
+        "yards": {
+          "Black": 199,
+          "Blue": 181,
+          "Blue/White": 181,
+          "White": 162,
+          "Yellow": 144,
+          "Yellow/Red": 144,
+          "Red": 112
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 12,
+        "yards": {
+          "Black": 358,
+          "Blue": 331,
+          "Blue/White": 331,
+          "White": 311,
+          "Yellow": 292,
+          "Yellow/Red": 292,
+          "Red": 255
+        }
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "si": 8,
+        "yards": {
+          "Black": 557,
+          "Blue": 528,
+          "Blue/White": 528,
+          "White": 497,
+          "Yellow": 471,
+          "Yellow/Red": 422,
+          "Red": 422
+        }
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "si": 2,
+        "yards": {
+          "Black": 447,
+          "Blue": 421,
+          "Blue/White": 388,
+          "White": 388,
+          "Yellow": 334,
+          "Yellow/Red": 334,
+          "Red": 308
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "forest park",
+      "probstein",
+      "hawthorn/dogwood"
+    ],
+    "name": "Forest Park Golf Course - Hawthorn/Dogwood",
+    "city": "St. Louis, MO",
+    "par": 70,
+    "lat": 38.64376,
+    "lon": -90.295924,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6174",
+      "https://api.golfcore.org/v1/courses/norman-k-probstein-golf-course"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 68.8,
+        "slope": 119,
+        "par": 70,
+        "yards": 6187
+      },
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 66.3,
+        "slope": 117,
+        "par": 70,
+        "yards": 5605
+      },
+      {
+        "name": "Yellow",
+        "gender": "W",
+        "rating": 71.3,
+        "slope": 117,
+        "par": 70,
+        "yards": 5605
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 62.9,
+        "slope": 110,
+        "par": 70,
+        "yards": 4865
+      },
+      {
+        "name": "Blue",
+        "gender": "W",
+        "rating": 66.6,
+        "slope": 111,
+        "par": 70,
+        "yards": 4865
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 61.4,
+        "slope": 92,
+        "par": 70,
+        "yards": 4210
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 62.8,
+        "slope": 101,
+        "par": 70,
+        "yards": 4210
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Yellow": 358,
+          "Blue": 309,
+          "White": 248,
+          "Black": 387
+        }
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "si": 7,
+        "yards": {
+          "Yellow": 158,
+          "Blue": 136,
+          "White": 114,
+          "Black": 179
+        }
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Yellow": 387,
+          "Blue": 340,
+          "White": 304,
+          "Black": 415
+        }
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Yellow": 166,
+          "Blue": 133,
+          "White": 110,
+          "Black": 184
+        }
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "si": 11,
+        "yards": {
+          "Yellow": 352,
+          "Blue": 285,
+          "White": 197,
+          "Black": 381
+        }
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "si": 3,
+        "yards": {
+          "Yellow": 493,
+          "Blue": 404,
+          "White": 377,
+          "Black": 516
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 15,
+        "yards": {
+          "Yellow": 276,
+          "Blue": 258,
+          "White": 240,
+          "Black": 299
+        }
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "si": 9,
+        "yards": {
+          "Yellow": 481,
+          "Blue": 427,
+          "White": 403,
+          "Black": 536
+        }
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "si": 5,
+        "yards": {
+          "Yellow": 134,
+          "Blue": 106,
+          "White": 94,
+          "Black": 150
+        }
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "si": 6,
+        "yards": {
+          "Yellow": 473,
+          "Blue": 437,
+          "White": 371,
+          "Black": 507
+        }
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "si": 8,
+        "yards": {
+          "Yellow": 167,
+          "Blue": 144,
+          "White": 118,
+          "Black": 201
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Yellow": 300,
+          "Blue": 270,
+          "White": 241,
+          "Black": 331
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 14,
+        "yards": {
+          "Yellow": 301,
+          "Blue": 275,
+          "White": 225,
+          "Black": 351
+        }
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "si": 12,
+        "yards": {
+          "Yellow": 134,
+          "Blue": 120,
+          "White": 104,
+          "Black": 178
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Yellow": 355,
+          "Blue": 298,
+          "White": 220,
+          "Black": 370
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Yellow": 384,
+          "Blue": 326,
+          "White": 307,
+          "Black": 438
+        }
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Yellow": 117,
+          "Blue": 102,
+          "White": 85,
+          "Black": 131
+        }
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "si": 2,
+        "yards": {
+          "Yellow": 569,
+          "Blue": 495,
+          "White": 452,
+          "Black": 633
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "forest park",
+      "probstein",
+      "redbud/dogwood"
+    ],
+    "name": "Forest Park Golf Course - Redbud/Dogwood",
+    "city": "St. Louis, MO",
+    "par": 70,
+    "lat": 38.64376,
+    "lon": -90.295924,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6176",
+      "https://api.golfcore.org/v1/courses/norman-k-probstein-golf-course"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 70.6,
+        "slope": 131,
+        "par": 70,
+        "yards": 6314
+      },
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 67.4,
+        "slope": 121,
+        "par": 70,
+        "yards": 5754
+      },
+      {
+        "name": "Yellow",
+        "gender": "W",
+        "rating": 72.2,
+        "slope": 119,
+        "par": 70,
+        "yards": 5754
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 64.7,
+        "slope": 115,
+        "par": 70,
+        "yards": 5141
+      },
+      {
+        "name": "Blue",
+        "gender": "W",
+        "rating": 68.5,
+        "slope": 112,
+        "par": 70,
+        "yards": 5141
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 62.3,
+        "slope": 97,
+        "par": 70,
+        "yards": 4431
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 64.2,
+        "slope": 104,
+        "par": 70,
+        "yards": 4431
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 5,
+        "yards": {
+          "Black": 357,
+          "Yellow": 316,
+          "Blue": 295,
+          "White": 252
+        }
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Black": 416,
+          "Yellow": 385,
+          "Blue": 363,
+          "White": 285
+        }
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "si": 15,
+        "yards": {
+          "Black": 171,
+          "Yellow": 149,
+          "Blue": 121,
+          "White": 103
+        }
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Black": 395,
+          "Yellow": 361,
+          "Blue": 338,
+          "White": 309
+        }
+      },
+      {
+        "hole": 5,
+        "par": 5,
+        "si": 11,
+        "yards": {
+          "Black": 524,
+          "Yellow": 510,
+          "Blue": 467,
+          "White": 419
+        }
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "si": 9,
+        "yards": {
+          "Black": 205,
+          "Yellow": 189,
+          "Blue": 154,
+          "White": 105
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 3,
+        "yards": {
+          "Black": 430,
+          "Yellow": 413,
+          "Blue": 372,
+          "White": 333
+        }
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "si": 17,
+        "yards": {
+          "Black": 347,
+          "Yellow": 331,
+          "Blue": 298,
+          "White": 257
+        }
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Black": 329,
+          "Yellow": 300,
+          "Blue": 266,
+          "White": 245
+        }
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "si": 16,
+        "yards": {
+          "Black": 507,
+          "Yellow": 473,
+          "Blue": 437,
+          "White": 371
+        }
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "si": 8,
+        "yards": {
+          "Black": 201,
+          "Yellow": 167,
+          "Blue": 144,
+          "White": 118
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Black": 331,
+          "Yellow": 300,
+          "Blue": 270,
+          "White": 241
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 18,
+        "yards": {
+          "Black": 351,
+          "Yellow": 301,
+          "Blue": 275,
+          "White": 225
+        }
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "si": 6,
+        "yards": {
+          "Black": 178,
+          "Yellow": 134,
+          "Blue": 120,
+          "White": 104
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 2,
+        "yards": {
+          "Black": 370,
+          "Yellow": 355,
+          "Blue": 298,
+          "White": 220
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Black": 438,
+          "Yellow": 384,
+          "Blue": 326,
+          "White": 307
+        }
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "si": 14,
+        "yards": {
+          "Black": 131,
+          "Yellow": 117,
+          "Blue": 102,
+          "White": 85
+        }
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "si": 12,
+        "yards": {
+          "Black": 633,
+          "Yellow": 569,
+          "Blue": 495,
+          "White": 452
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "forest park",
+      "probstein",
+      "redbud/hawthorn"
+    ],
+    "name": "Forest Park Golf Course - Redbud/Hawthorn",
+    "city": "St. Louis, MO",
+    "par": 70,
+    "lat": 38.64376,
+    "lon": -90.295924,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6175",
+      "https://api.golfcore.org/v1/courses/norman-k-probstein-golf-course"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 68.7,
+        "slope": 119,
+        "par": 70
+      },
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 67.1,
+        "slope": 115,
+        "par": 70
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 63.6,
+        "slope": 109,
+        "par": 70
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 61.3,
+        "slope": 94,
+        "par": 70
+      },
+      {
+        "name": "Yellow",
+        "gender": "W",
+        "rating": 71.9,
+        "slope": 119,
+        "par": 70
+      },
+      {
+        "name": "Blue",
+        "gender": "W",
+        "rating": 67.7,
+        "slope": 111,
+        "par": 70
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 63.6,
+        "slope": 101,
+        "par": 70
+      }
+    ],
+    "checked": false
+  },
+  {
+    "match": [
+      "far oaks"
+    ],
+    "name": "Far Oaks Golf Club",
+    "city": "Caseyville, IL",
+    "par": 72,
+    "lat": 38.623536,
+    "lon": -89.970566,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6170",
+      "https://api.golfcore.org/v1/courses/far-oaks-gc"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 71.0,
+        "slope": 130,
+        "par": 72,
+        "yards": 6503
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 69.3,
+        "slope": 128,
+        "par": 72,
+        "yards": 6124
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 67.8,
+        "slope": 118,
+        "par": 72,
+        "yards": 5629
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 72.4,
+        "slope": 133,
+        "par": 72,
+        "yards": 5629
+      },
+      {
+        "name": "White/Yellow",
+        "gender": "M",
+        "rating": 66.7,
+        "slope": 114,
+        "par": 72,
+        "yards": 5454
+      },
+      {
+        "name": "White/Yellow",
+        "gender": "W",
+        "rating": 71.4,
+        "slope": 129,
+        "par": 72,
+        "yards": 5454
+      },
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 65.3,
+        "slope": 109,
+        "par": 72,
+        "yards": 5176
+      },
+      {
+        "name": "Yellow",
+        "gender": "W",
+        "rating": 69.6,
+        "slope": 123,
+        "par": 72,
+        "yards": 5176
+      },
+      {
+        "name": "Red/Yellow",
+        "gender": "M",
+        "rating": 64.0,
+        "slope": 104,
+        "par": 72,
+        "yards": 4844
+      },
+      {
+        "name": "Red/Yellow",
+        "gender": "W",
+        "rating": 67.7,
+        "slope": 118,
+        "par": 72,
+        "yards": 4844
+      },
+      {
+        "name": "Red",
+        "gender": "M",
+        "rating": 62.5,
+        "slope": 104,
+        "par": 72,
+        "yards": 4510
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 66.0,
+        "slope": 115,
+        "par": 72,
+        "yards": 4510
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 5,
+        "si": 4,
+        "yards": {
+          "Black": 464,
+          "Blue": 440,
+          "White": 415,
+          "White/Yellow": 416,
+          "Yellow": 386,
+          "Red/Yellow": 386,
+          "Red": 342
+        }
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "si": 12,
+        "yards": {
+          "Black": 167,
+          "Blue": 140,
+          "White": 123,
+          "White/Yellow": 131,
+          "Yellow": 115,
+          "Red/Yellow": 115,
+          "Red": 112
+        }
+      },
+      {
+        "hole": 3,
+        "par": 5,
+        "si": 2,
+        "yards": {
+          "Black": 581,
+          "Blue": 566,
+          "White": 546,
+          "White/Yellow": 509,
+          "Yellow": 509,
+          "Red/Yellow": 438,
+          "Red": 438
+        }
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Black": 422,
+          "Blue": 399,
+          "White": 351,
+          "White/Yellow": 323,
+          "Yellow": 323,
+          "Red/Yellow": 275,
+          "Red": 275
+        }
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Black": 428,
+          "Blue": 405,
+          "White": 382,
+          "White/Yellow": 382,
+          "Yellow": 358,
+          "Red/Yellow": 271,
+          "Red": 271
+        }
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "si": 8,
+        "yards": {
+          "Black": 140,
+          "Blue": 130,
+          "White": 120,
+          "White/Yellow": 120,
+          "Yellow": 110,
+          "Red/Yellow": 110,
+          "Red": 100
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 14,
+        "yards": {
+          "Black": 358,
+          "Blue": 314,
+          "White": 292,
+          "White/Yellow": 292,
+          "Yellow": 288,
+          "Red/Yellow": 288,
+          "Red": 242
+        }
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Black": 167,
+          "Blue": 155,
+          "White": 133,
+          "White/Yellow": 114,
+          "Yellow": 114,
+          "Red/Yellow": 114,
+          "Red": 101
+        }
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "si": 6,
+        "yards": {
+          "Black": 518,
+          "Blue": 494,
+          "White": 466,
+          "White/Yellow": 429,
+          "Yellow": 429,
+          "Red/Yellow": 396,
+          "Red": 396
+        }
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "si": 11,
+        "yards": {
+          "Black": 375,
+          "Blue": 347,
+          "White": 329,
+          "White/Yellow": 329,
+          "Yellow": 318,
+          "Red/Yellow": 318,
+          "Red": 278
+        }
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Black": 392,
+          "Blue": 374,
+          "White": 344,
+          "White/Yellow": 320,
+          "Yellow": 320,
+          "Red/Yellow": 270,
+          "Red": 270
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 9,
+        "yards": {
+          "Black": 370,
+          "Blue": 361,
+          "White": 336,
+          "White/Yellow": 336,
+          "Yellow": 263,
+          "Red/Yellow": 263,
+          "Red": 207
+        }
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "si": 15,
+        "yards": {
+          "Black": 181,
+          "Blue": 172,
+          "White": 139,
+          "White/Yellow": 139,
+          "Yellow": 128,
+          "Red/Yellow": 128,
+          "Red": 108
+        }
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "si": 1,
+        "yards": {
+          "Black": 532,
+          "Blue": 508,
+          "White": 475,
+          "White/Yellow": 436,
+          "Yellow": 436,
+          "Red/Yellow": 422,
+          "Red": 422
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Black": 334,
+          "Blue": 301,
+          "White": 274,
+          "White/Yellow": 274,
+          "Yellow": 252,
+          "Red/Yellow": 252,
+          "Red": 189
+        }
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Black": 178,
+          "Blue": 172,
+          "White": 164,
+          "White/Yellow": 164,
+          "Yellow": 136,
+          "Red/Yellow": 116,
+          "Red": 116
+        }
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "si": 3,
+        "yards": {
+          "Black": 392,
+          "Blue": 371,
+          "White": 323,
+          "White/Yellow": 323,
+          "Yellow": 286,
+          "Red/Yellow": 277,
+          "Red": 277
+        }
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "si": 5,
+        "yards": {
+          "Black": 504,
+          "Blue": 475,
+          "White": 417,
+          "White/Yellow": 417,
+          "Yellow": 405,
+          "Red/Yellow": 405,
+          "Red": 366
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "aberdeen"
+    ],
+    "name": "Aberdeen Golf Club",
+    "city": "Eureka, MO",
+    "par": 72,
+    "lat": 38.533498,
+    "lon": -90.618282,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6166",
+      "https://api.golfcore.org/v1/courses/aberdeen-golf-club"
+    ],
+    "tees": [
+      {
+        "name": "Gold",
+        "gender": "M",
+        "rating": 74.4,
+        "slope": 126,
+        "par": 72,
+        "yards": 7165
+      },
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 72.3,
+        "slope": 123,
+        "par": 72,
+        "yards": 6665
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 70.2,
+        "slope": 121,
+        "par": 72,
+        "yards": 6291,
+        "conflicts": [
+          "GHIN shows a 70.3 / 120 tee at this course with no matching NCRDB row"
+        ]
+      },
+      {
+        "name": "Blue",
+        "gender": "W",
+        "rating": 76.7,
+        "slope": 134,
+        "par": 72,
+        "yards": 6291
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 69.4,
+        "slope": 119,
+        "par": 72,
+        "yards": 6040
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 75.3,
+        "slope": 129,
+        "par": 72,
+        "yards": 6040
+      },
+      {
+        "name": "Green",
+        "gender": "M",
+        "rating": 67.4,
+        "slope": 116,
+        "par": 72,
+        "yards": 5620
+      },
+      {
+        "name": "Green",
+        "gender": "W",
+        "rating": 73.1,
+        "slope": 122,
+        "par": 72,
+        "yards": 5620
+      },
+      {
+        "name": "Silver",
+        "gender": "M",
+        "rating": 65.1,
+        "slope": 109,
+        "par": 72,
+        "yards": 5157
+      },
+      {
+        "name": "Silver",
+        "gender": "W",
+        "rating": 69.8,
+        "slope": 117,
+        "par": 72,
+        "yards": 5157
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 8,
+        "yards": {
+          "Gold": 426,
+          "Black": 404,
+          "Blue": 385,
+          "White": 373,
+          "Green": 353,
+          "Silver": 320
+        }
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Gold": 355,
+          "Black": 335,
+          "Blue": 319,
+          "White": 319,
+          "Green": 276,
+          "Silver": 261
+        }
+      },
+      {
+        "hole": 3,
+        "par": 3,
+        "si": 12,
+        "yards": {
+          "Gold": 192,
+          "Black": 183,
+          "Blue": 156,
+          "White": 156,
+          "Green": 124,
+          "Silver": 104
+        }
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "si": 2,
+        "yards": {
+          "Gold": 438,
+          "Black": 413,
+          "Blue": 394,
+          "White": 345,
+          "Green": 345,
+          "Silver": 308
+        }
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Gold": 146,
+          "Black": 127,
+          "Blue": 116,
+          "White": 116,
+          "Green": 96,
+          "Silver": 89
+        }
+      },
+      {
+        "hole": 6,
+        "par": 5,
+        "si": 6,
+        "yards": {
+          "Gold": 548,
+          "Black": 515,
+          "Blue": 492,
+          "White": 466,
+          "Green": 466,
+          "Silver": 446
+        }
+      },
+      {
+        "hole": 7,
+        "par": 5,
+        "si": 10,
+        "yards": {
+          "Gold": 560,
+          "Black": 500,
+          "Blue": 479,
+          "White": 479,
+          "Green": 433,
+          "Silver": 405
+        }
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "si": 14,
+        "yards": {
+          "Gold": 408,
+          "Black": 382,
+          "Blue": 367,
+          "White": 367,
+          "Green": 318,
+          "Silver": 289
+        }
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Gold": 443,
+          "Black": 411,
+          "Blue": 390,
+          "White": 390,
+          "Green": 358,
+          "Silver": 340
+        }
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "si": 15,
+        "yards": {
+          "Gold": 384,
+          "Black": 331,
+          "Blue": 310,
+          "White": 310,
+          "Green": 278,
+          "Silver": 254
+        }
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Gold": 188,
+          "Black": 170,
+          "Blue": 154,
+          "White": 154,
+          "Green": 131,
+          "Silver": 95
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Gold": 446,
+          "Black": 426,
+          "Blue": 410,
+          "White": 371,
+          "Green": 371,
+          "Silver": 351
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 5,
+        "yards": {
+          "Gold": 486,
+          "Black": 427,
+          "Blue": 396,
+          "White": 349,
+          "Green": 349,
+          "Silver": 327
+        }
+      },
+      {
+        "hole": 14,
+        "par": 5,
+        "si": 11,
+        "yards": {
+          "Gold": 500,
+          "Black": 486,
+          "Blue": 470,
+          "White": 470,
+          "Green": 415,
+          "Silver": 375
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 3,
+        "yards": {
+          "Gold": 455,
+          "Black": 436,
+          "Blue": 411,
+          "White": 376,
+          "Green": 376,
+          "Silver": 345
+        }
+      },
+      {
+        "hole": 16,
+        "par": 3,
+        "si": 13,
+        "yards": {
+          "Gold": 213,
+          "Black": 178,
+          "Blue": 137,
+          "White": 137,
+          "Green": 120,
+          "Silver": 105
+        }
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "si": 9,
+        "yards": {
+          "Gold": 527,
+          "Black": 510,
+          "Blue": 498,
+          "White": 455,
+          "Green": 455,
+          "Silver": 425
+        }
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Gold": 450,
+          "Black": 431,
+          "Blue": 407,
+          "White": 407,
+          "Green": 356,
+          "Silver": 318
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "pevely farms",
+      "pevely"
+    ],
+    "name": "Pevely Farms Golf Club",
+    "city": "Eureka, MO",
+    "par": 72,
+    "lat": 38.526113,
+    "lon": -90.599002,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6183",
+      "https://api.golfcore.org/v1/courses/pevely-farms-gc"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 74.6,
+        "slope": 141,
+        "par": 72,
+        "yards": 7032
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 73.1,
+        "slope": 138,
+        "par": 72,
+        "yards": 6717
+      },
+      {
+        "name": "Blue/White",
+        "gender": "M",
+        "rating": 71.5,
+        "slope": 130,
+        "par": 72,
+        "yards": 6406
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 70.5,
+        "slope": 127,
+        "par": 72,
+        "yards": 6170
+      },
+      {
+        "name": "Yellow",
+        "gender": "M",
+        "rating": 67.8,
+        "slope": 121,
+        "par": 72,
+        "yards": 5628
+      },
+      {
+        "name": "Yellow",
+        "gender": "W",
+        "rating": 72.8,
+        "slope": 127,
+        "par": 72,
+        "yards": 5598
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 69.8,
+        "slope": 122,
+        "par": 72,
+        "yards": 5140
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 5,
+        "yards": {
+          "Black": 446,
+          "Blue": 425,
+          "Blue/White": 425,
+          "White": 388,
+          "Yellow": 388,
+          "Red": 355
+        }
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "si": 9,
+        "yards": {
+          "Black": 531,
+          "Blue": 524,
+          "Blue/White": 492,
+          "White": 492,
+          "Yellow": 441,
+          "Red": 441
+        }
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "si": 17,
+        "yards": {
+          "Black": 277,
+          "Blue": 250,
+          "Blue/White": 250,
+          "White": 235,
+          "Yellow": 191,
+          "Red": 130
+        }
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Black": 439,
+          "Blue": 439,
+          "Blue/White": 426,
+          "White": 383,
+          "Yellow": 336,
+          "Red": 336
+        }
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "si": 15,
+        "yards": {
+          "Black": 199,
+          "Blue": 163,
+          "Blue/White": 132,
+          "White": 132,
+          "Yellow": 132,
+          "Red": 111
+        }
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Black": 398,
+          "Blue": 363,
+          "Blue/White": 321,
+          "White": 321,
+          "Yellow": 321,
+          "Red": 309
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Black": 397,
+          "Blue": 384,
+          "Blue/White": 384,
+          "White": 353,
+          "Yellow": 353,
+          "Red": 228
+        }
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "si": 3,
+        "yards": {
+          "Black": 217,
+          "Blue": 201,
+          "Blue/White": 182,
+          "White": 182,
+          "Yellow": 182,
+          "Red": 127
+        }
+      },
+      {
+        "hole": 9,
+        "par": 5,
+        "si": 11,
+        "yards": {
+          "Black": 527,
+          "Blue": 506,
+          "Blue/White": 481,
+          "White": 481,
+          "Yellow": 424,
+          "Red": 424
+        }
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "si": 8,
+        "yards": {
+          "Black": 403,
+          "Blue": 384,
+          "Blue/White": 352,
+          "White": 352,
+          "Yellow": 306,
+          "Red": 306
+        }
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "si": 12,
+        "yards": {
+          "Black": 401,
+          "Blue": 381,
+          "Blue/White": 381,
+          "White": 352,
+          "Yellow": 352,
+          "Red": 323
+        }
+      },
+      {
+        "hole": 12,
+        "par": 5,
+        "si": 6,
+        "yards": {
+          "Black": 572,
+          "Blue": 544,
+          "Blue/White": 544,
+          "White": 527,
+          "Yellow": 465,
+          "Red": 465
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 14,
+        "yards": {
+          "Black": 389,
+          "Blue": 371,
+          "Blue/White": 335,
+          "White": 335,
+          "Yellow": 335,
+          "Red": 283
+        }
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Black": 145,
+          "Blue": 138,
+          "Blue/White": 138,
+          "White": 122,
+          "Yellow": 122,
+          "Red": 102
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Black": 358,
+          "Blue": 344,
+          "Blue/White": 344,
+          "White": 328,
+          "Yellow": 328,
+          "Red": 248
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Black": 443,
+          "Blue": 439,
+          "Blue/White": 403,
+          "White": 403,
+          "Yellow": 324,
+          "Red": 324
+        }
+      },
+      {
+        "hole": 17,
+        "par": 4,
+        "si": 2,
+        "yards": {
+          "Black": 422,
+          "Blue": 408,
+          "Blue/White": 408,
+          "White": 376,
+          "Yellow": 303,
+          "Red": 303
+        }
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Black": 468,
+          "Blue": 453,
+          "Blue/White": 408,
+          "White": 408,
+          "Yellow": 325,
+          "Red": 325
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "quarry at crystal springs",
+      "quarry"
+    ],
+    "name": "The Quarry at Crystal Springs",
+    "city": "Maryland Heights, MO",
+    "par": 70,
+    "lat": 38.725749,
+    "lon": -90.47903,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6184",
+      "https://api.golfcore.org/v1/courses/quarry-crystal-springs"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 72.2,
+        "slope": 131,
+        "par": 70,
+        "yards": 6612
+      },
+      {
+        "name": "Gold",
+        "gender": "M",
+        "rating": 70.0,
+        "slope": 124,
+        "par": 70,
+        "yards": 6156
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 68.3,
+        "slope": 120,
+        "par": 70,
+        "yards": 5767
+      },
+      {
+        "name": "Blue",
+        "gender": "W",
+        "rating": 73.5,
+        "slope": 127,
+        "par": 70,
+        "yards": 5767
+      },
+      {
+        "name": "Red",
+        "gender": "M",
+        "rating": 64.9,
+        "slope": 113,
+        "par": 70,
+        "yards": 5114
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 69.7,
+        "slope": 116,
+        "par": 70,
+        "yards": 5114
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 67.0,
+        "slope": 109,
+        "par": 70,
+        "yards": 4628
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 9,
+        "yards": {
+          "Black": 440,
+          "Gold": 415,
+          "Blue": 380,
+          "Red": 350,
+          "White": 315
+        }
+      },
+      {
+        "hole": 2,
+        "par": 3,
+        "si": 15,
+        "yards": {
+          "Black": 188,
+          "Gold": 170,
+          "Blue": 155,
+          "Red": 127,
+          "White": 98
+        }
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Black": 405,
+          "Gold": 380,
+          "Blue": 355,
+          "Red": 333,
+          "White": 285
+        }
+      },
+      {
+        "hole": 4,
+        "par": 3,
+        "si": 11,
+        "yards": {
+          "Black": 236,
+          "Gold": 210,
+          "Blue": 173,
+          "Red": 140,
+          "White": 126
+        }
+      },
+      {
+        "hole": 5,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Black": 436,
+          "Gold": 397,
+          "Blue": 377,
+          "Red": 320,
+          "White": 300
+        }
+      },
+      {
+        "hole": 6,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Black": 137,
+          "Gold": 127,
+          "Blue": 115,
+          "Red": 99,
+          "White": 89
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 5,
+        "yards": {
+          "Black": 410,
+          "Gold": 350,
+          "Blue": 320,
+          "Red": 279,
+          "White": 259
+        }
+      },
+      {
+        "hole": 8,
+        "par": 5,
+        "si": 3,
+        "yards": {
+          "Black": 532,
+          "Gold": 497,
+          "Blue": 477,
+          "Red": 409,
+          "White": 384
+        }
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Black": 441,
+          "Gold": 386,
+          "Blue": 364,
+          "Red": 345,
+          "White": 282
+        }
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "si": 6,
+        "yards": {
+          "Black": 526,
+          "Gold": 511,
+          "Blue": 465,
+          "Red": 440,
+          "White": 387
+        }
+      },
+      {
+        "hole": 11,
+        "par": 4,
+        "si": 4,
+        "yards": {
+          "Black": 411,
+          "Gold": 388,
+          "Blue": 373,
+          "Red": 316,
+          "White": 294
+        }
+      },
+      {
+        "hole": 12,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Black": 140,
+          "Gold": 129,
+          "Blue": 120,
+          "Red": 109,
+          "White": 101
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Black": 336,
+          "Gold": 317,
+          "Blue": 303,
+          "Red": 286,
+          "White": 262
+        }
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "si": 14,
+        "yards": {
+          "Black": 198,
+          "Gold": 186,
+          "Blue": 174,
+          "Red": 166,
+          "White": 147
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 2,
+        "yards": {
+          "Black": 437,
+          "Gold": 411,
+          "Blue": 389,
+          "Red": 326,
+          "White": 305
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 8,
+        "yards": {
+          "Black": 426,
+          "Gold": 401,
+          "Blue": 385,
+          "Red": 332,
+          "White": 326
+        }
+      },
+      {
+        "hole": 17,
+        "par": 5,
+        "si": 10,
+        "yards": {
+          "Black": 532,
+          "Gold": 515,
+          "Blue": 486,
+          "Red": 449,
+          "White": 391
+        }
+      },
+      {
+        "hole": 18,
+        "par": 4,
+        "si": 12,
+        "yards": {
+          "Black": 381,
+          "Gold": 366,
+          "Blue": 356,
+          "Red": 288,
+          "White": 277
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "algonquin"
+    ],
+    "name": "Algonquin Golf Club",
+    "city": "St. Louis, MO",
+    "par": 71,
+    "lat": 38.587556,
+    "lon": -90.376101,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=6205",
+      "https://api.golfcore.org/v1/courses/algonquin-gc"
+    ],
+    "tees": [
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 71.4,
+        "slope": 134,
+        "par": 71,
+        "yards": 6246
+      },
+      {
+        "name": "Blue/White",
+        "gender": "M",
+        "rating": 70.7,
+        "slope": 132,
+        "par": 71,
+        "yards": 6107
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 70.1,
+        "slope": 130,
+        "par": 71,
+        "yards": 5964
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 74.7,
+        "slope": 133,
+        "par": 72,
+        "yards": 5949
+      },
+      {
+        "name": "Red",
+        "gender": "M",
+        "rating": 67.5,
+        "slope": 126,
+        "par": 71,
+        "yards": 5411
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 71.7,
+        "slope": 130,
+        "par": 71,
+        "yards": 5402
+      },
+      {
+        "name": "District Combo",
+        "gender": "W",
+        "rating": 70.5,
+        "slope": 127,
+        "par": 71,
+        "yards": 5205
+      },
+      {
+        "name": "Ladies' Combo",
+        "gender": "W",
+        "rating": 70.0,
+        "slope": 128,
+        "par": 71,
+        "yards": 5134
+      },
+      {
+        "name": "Gold",
+        "gender": "M",
+        "rating": 63.8,
+        "slope": 112,
+        "par": 71,
+        "yards": 4815
+      },
+      {
+        "name": "Gold",
+        "gender": "W",
+        "rating": 68.7,
+        "slope": 122,
+        "par": 71,
+        "yards": 4815
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Blue": 416,
+          "Blue/White": 396,
+          "White": 396,
+          "Red": 344,
+          "Gold": 344,
+          "District Combo": 344,
+          "Ladies' Combo": 344
+        }
+      },
+      {
+        "hole": 2,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Blue": 414,
+          "Blue/White": 400,
+          "White": 400,
+          "Red": 377,
+          "Gold": 322,
+          "District Combo": 322,
+          "Ladies' Combo": 322
+        }
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "si": 3,
+        "yards": {
+          "Blue": 430,
+          "Blue/White": 409,
+          "White": 409,
+          "Red": 360,
+          "Gold": 336,
+          "District Combo": 360,
+          "Ladies' Combo": 336
+        }
+      },
+      {
+        "hole": 4,
+        "par": 5,
+        "si": 5,
+        "yards": {
+          "Blue": 521,
+          "Blue/White": 521,
+          "White": 500,
+          "Red": 457,
+          "Gold": 363,
+          "District Combo": 457,
+          "Ladies' Combo": 457
+        }
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "si": 15,
+        "yards": {
+          "Blue": 155,
+          "Blue/White": 155,
+          "White": 147,
+          "Red": 131,
+          "Gold": 105,
+          "District Combo": 131,
+          "Ladies' Combo": 131
+        }
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Blue": 381,
+          "Blue/White": 374,
+          "White": 374,
+          "Red": 333,
+          "Gold": 220,
+          "District Combo": 333,
+          "Ladies' Combo": 333
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 9,
+        "yards": {
+          "Blue": 361,
+          "Blue/White": 361,
+          "White": 350,
+          "Red": 320,
+          "Gold": 273,
+          "District Combo": 320,
+          "Ladies' Combo": 273
+        }
+      },
+      {
+        "hole": 8,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Blue": 178,
+          "Blue/White": 151,
+          "White": 151,
+          "Red": 138,
+          "Gold": 125,
+          "District Combo": 138,
+          "Ladies' Combo": 138
+        }
+      },
+      {
+        "hole": 9,
+        "par": 4,
+        "si": 11,
+        "yards": {
+          "Blue": 340,
+          "Blue/White": 340,
+          "White": 330,
+          "Red": 316,
+          "Gold": 309,
+          "District Combo": 316,
+          "Ladies' Combo": 316
+        }
+      },
+      {
+        "hole": 10,
+        "par": 5,
+        "si": 4,
+        "yards": {
+          "Blue": 460,
+          "Blue/White": 460,
+          "White": 440,
+          "Red": 385,
+          "Gold": 341,
+          "District Combo": 341,
+          "Ladies' Combo": 341
+        }
+      },
+      {
+        "hole": 11,
+        "par": 3,
+        "si": 8,
+        "yards": {
+          "Blue": 210,
+          "Blue/White": 185,
+          "White": 185,
+          "Red": 140,
+          "Gold": 128,
+          "District Combo": 140,
+          "Ladies' Combo": 140
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 12,
+        "yards": {
+          "Blue": 335,
+          "Blue/White": 335,
+          "White": 325,
+          "Red": 315,
+          "Gold": 280,
+          "District Combo": 280,
+          "Ladies' Combo": 280
+        }
+      },
+      {
+        "hole": 13,
+        "par": 3,
+        "si": 16,
+        "yards": {
+          "Blue": 215,
+          "Blue/White": 195,
+          "White": 195,
+          "Red": 165,
+          "Gold": 139,
+          "District Combo": 156,
+          "Ladies' Combo": 156
+        }
+      },
+      {
+        "hole": 14,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Blue": 339,
+          "Blue/White": 339,
+          "White": 320,
+          "Red": 297,
+          "Gold": 285,
+          "District Combo": 297,
+          "Ladies' Combo": 297
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 14,
+        "yards": {
+          "Blue": 314,
+          "Blue/White": 314,
+          "White": 295,
+          "Red": 282,
+          "Gold": 274,
+          "District Combo": 282,
+          "Ladies' Combo": 282
+        }
+      },
+      {
+        "hole": 16,
+        "par": 5,
+        "si": 2,
+        "yards": {
+          "Blue": 555,
+          "Blue/White": 555,
+          "White": 540,
+          "Red": 500,
+          "Gold": 437,
+          "District Combo": 437,
+          "Ladies' Combo": 437
+        }
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Blue": 142,
+          "Blue/White": 137,
+          "White": 137,
+          "Red": 121,
+          "Gold": 111,
+          "District Combo": 121,
+          "Ladies' Combo": 121
+        }
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "si": 6,
+        "yards": {
+          "Blue": 480,
+          "Blue/White": 480,
+          "White": 470,
+          "Red": 430,
+          "Gold": 423,
+          "District Combo": 430,
+          "Ladies' Combo": 430
+        }
+      }
+    ]
+  },
+  {
+    "match": [
+      "wolf hollow"
+    ],
+    "name": "Wolf Hollow Golf Club",
+    "city": "Labadie, MO",
+    "par": 71,
+    "lat": 38.508247,
+    "lon": -90.921736,
+    "sources": [
+      "https://ncrdb.usga.org/courseTeeInfo?CourseID=21018",
+      "https://api.golfcore.org/v1/courses/wolf-hollow-golf-club"
+    ],
+    "tees": [
+      {
+        "name": "Black",
+        "gender": "M",
+        "rating": 73.8,
+        "slope": 127,
+        "par": 71,
+        "yards": 6771
+      },
+      {
+        "name": "Blue",
+        "gender": "M",
+        "rating": 72.5,
+        "slope": 124,
+        "par": 71,
+        "yards": 6488
+      },
+      {
+        "name": "White",
+        "gender": "M",
+        "rating": 69.7,
+        "slope": 122,
+        "par": 71,
+        "yards": 5934
+      },
+      {
+        "name": "White",
+        "gender": "W",
+        "rating": 74.4,
+        "slope": 128,
+        "par": 71,
+        "yards": 5934
+      },
+      {
+        "name": "Gold",
+        "gender": "M",
+        "rating": 68.0,
+        "slope": 114,
+        "par": 71,
+        "yards": 5546
+      },
+      {
+        "name": "Gold",
+        "gender": "W",
+        "rating": 72.6,
+        "slope": 123,
+        "par": 71,
+        "yards": 5546
+      },
+      {
+        "name": "Red",
+        "gender": "W",
+        "rating": 68.7,
+        "slope": 116,
+        "par": 71,
+        "yards": 4913
+      }
+    ],
+    "checked": false,
+    "holes": [
+      {
+        "hole": 1,
+        "par": 4,
+        "si": 16,
+        "yards": {
+          "Black": 373,
+          "Blue": 358,
+          "White": 311,
+          "Gold": 294,
+          "Red": 254
+        }
+      },
+      {
+        "hole": 2,
+        "par": 5,
+        "si": 4,
+        "yards": {
+          "Black": 529,
+          "Blue": 518,
+          "White": 496,
+          "Gold": 482,
+          "Red": 440
+        }
+      },
+      {
+        "hole": 3,
+        "par": 4,
+        "si": 12,
+        "yards": {
+          "Black": 313,
+          "Blue": 295,
+          "White": 277,
+          "Gold": 259,
+          "Red": 202
+        }
+      },
+      {
+        "hole": 4,
+        "par": 4,
+        "si": 8,
+        "yards": {
+          "Black": 361,
+          "Blue": 344,
+          "White": 326,
+          "Gold": 308,
+          "Red": 274
+        }
+      },
+      {
+        "hole": 5,
+        "par": 3,
+        "si": 18,
+        "yards": {
+          "Black": 163,
+          "Blue": 154,
+          "White": 132,
+          "Gold": 118,
+          "Red": 104
+        }
+      },
+      {
+        "hole": 6,
+        "par": 4,
+        "si": 2,
+        "yards": {
+          "Black": 412,
+          "Blue": 408,
+          "White": 383,
+          "Gold": 372,
+          "Red": 330
+        }
+      },
+      {
+        "hole": 7,
+        "par": 4,
+        "si": 6,
+        "yards": {
+          "Black": 443,
+          "Blue": 426,
+          "White": 374,
+          "Gold": 353,
+          "Red": 315
+        }
+      },
+      {
+        "hole": 8,
+        "par": 4,
+        "si": 10,
+        "yards": {
+          "Black": 423,
+          "Blue": 398,
+          "White": 375,
+          "Gold": 368,
+          "Red": 328
+        }
+      },
+      {
+        "hole": 9,
+        "par": 3,
+        "si": 14,
+        "yards": {
+          "Black": 229,
+          "Blue": 208,
+          "White": 175,
+          "Gold": 125,
+          "Red": 117
+        }
+      },
+      {
+        "hole": 10,
+        "par": 4,
+        "si": 7,
+        "yards": {
+          "Black": 423,
+          "Blue": 408,
+          "White": 352,
+          "Gold": 342,
+          "Red": 278
+        }
+      },
+      {
+        "hole": 11,
+        "par": 5,
+        "si": 3,
+        "yards": {
+          "Black": 514,
+          "Blue": 493,
+          "White": 481,
+          "Gold": 468,
+          "Red": 445
+        }
+      },
+      {
+        "hole": 12,
+        "par": 4,
+        "si": 9,
+        "yards": {
+          "Black": 424,
+          "Blue": 411,
+          "White": 383,
+          "Gold": 351,
+          "Red": 301
+        }
+      },
+      {
+        "hole": 13,
+        "par": 4,
+        "si": 15,
+        "yards": {
+          "Black": 371,
+          "Blue": 347,
+          "White": 330,
+          "Gold": 285,
+          "Red": 277
+        }
+      },
+      {
+        "hole": 14,
+        "par": 3,
+        "si": 17,
+        "yards": {
+          "Black": 160,
+          "Blue": 160,
+          "White": 141,
+          "Gold": 121,
+          "Red": 102
+        }
+      },
+      {
+        "hole": 15,
+        "par": 4,
+        "si": 13,
+        "yards": {
+          "Black": 433,
+          "Blue": 417,
+          "White": 361,
+          "Gold": 361,
+          "Red": 290
+        }
+      },
+      {
+        "hole": 16,
+        "par": 4,
+        "si": 1,
+        "yards": {
+          "Black": 433,
+          "Blue": 428,
+          "White": 417,
+          "Gold": 364,
+          "Red": 330
+        }
+      },
+      {
+        "hole": 17,
+        "par": 3,
+        "si": 11,
+        "yards": {
+          "Black": 262,
+          "Blue": 226,
+          "White": 180,
+          "Gold": 135,
+          "Red": 124
+        }
+      },
+      {
+        "hole": 18,
+        "par": 5,
+        "si": 5,
+        "yards": {
+          "Black": 505,
+          "Blue": 489,
+          "White": 440,
+          "Gold": 440,
+          "Red": 402
+        }
+      }
+    ]
   }
 ]

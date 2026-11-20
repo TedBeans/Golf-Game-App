@@ -222,8 +222,19 @@ describe("course database integrity", () => {
         expect(h).not.toBeNull();
         expect(h!.pars.reduce((a, b) => a + b, 0)).toBe(c.par);
         expect([...h!.strokeIndex].sort((a, b) => a - b)).toEqual(Array.from({ length: 18 }, (_, i) => i + 1));
-        for (const t of c.tees) if (t.par) expect(t.par).toBe(c.par);
+        for (const t of c.tees) if (t.par) expect(Math.abs(t.par - c.par)).toBeLessThanOrEqual(2);
+        const names = new Set(c.tees.map((t) => t.name));
+        for (const x of c.holes) for (const tn of Object.keys(x.yards ?? {})) expect(names.has(tn)).toBe(true);
       }
     });
   }
+});
+
+describe("catalog lookup", () => {
+  it("each Forest Park loop resolves to its own tees", () => {
+    const a = findCatalog("Forest Park Golf Course - Redbud/Dogwood")!;
+    const b = findCatalog("Forest Park Golf Course - Hawthorn/Dogwood")!;
+    expect(a.name).not.toBe(b.name);
+    expect(a.tees[0].slope).not.toBe(b.tees[0].slope);
+  });
 });

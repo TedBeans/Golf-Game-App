@@ -13,7 +13,7 @@ import { money } from "@/lib/money";
 import { recapText } from "@/lib/share";
 import { CATALOG } from "@/lib/catalog";
 import GameEditor from "@/components/GameEditor";
-import { Avatar, Net, NumInput, Seg, useToast } from "@/components/ui";
+import { Avatar, Net, NumInput, Seg, useToast, ConfirmSheet } from "@/components/ui";
 
 type Tab = "hole" | "card" | "money" | "games";
 type Upd = (fn: (r: Round) => Round) => void;
@@ -202,6 +202,7 @@ function CardTab({ round, setHole }: { round: Round; setHole: (h: number) => voi
 function MoneyTab({ round, computed, upd }: { round: Round; computed: ReturnType<typeof computeRound>; upd: Upd }) {
   const router = useRouter();
   const { deleteRound } = useStore();
+  const [delOpen, setDelOpen] = useState(false);
   const toast = useToast();
   const name = (id: string) => round.players.find((p) => p.id === id)?.name ?? "?";
   const copy = async () => { try { await navigator.clipboard.writeText(recapText(round)); toast.show("Recap copied"); } catch { toast.show("Couldn't copy"); } };
@@ -248,9 +249,10 @@ function MoneyTab({ round, computed, upd }: { round: Round; computed: ReturnType
         {round.status === "final"
           ? <button className="btn ghost grow" onClick={() => upd((r) => ({ ...r, status: "active" }))}>Reopen round</button>
           : <button className="btn grow" onClick={() => { upd((r) => ({ ...r, status: "final" })); router.push("/ledger"); }}>Finish round</button>}
-        <button className="btn danger" onClick={() => { if (confirm("Delete this round and its money?")) { deleteRound(round.id); router.push("/"); } }}>Delete</button>
+        <button className="btn danger" onClick={() => setDelOpen(true)}>Delete</button>
       </div>
       {round.demo && <div className="small faint">This is a demo round, so it never counts toward your balances.</div>}
+      <ConfirmSheet open={delOpen} title="Delete this round?" body="The round and any money from it will be removed. This can't be undone." onConfirm={() => { deleteRound(round.id); router.push("/"); }} onClose={() => setDelOpen(false)} />
       {toast.node}
     </div>
   );

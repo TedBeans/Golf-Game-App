@@ -6,11 +6,14 @@ import { balances, nameMap, owes } from "@/lib/ledger";
 import { computeRound } from "@/lib/engine";
 import { demoRound } from "@/lib/demo";
 import { money } from "@/lib/money";
-import { Net } from "@/components/ui";
+import { useState } from "react";
+import { ConfirmSheet, Net } from "@/components/ui";
 
 export default function Home() {
   const router = useRouter();
-  const { state, ready, saveRound } = useStore();
+  const { state, ready, saveRound, deleteRound } = useStore();
+  const [del, setDel] = useState<string | null>(null);
+  const delRound = state.rounds.find((r) => r.id === del);
   if (!ready) return <div className="empty">Loading…</div>;
   const names = nameMap(state);
   const transfers = owes(state);
@@ -35,7 +38,7 @@ export default function Home() {
             {active.map((r) => {
               const { net } = computeRound(r);
               return (
-                <Link key={r.id} href={`/round/${r.id}`} className="card tap">
+                <div key={r.id} className="rcard"><Link href={`/round/${r.id}`} className="card tap">
                   <div className="row between">
                     <div style={{ fontWeight: 800, fontSize: 17 }}>{r.course.name || "Round"}{r.demo && <span className="pill" style={{ marginLeft: 8 }}>Demo</span>}</div>
                     <span className="pill live">Thru {holesIn(r)}</span>
@@ -44,6 +47,8 @@ export default function Home() {
                     {r.players.map((p) => <span key={p.id}><span className="sub">{p.name}</span> <Net v={net[p.id] ?? 0} /></span>)}
                   </div>
                 </Link>
+                <button className="trash" aria-label="Delete round" onClick={() => setDel(r.id)}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3" /></svg></button>
+              </div>
               );
             })}
           </div>
@@ -69,10 +74,12 @@ export default function Home() {
             {past.slice(0, 6).map((r) => {
               const { net } = computeRound(r);
               return (
-                <Link key={r.id} href={`/round/${r.id}`} className="card tap">
+                <div key={r.id} className="rcard"><Link href={`/round/${r.id}`} className="card tap">
                   <div className="row between"><b>{r.course.name}</b><span className="small faint">{r.date}</span></div>
                   <div className="row wrap small" style={{ marginTop: 8, gap: 14 }}>{r.players.map((p) => <span key={p.id}><span className="sub">{p.name}</span> <Net v={net[p.id] ?? 0} /></span>)}</div>
                 </Link>
+                <button className="trash" aria-label="Delete round" onClick={() => setDel(r.id)}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3" /></svg></button>
+              </div>
               );
             })}
           </div>
@@ -85,6 +92,7 @@ export default function Home() {
           <button className="btn ghost" onClick={tryDemo}>Try a demo round</button>
         </div>
       )}
+    <ConfirmSheet open={!!del} title="Delete this round?" body={delRound ? `${delRound.course.name || "This round"} and any money from it will be removed. This can't be undone.` : undefined} onConfirm={() => { if (del) deleteRound(del); setDel(null); }} onClose={() => setDel(null)} />
     </>
   );
 }

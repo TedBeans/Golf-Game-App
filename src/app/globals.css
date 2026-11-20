@@ -184,3 +184,7 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .elrow { background: var(--s2); border: 1px solid var(--line); border-radius: 14px; padding: 10px; } .elrow .picker { background: var(--s1); }
 
 .alert { background: #2a2108; border: 1px solid #5c4a12; border-radius: 14px; padding: 14px; } .alert b { color: var(--warn); font-size: 14px; } .alert p { color: var(--dim); font-size: 13px; margin-top: 4px; line-height: 1.4; }
+
+.btn.delete { background: var(--loss); color: #2a0610; }
+.rcard { position: relative; } .rcard .trash { position: absolute; right: 10px; bottom: 10px; width: 36px; height: 36px; border-radius: 10px; border: 0; background: transparent; color: var(--faint); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; } .rcard .trash:hover { color: var(--loss); background: var(--s2); }
+.rcard .row.wrap { padding-right: 38px; }

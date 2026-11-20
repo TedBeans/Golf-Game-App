@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Course } from "@/lib/types";
 import { blankCourse, DEFAULT_PARS, DEFAULT_SI, haversineMi, type NearbyCourse } from "@/lib/courses";
 import { totalPar } from "@/lib/handicap";
-import { allCatalog, findCatalog, holeData, searchCatalog, teeKey, teeLabel, type CatalogCourse } from "@/lib/tees";
+import { allCatalog, findCatalog, holeData, yardsFor, searchCatalog, teeKey, teeLabel, type CatalogCourse } from "@/lib/tees";
 import { Field, NumInput, Picker, Seg, type PickOption } from "./ui";
 
 const TEE_DOT: Record<string, string> = { black: "#18181b", gold: "#e4b43c", blue: "#3b82f6", white: "#f4f4f5", green: "#22a06b", red: "#ef4444", silver: "#a1a1aa", yellow: "#facc15", orange: "#fb923c", purple: "#a855f7" };
@@ -104,7 +104,7 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
     if (v === "__manual") { setManualTee(true); upd({ tees: known.tees, teePar: undefined }); return; }
     const t = known.tees.find((x) => teeKey(x) === v);
     setManualTee(false);
-    if (t) { const h = holeData(known); upd({ tees: known.tees, tee: teeLabel(t), slope: t.slope, rating: t.rating, teePar: t.par ?? known.par, ...(h ? { ...h, holesConfirmed: true } : {}) }); }
+    if (t) { const h = holeData(known); upd({ tees: known.tees, tee: teeLabel(t), slope: t.slope, rating: t.rating, teePar: t.par ?? known.par, yards: yardsFor(known, t.name), ...(h ? { ...h, holesConfirmed: true } : {}) }); }
   }
   const siOk = !course || new Set(course.strokeIndex.slice(0, 18)).size === 18;
 
