@@ -90,10 +90,26 @@ describe("Sixes + two-point game", () => {
     expect(res.net.a).toBe(0);
     expect(res.status).toMatch(/thru 4/);
   });
-  it("ties can split the point", () => {
-    const r = mk(FOUR, { a: fill(6, 4), b: fill(6, 4), c: fill(6, 4), d: fill(6, 4) });
-    const g = six(r); g.stake = 4; g.ties = "split"; r.games = [g];
-    expect(computeGame(r, g).net).toEqual({ a: 0, b: 0, c: 0, d: 0 });
+  it("a tied six carries into the next one", () => {
+    // holes 1-6 tie everything; holes 7-12 A&C (Mike-style rotate) -> a+c beat b+d
+    const sc = { a: [...fill(6, 4), ...fill(6, 3), ...fill(6, 4)], b: [...fill(6, 4), ...fill(6, 5), ...fill(6, 4)], c: [...fill(6, 4), ...fill(6, 3), ...fill(6, 4)], d: [...fill(6, 4), ...fill(6, 5), ...fill(6, 4)] };
+    const r = mk(FOUR, sc);
+    const g = six(r); g.stake = 1; g.ties = "push"; r.games = [g];
+    const plain = computeGame(r, g).net;
+    g.ties = "carry"; g.maxCarry = 0;
+    const carried = computeGame(r, g).net;
+    expect(sum(carried)).toBe(0);
+    // segment 2 pairs a&c v b&d (order a,b,c,d -> [0,2] v [1,3]); doubled by the carry
+    expect(carried.a).toBe(plain.a * 2);
+  });
+  it("max carry caps the multiplier", () => {
+    const sc = { a: [...fill(12, 4), ...fill(6, 3)], b: [...fill(12, 4), ...fill(6, 5)], c: [...fill(12, 4), ...fill(6, 5)], d: [...fill(12, 4), ...fill(6, 5)] };
+    const r = mk(FOUR, sc);
+    const g = six(r); g.stake = 1; g.ties = "carry"; r.games = [g];
+    g.maxCarry = 0; const unlimited = computeGame(r, g).net;
+    g.maxCarry = 2; const doubled = computeGame(r, g).net;
+    expect(Math.abs(unlimited.a)).toBeGreaterThan(Math.abs(doubled.a));
+    expect(sum(unlimited)).toBe(0);
   });
 });
 

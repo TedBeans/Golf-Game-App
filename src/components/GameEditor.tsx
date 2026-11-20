@@ -3,7 +3,7 @@ import type { Element, Game, MatchGame, RoundPlayer } from "@/lib/types";
 import { SCORING, fixedParts, fixedSegments, sixSegments } from "@/lib/catalog";
 import { range } from "@/lib/engine/ctx";
 import { uid } from "@/lib/id";
-import { Field, NumInput, Seg } from "./ui";
+import { Field, NumInput, Picker, Seg } from "./ui";
 
 type Props = { game: Game; players: RoundPlayer[]; holes: 9 | 18; onChange: (g: Game) => void; onRemove: () => void };
 
@@ -120,25 +120,37 @@ function MatchEditor({ g, players, holes, set }: { g: MatchGame; players: RoundP
         </div>
         <div className="stack8">
           {g.elements.map((e) => (
-            <div key={e.id} className="row" style={{ gap: 6 }}>
-              <select className="input" style={{ flex: 1.1 }} value={e.kind} onChange={(ev) => setEl(e.id, { kind: ev.target.value as Element["kind"] })}>
-                <option value="bestBall">Best ball</option><option value="combined">Combined</option>
-              </select>
-              <select className="input" style={{ flex: 1.1 }} value={e.method} onChange={(ev) => setEl(e.id, { method: ev.target.value as Element["method"] })}>
-                <option value="total">Total score</option><option value="holes">Holes won</option>
-              </select>
-              <div style={{ width: 62 }}><NumInput className="num" value={e.points} min={0} onChange={(n) => setEl(e.id, { points: n })} /></div>
-              <button className="btn quiet" aria-label="Remove element" onClick={() => set({ ...g, elements: g.elements.filter((x) => x.id !== e.id) })}>✕</button>
+            <div key={e.id} className="elrow">
+              <div className="row" style={{ gap: 8 }}>
+                <div style={{ flex: 1, minWidth: 0 }}><Picker title="Scoring" value={e.kind} onChange={(v) => setEl(e.id, { kind: v as Element["kind"] })} options={[{ value: "bestBall", label: "Best ball", sub: "Lower of the two partners' net scores" }, { value: "combined", label: "Combined", sub: "Both partners' net scores added" }]} /></div>
+                <div style={{ flex: 1, minWidth: 0 }}><Picker title="Counted by" value={e.method} onChange={(v) => setEl(e.id, { method: v as Element["method"] })} options={[{ value: "total", label: "Total score", sub: "Lowest total over the segment wins" }, { value: "holes", label: "Holes won", sub: "Most holes won takes the point" }]} /></div>
+              </div>
+              <div className="row" style={{ gap: 8, marginTop: 8 }}>
+                <span className="small faint">Worth</span>
+                <div style={{ width: 64 }}><NumInput className="num" value={e.points} min={0} onChange={(n) => setEl(e.id, { points: n })} /></div>
+                <span className="small faint grow">{e.points === 1 ? "point" : "points"}</span>
+                <button className="btn quiet sm" aria-label="Remove element" onClick={() => set({ ...g, elements: g.elements.filter((x) => x.id !== e.id) })}>Remove</button>
+              </div>
             </div>
           ))}
           <button className="btn ghost sm" onClick={() => set({ ...g, elements: [...g.elements, { id: uid(), kind: "bestBall", method: "total", points: 1 }] })}>+ Add scoring element</button>
-          <div className="small faint">Each element is worth the points on the right. Win it to take the points, tie and it pushes{g.ties === "split" ? " (split)" : ""}.</div>
+          <div className="small faint">Each element is worth the points you set. Win it to take them, a tie {g.ties === "carry" ? "carries its points into the next segment." : "pushes."}</div>
         </div>
       </Field>
       <div className="row" style={{ alignItems: "flex-end" }}>
         <div className="grow"><Field label="$ per point, per player"><NumInput prefix="$" value={g.stake} min={0} onChange={(n) => set({ ...g, stake: n })} /></Field></div>
-        <div className="grow"><Field label="Ties"><Seg value={g.ties} options={[{ value: "push", label: "Push" }, { value: "split", label: "Split" }]} onChange={(t) => set({ ...g, ties: t })} /></Field></div>
+        <div className="grow"><Field label="Ties"><Seg value={g.ties} options={[{ value: "push", label: "Push" }, { value: "carry", label: "Carry over" }]} onChange={(t) => set({ ...g, ties: t, maxCarry: t === "carry" ? g.maxCarry ?? 2 : g.maxCarry })} /></Field></div>
       </div>
+      {g.ties === "carry" && (
+        <Field label="Max carry-over">
+          <Picker title="Max carry-over" value={String(g.maxCarry ?? 0)} onChange={(v) => set({ ...g, maxCarry: Number(v) })} options={[
+            { value: "2", label: "Double", meta: "2×", sub: "A tie carries once" },
+            { value: "3", label: "Triple", meta: "3×", sub: "Up to two ties in a row" },
+            { value: "4", label: "Quadruple", meta: "4×", sub: "Up to three ties in a row" },
+            { value: "0", label: "No limit", meta: "∞", sub: "Keeps stacking until someone wins" },
+          ]} />
+        </Field>
+      )}
     </>
   );
 }
@@ -182,10 +194,7 @@ export default function GameEditor({ game: g, players, holes, onChange, onRemove
             <Field key={k} label={k === "teamA" ? "Team A" : "Team B"}>
               <div className="row">
                 {[0, 1].map((i) => (
-                  <select key={i} className="input" value={g[k][i] ?? ""} onChange={(e) => { const t = [...g[k]]; t[i] = e.target.value; set({ ...g, [k]: t.filter(Boolean) }); }}>
-                    <option value="">Pick</option>
-                    {players.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-                  </select>
+                  <Picker key={i} title="Pick player" placeholder="Pick" value={g[k][i] ?? ""} onChange={(v) => { const t = [...g[k]]; t[i] = v; set({ ...g, [k]: t.filter(Boolean) }); }} options={players.map((p) => ({ value: p.id, label: p.name }))} />
                 ))}
               </div>
             </Field>

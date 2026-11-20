@@ -47,7 +47,8 @@ export type MatchGame = {
   segments: Segment[];
   elements: Element[];
   stake: number; // $ per point, per player
-  ties: "push" | "split";
+  ties: "push" | "carry"; // carry: a tied element's points roll into the next segment (x2, x3...)
+  maxCarry?: number; // biggest multiplier a carry can build to (2 = double). 0 or unset = no limit
 };
 
 export type SkinsGame = { id: string; type: "skins"; name: string; playerIds: string[]; stake: number; carryover: boolean; holes: number[] };

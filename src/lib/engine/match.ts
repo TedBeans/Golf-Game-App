@@ -17,9 +17,9 @@ export function teamsFor(g: MatchGame, segIndex: number): { A: string[]; B: stri
 
 export const ELEMENT_LABEL: Record<Element["kind"], string> = { bestBall: "Best ball", combined: "Combined" };
 
-type ElementEval = { ptsA: number; ptsB: number; text: string };
+type ElementEval = { ptsA: number; ptsB: number; text: string; tie: boolean };
 
-function evalElement(c: Ctx, el: Element, A: string[], B: string[], holes: number[], ties: "push" | "split"): ElementEval {
+function evalElement(c: Ctx, el: Element, A: string[], B: string[], holes: number[], mult: number): ElementEval {
   const val = (team: string[], h: number) => {
     const s = team.map((id) => c.net(id, h)!);
     return el.kind === "bestBall" ? Math.min(...s) : s.reduce((x, y) => x + y, 0);
@@ -37,9 +37,10 @@ function evalElement(c: Ctx, el: Element, A: string[], B: string[], holes: numbe
     // for "holes" a bigger count wins, so flip to the same lower-wins comparison below
     a = -a; b = -b;
   }
-  if (a < b) return { ptsA: el.points, ptsB: 0, text };
-  if (b < a) return { ptsA: 0, ptsB: el.points, text };
-  return ties === "split" ? { ptsA: el.points / 2, ptsB: el.points / 2, text } : { ptsA: 0, ptsB: 0, text };
+  const pts = el.points * mult;
+  if (a < b) return { ptsA: pts, ptsB: 0, text, tie: false };
+  if (b < a) return { ptsA: 0, ptsB: pts, text, tie: false };
+  return { ptsA: 0, ptsB: 0, text, tie: true };
 }
 
 export function match(round: Round, g: MatchGame): GameResult {
@@ -60,11 +61,16 @@ export function match(round: Round, g: MatchGame): GameResult {
   if (!g.elements.length) warnings.push("Add at least one scoring element.");
 
   let banked: Record<string, number> = {};
+  // Carry-over: a tied element rolls into the next segment as a bigger multiplier (capped by maxCarry).
+  const cap = g.maxCarry && g.maxCarry > 1 ? g.maxCarry : Infinity;
+  let carry: number[] = g.elements.map(() => 0);
+  let prevTo = 0;
   let liveNote = "";
   if (valid && g.elements.length) {
     g.segments.forEach((seg, si) => {
       const holes = range(Math.min(seg.to, round.holes) - seg.from).map((i) => seg.from + i).filter((h) => h < round.holes);
       if (!holes.length) return;
+      if (seg.from < prevTo) carry = carry.map(() => 0); // overlapping segments (e.g. a Nassau's overall bet) don't carry
       const { A, B } = teamsFor(g, si);
       const players = [...A, ...B];
       const finished = holes.filter((h) => c.done(players, h));
@@ -72,11 +78,15 @@ export function match(round: Round, g: MatchGame): GameResult {
       const complete = finished.length === holes.length;
       let pa = 0, pb = 0;
       const texts: string[] = [];
-      for (const el of g.elements) {
-        const r = evalElement(c, el, A, B, finished, g.ties);
+      const nextCarry = [...carry];
+      g.elements.forEach((el, ei) => {
+        const mult = g.ties === "carry" ? 1 + carry[ei] : 1;
+        const r = evalElement(c, el, A, B, finished, mult);
         pa += r.ptsA; pb += r.ptsB;
-        texts.push(r.text);
-      }
+        texts.push(r.text + (mult > 1 ? ` ×${mult}` : "") + (r.tie && g.ties === "carry" && complete ? " · tied, carries" : ""));
+        if (complete && g.ties === "carry") nextCarry[ei] = r.tie ? Math.min(carry[ei] + 1, cap - 1) : 0;
+      });
+      if (complete) { carry = nextCarry; prevTo = seg.to; }
       const margin = cents(pa - pb);
       if (complete) {
         for (const id of A) net[id] = cents(net[id] + margin * g.stake);
