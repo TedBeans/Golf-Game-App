@@ -157,7 +157,8 @@ export default function NewRound() {
           <div className="sec" style={{ marginTop: 22 }}>{games.length ? "Add another game" : "Pick your games"}<span>tap to add</span></div>
           <div className="tiles">
             {CATALOG.map((c) => {
-              const n = games.filter((g) => (g as unknown as { catalogKey?: string }).catalogKey === c.key).length;
+              const nm = c.create({ players, holes }).name;
+              const n = games.filter((g) => g.name === nm).length;
               return (
                 <button key={c.key} className={"tile" + (n ? " hot" : "")} onClick={() => setGames((g) => [...g, c.create({ players, holes }) as unknown as Game])}>
                   {n > 0 && <span className="badge">{n}</span>}
