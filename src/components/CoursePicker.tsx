@@ -4,8 +4,9 @@ import type { Course } from "@/lib/types";
 import { blankCourse, DEFAULT_PARS, DEFAULT_SI, haversineMi, type NearbyCourse } from "@/lib/courses";
 import { totalPar } from "@/lib/handicap";
 import { allCatalog, findCatalog, searchCatalog, teeKey, teeLabel, type CatalogCourse } from "@/lib/tees";
-import { Field, NumInput, Seg } from "./ui";
+import { Field, NumInput, Picker, Seg, type PickOption } from "./ui";
 
+const TEE_DOT: Record<string, string> = { black: "#18181b", gold: "#e4b43c", blue: "#3b82f6", white: "#f4f4f5", green: "#22a06b", red: "#ef4444", silver: "#a1a1aa", yellow: "#facc15", orange: "#fb923c", purple: "#a855f7" };
 type Props = { course: Course | null; holes: 9 | 18; onCourse: (c: Course) => void; onHoles: (h: 9 | 18) => void };
 
 export default function CoursePicker({ course, holes, onCourse, onHoles }: Props) {
@@ -93,6 +94,10 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
   const known = useMemo(() => findCatalog(course?.name), [course?.name]);
   const [manualTee, setManualTee] = useState(false);
   const teeValue = manualTee ? "__manual" : known?.tees.find((t) => teeLabel(t) === course?.tee && t.slope === course?.slope) ? teeKey(known.tees.find((t) => teeLabel(t) === course?.tee && t.slope === course?.slope)!) : "";
+  const teeOptions: PickOption[] = known ? [
+    ...[...known.tees].sort((a, b) => Number(a.gender === "W") - Number(b.gender === "W")).map((t) => ({ value: teeKey(t), label: teeLabel(t).replace(" (W)", ""), meta: `${t.rating} / ${t.slope}`, sub: t.yards ? `${t.yards.toLocaleString()} yds` : undefined, dot: TEE_DOT[t.name.toLowerCase()] ?? "#71717a", group: t.gender === "W" ? "Women's tees" : "Men's tees" })),
+    { value: "__manual", label: "Other", sub: "Enter slope and rating yourself", group: "Not listed" },
+  ] : [];
   function chooseTee(v: string) {
     if (!known) return;
     if (v === "__manual") { setManualTee(true); upd({ tees: known.tees, teePar: undefined }); return; }
@@ -107,9 +112,7 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
       <div className="card">
         <div className="row">
           <button className="btn grow" onClick={nearMe} disabled={busy}>{busy ? "Searching…" : "Courses near me"}</button>
-          <select className="input" style={{ width: 112 }} value={radius} onChange={(e) => setRadius(e.target.value)}>
-            {["10", "25", "50"].map((r) => <option key={r} value={r}>{r} mi</option>)}
-          </select>
+          <Picker compact title="Search radius" value={radius} onChange={setRadius} options={["10", "25", "50"].map((r) => ({ value: r, label: `${r} mi` }))} />
         </div>
         <div className="row" style={{ marginTop: 10 }}>
           <input className="input" placeholder="City or ZIP" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === "Enter" && q.trim() && search({ q })} />
@@ -156,11 +159,7 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
           {known && !manualTee ? (
             <>
               <Field label="Tees">
-                <select className="input" value={teeValue} onChange={(e) => chooseTee(e.target.value)}>
-                  <option value="" disabled>Choose tees</option>
-                  {known.tees.map((t) => <option key={teeKey(t)} value={teeKey(t)}>{teeLabel(t)} · {t.rating} / {t.slope}{t.yards ? ` · ${t.yards.toLocaleString()} yds` : ""}</option>)}
-                  <option value="__manual">Other (enter manually)</option>
-                </select>
+                <Picker title="Choose tees" placeholder="Choose tees" value={teeValue} onChange={chooseTee} options={teeOptions} />
               </Field>
               {(() => { const t = known.tees.find((x) => teeKey(x) === teeValue); return t?.conflicts?.length ? <div className="warn" style={{ marginTop: 8 }}>Sources disagree on this tee: {t.conflicts.join(" · ")}</div> : null; })()}
               <div className="small faint" style={{ marginTop: 8 }}>Rating / slope for each tee are filled in for you.{known.checked ? "" : " Unverified, so check them against the scorecard."}</div>

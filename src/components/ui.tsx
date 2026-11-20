@@ -62,3 +62,57 @@ export function useToast() {
   useEffect(() => { if (!msg) return; const t = setTimeout(() => setMsg(""), 1800); return () => clearTimeout(t); }, [msg]);
   return { show: setMsg, node: msg ? <div className="toast">{msg}</div> : null };
 }
+
+
+export type PickOption = { value: string; label: string; meta?: string; sub?: string; dot?: string; group?: string };
+
+/** Themed replacement for <select>: a trigger plus a bottom sheet. */
+export function Picker({ value, options, onChange, placeholder = "Choose", title, compact = false }: {
+  value: string; options: PickOption[]; onChange: (v: string) => void; placeholder?: string; title?: string; compact?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow; document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prev; };
+  }, [open]);
+  const cur = options.find((o) => o.value === value);
+  let lastGroup: string | undefined;
+  return (
+    <>
+      <button type="button" className={"picker" + (compact ? " compact" : "") + (cur ? "" : " empty")} onClick={() => setOpen(true)} aria-haspopup="listbox" aria-expanded={open}>
+        {cur?.dot && <i className="pdot" style={{ background: cur.dot }} />}
+        <span className="plabel">{cur ? cur.label : placeholder}</span>
+        {cur?.meta && !compact && <span className="pmeta">{cur.meta}</span>}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+      </button>
+      {open && (
+        <div className="sheet-wrap" onClick={() => setOpen(false)}>
+          <div className="sheet" role="listbox" onClick={(e) => e.stopPropagation()}>
+            <div className="sheet-grip" />
+            {title && <div className="sheet-title">{title}</div>}
+            <div className="sheet-list">
+              {options.map((o) => {
+                const head = o.group !== lastGroup && o.group ? o.group : null;
+                lastGroup = o.group;
+                return (
+                  <div key={o.value}>
+                    {head && <div className="sheet-group">{head}</div>}
+                    <button type="button" role="option" aria-selected={o.value === value} className={"opt" + (o.value === value ? " on" : "")} onClick={() => { onChange(o.value); setOpen(false); }}>
+                      {o.dot !== undefined && <i className="pdot" style={{ background: o.dot }} />}
+                      <span className="grow"><span className="olabel">{o.label}</span>{o.sub && <span className="osub">{o.sub}</span>}</span>
+                      {o.meta && <span className="ometa">{o.meta}</span>}
+                      <svg className="ocheck" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7" /></svg>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
