@@ -1,13 +1,12 @@
 "use client";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useStore } from "@/lib/store";
 import { uid } from "@/lib/id";
 import type { Course, Game, Round, RoundPlayer } from "@/lib/types";
 import CoursePicker from "@/components/CoursePicker";
 import GameEditor from "@/components/GameEditor";
-import { Field, NumInput } from "@/components/ui";
+import { NumInput } from "@/components/ui";
 import { CATALOG } from "@/lib/catalog";
 import { courseHandicaps, playingHandicaps } from "@/lib/handicap";
 import { range } from "@/lib/engine/ctx";
@@ -69,48 +68,58 @@ export default function NewRound() {
     router.push(`/round/${round.id}`);
   };
 
+  const HEAD = [
+    ["Who's playing?", "Add everyone and their handicap index."],
+    ["Where are you playing?", "Search by name, or find courses near you."],
+    ["What's the action?", "Everyone plays off the low man."],
+  ];
+  const unpicked = roster.filter((p) => !picked.includes(p.id));
+  const goBack = () => (step === 0 ? router.push("/") : setStep(step - 1));
+  const label = step === 0 ? (players.length < 2 ? (players.length === 1 ? "Add one more player" : "Add at least 2 players") : `Continue with ${players.length} players`) : step === 1 ? (canNext ? "Continue" : "Pick a course") : "Start round";
+  const summary = step === 0 ? "" : step === 1 ? `${players.length} players` : `${players.length} players · ${course?.name || "Course"}${course?.tee ? " · " + course.tee : ""} · ${games.length} game${games.length === 1 ? "" : "s"}`;
+
   return (
     <>
-      <div className="top"><Link href="/" className="brand">PRESS<i>.</i></Link><Link href="/" className="btn quiet sm">Cancel</Link></div>
-      <h1 className="title" style={{ marginBottom: 18 }}>New round</h1>
-      <div className="steps">
-        {STEPS.map((s, i) => <button key={s} className={(i === step ? "on " : "") + (i < step ? "done" : "")} onClick={() => (i <= step || canNext) && setStep(i)}>{s}</button>)}
+      <div className="wiz-top">
+        <button className="wiz-back" onClick={goBack} aria-label="Back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M15 6l-6 6 6 6" /></svg></button>
+        <div className="wiz-bar">{STEPS.map((s, i) => <i key={s} className={i <= step ? "on" : ""} />)}</div>
+        <span className="wiz-count">{step + 1} / 3</span>
       </div>
+      <h1 className="wiz-h1">{HEAD[step][0]}</h1>
+      <div className="wiz-sub">{HEAD[step][1]}</div>
 
       {step === 0 && (
-        <div className="stack">
-          {roster.length > 0 && (
-            <div className="card">
-              <div className="label">Your players</div>
-              <div className="row wrap">{roster.map((p) => <button key={p.id} className={"chip" + (picked.includes(p.id) ? " on" : "")} onClick={() => toggle(p.id)}>{p.name}</button>)}</div>
-            </div>
-          )}
-          <div className="card">
-            <div className="label">Add a player</div>
-            <div className="row">
-              <input className="input" placeholder="Name" value={nName} onChange={(e) => setNName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && quickAdd()} />
-              <div style={{ width: 96 }}><NumInput className="num" placeholder="Index" value={nIdx} onChange={setNIdx} /></div>
-              <button className="btn ghost" onClick={quickAdd} disabled={!nName.trim()}>Add</button>
-            </div>
+        <div>
+          <div className="addbar">
+            <input className="nm" placeholder="Player name" value={nName} onChange={(e) => setNName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && quickAdd()} />
+            <input className="ix" inputMode="decimal" placeholder="Index" value={nIdx ?? ""} onChange={(e) => { const v = e.target.value; setNIdx(v === "" || isNaN(parseFloat(v)) ? undefined : parseFloat(v)); }} onKeyDown={(e) => e.key === "Enter" && quickAdd()} />
+            <button className="go" onClick={quickAdd} disabled={!nName.trim()} aria-label="Add player">+</button>
           </div>
+
+          {unpicked.length > 0 && (
+            <>
+              <div className="sec">Your players<span>tap to add</span></div>
+              <div className="row wrap" style={{ gap: 8 }}>{unpicked.map((p) => <button key={p.id} className="chip add" onClick={() => toggle(p.id)}>{p.name}<span className="faint" style={{ marginLeft: 8, fontWeight: 500 }}>{p.index}</span></button>)}</div>
+            </>
+          )}
+
           {players.length > 0 && (
-            <div className="card">
-              <div className="row between" style={{ marginBottom: 4 }}><div className="label" style={{ margin: 0 }}>Playing today</div><div className="small faint">Order sets Wolf and Sixes</div></div>
-              <div className="divide">
+            <>
+              <div className="sec">Playing today<span>order sets Wolf and Sixes</span></div>
+              <div className="plist divide">
                 {players.map((p, i) => (
                   <div key={p.id} className="prow">
                     <span className="avatar">{i + 1}</span>
                     <div className="grow" style={{ fontWeight: 700 }}>{p.name}</div>
-                    <div style={{ width: 84 }}><NumInput className="num" value={p.index} onChange={(n) => updatePlayer({ id: p.id, name: p.name, index: n })} /></div>
-                    <button className="btn quiet sm" onClick={() => move(p.id, -1)} disabled={i === 0}>↑</button>
-                    <button className="btn quiet sm" onClick={() => move(p.id, 1)} disabled={i === players.length - 1}>↓</button>
+                    <div className="ix2"><NumInput className="num" value={p.index} onChange={(n) => updatePlayer({ id: p.id, name: p.name, index: n })} /></div>
+                    <button className="icon-btn" onClick={() => move(p.id, -1)} disabled={i === 0} aria-label="Move up">↑</button>
+                    <button className="icon-btn" onClick={() => move(p.id, 1)} disabled={i === players.length - 1} aria-label="Move down">↓</button>
+                    <button className="icon-btn" onClick={() => toggle(p.id)} aria-label={`Remove ${p.name}`}>✕</button>
                   </div>
                 ))}
               </div>
-              <div className="small faint" style={{ marginTop: 8 }}>Handicap index. Everyone plays off the low man, so the best player plays to zero.</div>
-            </div>
+            </>
           )}
-          {roster.length === 0 && players.length === 0 && <div className="empty">Add the people you're playing with.</div>}
         </div>
       )}
 
@@ -118,9 +127,14 @@ export default function NewRound() {
 
       {step === 2 && (
         <div className="stack">
-          <div className="card">
-            <div className="row between" style={{ marginBottom: 6 }}><div className="label" style={{ margin: 0 }}>Strokes today</div><span className="pill">Off the low man</span></div>
-            <table className="tbl">
+          <details className="card acc" style={{ padding: "14px 16px" }}>
+            <summary>
+              <div className="row between"><span className="label" style={{ margin: 0 }}>Strokes today</span><span className="small faint">Adjust ▾</span></div>
+              <div className="strokes" style={{ marginTop: 10 }}>
+                {players.map((p) => <span key={p.id} className={"s" + ((ph[p.id] ?? 0) === 0 ? " zero" : "")}>{p.name}<b>{(ph[p.id] ?? 0) === 0 ? "scratch" : `+${ph[p.id]}`}</b></span>)}
+              </div>
+            </summary>
+            <table className="tbl" style={{ marginTop: 12 }}>
               <thead><tr><th>Player</th><th className="c">Index</th><th className="c">Course hcp</th><th className="c">Strokes</th></tr></thead>
               <tbody>
                 {players.map((p) => (
@@ -134,33 +148,32 @@ export default function NewRound() {
               </tbody>
             </table>
             <div className="small faint" style={{ marginTop: 8 }}>Edit a course handicap if someone plays to a different number today.</div>
-          </div>
+          </details>
 
           {games.map((g) => (
             <GameEditor key={g.id} game={g} players={players} holes={holes} onChange={(ng) => setGames((c) => c.map((x) => (x.id === g.id ? ng : x)))} onRemove={() => setGames((c) => c.filter((x) => x.id !== g.id))} />
           ))}
 
-          <div>
-            <div className="h2" style={{ marginTop: 6 }}>Add a game</div>
-            <div className="card divide" style={{ padding: "4px 16px" }}>
-              {CATALOG.map((c) => (
-                <button key={c.key} className="catalog" onClick={() => setGames((g) => [...g, c.create({ players, holes })])}>
-                  <span className="plus">+</span>
-                  <div className="grow"><div style={{ fontWeight: 700 }}>{c.title} <span className="faint small" style={{ fontWeight: 600 }}> · {c.meta}</span></div><div className="small sub">{c.blurb}</div></div>
+          <div className="sec" style={{ marginTop: 22 }}>{games.length ? "Add another game" : "Pick your games"}<span>tap to add</span></div>
+          <div className="tiles">
+            {CATALOG.map((c) => {
+              const n = games.filter((g) => (g as unknown as { catalogKey?: string }).catalogKey === c.key).length;
+              return (
+                <button key={c.key} className={"tile" + (n ? " hot" : "")} onClick={() => setGames((g) => [...g, c.create({ players, holes }) as unknown as Game])}>
+                  {n > 0 && <span className="badge">{n}</span>}
+                  <b>{c.title}</b><span className="tm">{c.meta}</span><p>{c.blurb}</p>
                 </button>
-              ))}
-            </div>
-            {games.length === 0 && <div className="small faint" style={{ marginTop: 8 }}>No games? You can still keep score, or add games later during the round.</div>}
+              );
+            })}
           </div>
+          {games.length === 0 && <div className="small faint" style={{ marginTop: 12 }}>No games? You can still keep score, or add games during the round.</div>}
         </div>
       )}
 
-      <div className="footbar"><div className="in">
-        {step > 0 && <button className="btn ghost" onClick={() => setStep(step - 1)}>Back</button>}
-        {step < 2 ? <button className="btn grow" disabled={!canNext} onClick={() => setStep(step + 1)}>{step === 0 ? (players.length < 2 ? "Pick at least 2 players" : "Course") : "Games"}</button>
-          : <button className="btn accent grow" disabled={!canNext} onClick={start}>Start round</button>}
+      <div className="dock"><div className="in">
+        {summary && <div className="note">{summary}</div>}
+        <button className={"btn" + (step === 2 ? " accent" : "")} disabled={!canNext} onClick={step < 2 ? () => setStep(step + 1) : start}>{label}</button>
       </div></div>
-      <div style={{ height: 70 }} />
     </>
   );
 }

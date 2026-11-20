@@ -107,69 +107,70 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
   }
   const siOk = !course || new Set(course.strokeIndex.slice(0, 18)).size === 18;
 
+  const hasName = !!course && course.name.trim().length > 0;
+  const [cityMode, setCityMode] = useState(false);
   return (
-    <div className="stack">
-      <div className="card">
-        <div className="row">
-          <button className="btn grow" onClick={nearMe} disabled={busy}>{busy ? "Searching…" : "Courses near me"}</button>
-          <Picker compact title="Search radius" value={radius} onChange={setRadius} options={["10", "25", "50"].map((r) => ({ value: r, label: `${r} mi` }))} />
-        </div>
-        <div className="row" style={{ marginTop: 10 }}>
-          <input className="input" placeholder="City or ZIP" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === "Enter" && q.trim() && search({ q })} />
-          <button className="btn ghost" disabled={busy || !q.trim()} onClick={() => search({ q })}>Search</button>
-        </div>
-        {err && <div className="warn" style={{ marginTop: 10 }}>{err}</div>}
-        {place && <div className="small faint" style={{ marginTop: 8 }}>Near {place}</div>}
-        {list && list.length > 0 && (
-          <div className="divide" style={{ marginTop: 10, maxHeight: 320, overflowY: "auto" }}>
-            {list.map((c) => (
-              <button key={c.key} className="catalog" onClick={() => pick(c)}>
-                <div className="grow"><div style={{ fontWeight: 700 }}>{c.name}</div><div className="small faint">{c.city ? `${c.city} · ` : ""}{c.distanceMi} mi</div></div>
-                <span className={"pill" + (course?.id === c.key ? " live" : "")}>{course?.id === c.key ? "Selected" : "Select"}</span>
-              </button>
-            ))}
-          </div>
-        )}
+    <div>
+      <div className="searchbox">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+        <input className="input" value={course?.name ?? ""} placeholder="Search for a course" autoComplete="off" autoFocus
+          onFocus={() => { setTyping(true); setLocal(searchCatalog(course?.name ?? "")); }} onBlur={() => setTimeout(() => setTyping(false), 150)} onChange={(e) => typeName(e.target.value)} />
       </div>
 
-      {!course && (
-        <button className="btn ghost block" onClick={() => onCourse(blankCourse(""))}>Enter a course manually</button>
+      {typing && (local.length > 0 || sug.length > 0) && (
+        <div className="results divide">
+          {local.map((k) => (
+            <button key={k.name} className="catalog" onMouseDown={(e) => e.preventDefault()} onClick={() => { pickKnown(k); setTyping(false); }}>
+              <div className="grow"><div style={{ fontWeight: 700 }}>{k.name}</div><div className="small faint">{k.city}</div></div>
+              <span className="pill live">Tees ready</span>
+            </button>
+          ))}
+          {sug.map((c) => (
+            <button key={c.key} className="catalog" onMouseDown={(e) => e.preventDefault()} onClick={() => { setSug([]); setTyping(false); pick(c); }}>
+              <div className="grow"><div style={{ fontWeight: 700 }}>{c.name}</div><div className="small faint">{c.city}</div></div>
+            </button>
+          ))}
+        </div>
       )}
 
-      {course && (
-        <div className="card">
-          <Field label="Course">
-            <input className="input" value={course.name} placeholder="Start typing a course name" autoComplete="off" onFocus={() => { setTyping(true); setLocal(searchCatalog(course.name)); }} onBlur={() => setTimeout(() => setTyping(false), 150)} onChange={(e) => typeName(e.target.value)} />
-          </Field>
-          {typing && (local.length > 0 || sug.length > 0) && (
-            <div className="divide" style={{ marginBottom: 10, maxHeight: 240, overflowY: "auto" }}>
-              {local.map((k) => (
-                <button key={k.name} className="catalog" onMouseDown={(e) => e.preventDefault()} onClick={() => { pickKnown(k); setTyping(false); }}>
-                  <div className="grow"><div style={{ fontWeight: 700 }}>{k.name}</div><div className="small faint">{k.city}</div></div>
-                  <span className="pill live">Tees ready</span>
-                </button>
-              ))}
-              {sug.map((c) => (
-                <button key={c.key} className="catalog" onMouseDown={(e) => e.preventDefault()} onClick={() => { setSug([]); setTyping(false); pick(c); }}>
-                  <div className="grow"><div style={{ fontWeight: 700 }}>{c.name}</div><div className="small faint">{c.city}</div></div>
-                </button>
-              ))}
-            </div>
-          )}
+      <div className="tools">
+        <button className="chip" onClick={nearMe} disabled={busy}>{busy ? "Searching…" : "◎  Near me"}</button>
+        <Picker compact title="Search radius" value={radius} onChange={setRadius} options={["10", "25", "50"].map((r) => ({ value: r, label: `${r} mi` }))} />
+        <button className="chip" onClick={() => setCityMode((v) => !v)}>City or ZIP</button>
+      </div>
+      {cityMode && (
+        <div className="row" style={{ marginTop: 10 }}>
+          <input className="input" placeholder="City or ZIP" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === "Enter" && q.trim() && search({ q })} />
+          <button className="btn ghost" disabled={busy || !q.trim()} onClick={() => search({ q })}>Go</button>
+        </div>
+      )}
+      {err && <div className="warn" style={{ marginTop: 10 }}>{err}</div>}
+      {place && <div className="small faint" style={{ marginTop: 8 }}>Near {place}</div>}
+      {list && list.length > 0 && (
+        <div className="results divide">
+          {list.map((c) => (
+            <button key={c.key} className="catalog" onClick={() => pick(c)}>
+              <div className="grow"><div style={{ fontWeight: 700 }}>{c.name}</div><div className="small faint">{c.city ? `${c.city} · ` : ""}{c.distanceMi} mi</div></div>
+              <span className={"pill" + (course?.id === c.key ? " live" : "")}>{course?.id === c.key ? "Selected" : "Select"}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {hasName && course && (
+        <div className="card" style={{ marginTop: 18 }}>
+          <div style={{ fontWeight: 800, fontSize: 18, letterSpacing: "-.02em" }}>{course.name}</div>
+          {course.city && <div className="small faint" style={{ marginBottom: 12 }}>{course.city}</div>}
           {known && !manualTee ? (
-            <>
-              <Field label="Tees">
-                <Picker title="Choose tees" placeholder="Choose tees" value={teeValue} onChange={chooseTee} options={teeOptions} />
-              </Field>
-              {(() => { const t = known.tees.find((x) => teeKey(x) === teeValue); return t?.conflicts?.length ? <div className="warn" style={{ marginTop: 8 }}>Sources disagree on this tee: {t.conflicts.join(" · ")}</div> : null; })()}
-              <div className="small faint" style={{ marginTop: 8 }}>Rating / slope for each tee are filled in for you.{known.checked ? "" : " Unverified, so check them against the scorecard."}</div>
-            </>
+            <Field label="Tees">
+              <Picker title="Choose tees" placeholder="Choose tees" value={teeValue} onChange={chooseTee} options={teeOptions} />
+            </Field>
           ) : (
             <>
               <div className="row" style={{ alignItems: "flex-end" }}>
                 <div className="grow"><Field label="Tees"><input className="input" value={course.tee ?? ""} placeholder="Blue" onChange={(e) => upd({ tee: e.target.value })} /></Field></div>
-                <div style={{ width: 92 }}><Field label="Slope"><NumInput className="num" value={course.slope} placeholder="113" onChange={(n) => upd({ slope: n })} /></Field></div>
-                <div style={{ width: 92 }}><Field label="Rating"><NumInput className="num" value={course.rating} placeholder="72.0" onChange={(n) => upd({ rating: n })} /></Field></div>
+                <div style={{ width: 84 }}><Field label="Slope"><NumInput className="num" value={course.slope} placeholder="113" onChange={(n) => upd({ slope: n })} /></Field></div>
+                <div style={{ width: 84 }}><Field label="Rating"><NumInput className="num" value={course.rating} placeholder="72.0" onChange={(n) => upd({ rating: n })} /></Field></div>
               </div>
               <div className="small faint" style={{ marginTop: 8 }}>Slope and rating turn each player's index into a course handicap. Leave them blank to use the index as is.</div>
               {known && <button className="btn quiet sm" style={{ marginTop: 8 }} onClick={() => setManualTee(false)}>Pick from known tees</button>}
@@ -177,7 +178,7 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
           )}
           <Field label="Holes"><Seg value={String(holes)} options={[{ value: "18", label: "18 holes" }, { value: "9", label: "9 holes" }]} onChange={(v) => onHoles(v === "9" ? 9 : 18)} /></Field>
           <div className="row between" style={{ marginTop: 14 }}>
-            <div className="small sub">Par {totalPar(course.pars, holes)} · {course.parsFromMap ? "pars from map data" : "default pars, check them"}</div>
+            <div className="small sub">Par {course.teePar ?? totalPar(course.pars, holes)}{course.parsFromMap ? " · pars from map data" : course.teePar ? "" : " · default pars, check them"}</div>
             <button className="btn ghost sm" onClick={() => setEdit((e) => !e)}>{edit ? "Done" : "Edit holes"}</button>
           </div>
           {edit && (

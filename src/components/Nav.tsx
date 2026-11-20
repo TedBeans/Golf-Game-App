@@ -12,6 +12,7 @@ const items = [
 export default function Nav() {
   const path = usePathname();
   const on = (h: string) => (h === "/" ? path === "/" || path.startsWith("/new") || path.startsWith("/round") : path.startsWith(h));
+  if (path.startsWith("/new")) return null;
   return (
     <nav className="nav"><div className="in">
       {items.map(({ href, label, Icon }) => (
