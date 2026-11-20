@@ -13,3 +13,16 @@ export function findCatalog(name?: string): CatalogCourse | null {
   if (!n) return null;
   return (data as CatalogCourse[]).find((c) => c.match.some((m) => n.includes(norm(m)))) ?? null;
 }
+
+export const allCatalog = () => data as CatalogCourse[];
+
+/** Instant type-ahead over the bundled courses. */
+export function searchCatalog(q: string): CatalogCourse[] {
+  const n = norm(q);
+  if (n.length < 2) return [];
+  const words = n.split(" ");
+  return allCatalog().filter((c) => {
+    const hay = norm([c.name, c.city ?? "", ...c.match].join(" "));
+    return words.every((w) => hay.includes(w));
+  });
+}

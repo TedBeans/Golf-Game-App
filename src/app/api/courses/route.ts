@@ -7,22 +7,19 @@ const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.k
 const UA = "golf-game-app/0.1 (personal golf betting tracker)";
 
 async function overpass(query: string) {
-  let lastErr: unknown;
-  for (const url of OVERPASS) {
-    try {
+  // Ask every mirror at once and take the first good answer (they are often slow or down one at a time).
+  return Promise.any(
+    OVERPASS.map(async (url) => {
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": UA },
         body: "data=" + encodeURIComponent(query),
-        signal: AbortSignal.timeout(20000),
+        signal: AbortSignal.timeout(12000),
       });
       if (!res.ok) throw new Error(`Overpass ${res.status}`);
-      return await res.json();
-    } catch (e) {
-      lastErr = e;
-    }
-  }
-  throw lastErr ?? new Error("Overpass unavailable");
+      return res.json();
+    }),
+  );
 }
 
 /** Find golf courses near a point (GET ?lat=&lon=&radius=miles) or near a place name (GET ?q=). */
@@ -33,6 +30,29 @@ export async function GET(req: Request) {
   const radiusMi = Math.min(60, Math.max(1, parseFloat(searchParams.get("radius") ?? "25") || 25));
   const q = searchParams.get("q")?.trim();
   let place: string | undefined;
+  const name = searchParams.get("name")?.trim();
+
+  if (name) {
+    // Type-ahead: find golf courses by (partial) name.
+    try {
+      const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=8&addressdetails=1&q=${encodeURIComponent(name + " golf")}`, {
+        headers: { "User-Agent": UA }, signal: AbortSignal.timeout(6000),
+      });
+      const arr = (await r.json()) as { lat: string; lon: string; name?: string; display_name: string; osm_type: string; osm_id: number; category?: string; type?: string; address?: Record<string, string> }[];
+      const courses: NearbyCourse[] = arr
+        .filter((x) => x.type === "golf_course" || x.category === "leisure")
+        .map((x) => ({
+          key: `${x.osm_type}/${x.osm_id}`,
+          name: x.name || x.display_name.split(",")[0],
+          city: [x.address?.city || x.address?.town || x.address?.village, x.address?.state].filter(Boolean).join(", "),
+          lat: parseFloat(x.lat), lon: parseFloat(x.lon), distanceMi: 0,
+          osm: { type: x.osm_type as "way" | "relation" | "node", id: x.osm_id },
+        }));
+      return NextResponse.json({ courses });
+    } catch {
+      return NextResponse.json({ courses: [] });
+    }
+  }
 
   try {
     if ((!isFinite(lat) || !isFinite(lon)) && q) {
@@ -50,7 +70,7 @@ export async function GET(req: Request) {
 
     const meters = Math.round(radiusMi * 1609.34);
     const data = await overpass(
-      `[out:json][timeout:25];nwr["leisure"="golf_course"](around:${meters},${lat},${lon});out center tags 200;`,
+      `[out:json][timeout:12];nwr["leisure"="golf_course"](around:${meters},${lat},${lon});out center tags 200;`,
     );
     const seen = new Set<string>();
     const courses: NearbyCourse[] = [];

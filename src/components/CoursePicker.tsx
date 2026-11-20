@@ -1,9 +1,9 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Course } from "@/lib/types";
-import { blankCourse, DEFAULT_PARS, DEFAULT_SI, type NearbyCourse } from "@/lib/courses";
+import { blankCourse, DEFAULT_PARS, DEFAULT_SI, haversineMi, type NearbyCourse } from "@/lib/courses";
 import { totalPar } from "@/lib/handicap";
-import { findCatalog, teeKey, teeLabel } from "@/lib/tees";
+import { allCatalog, findCatalog, searchCatalog, teeKey, teeLabel, type CatalogCourse } from "@/lib/tees";
 import { Field, NumInput, Seg } from "./ui";
 
 type Props = { course: Course | null; holes: 9 | 18; onCourse: (c: Course) => void; onHoles: (h: 9 | 18) => void };
@@ -20,25 +20,40 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
   async function search(params: Record<string, string>) {
     setBusy(true); setErr("");
     try {
-      const res = await fetch(`/api/courses?${new URLSearchParams({ ...params, radius })}`);
+      const res = await fetch(`/api/courses?${new URLSearchParams({ ...params, radius })}`, { signal: AbortSignal.timeout(20000) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Search failed");
-      setList(data.courses); setPlace(data.place || "");
-      if (!data.courses.length) setErr("No courses in that radius. Widen it or add one by name below.");
-    } catch (e) { setErr((e as Error).message); } finally { setBusy(false); }
+      setList((prev) => { const known = (prev ?? []).filter((c) => c.key.startsWith("known/")); const names = new Set(known.map((c) => c.name.toLowerCase().replace(/^the /, ""))); return [...known, ...data.courses.filter((c: NearbyCourse) => !names.has(c.name.toLowerCase().replace(/^the /, "")) && !known.some((k) => findCatalog(c.name)?.name === k.name))]; }); setPlace(data.place || "");
+      if (!data.courses.length && !(list && list.length)) setErr("No courses in that radius. Widen it or add one by name below.");
+    } catch (e) {
+      const msg = (e as Error).name === "TimeoutError" ? "The map service is slow right now. Type the course name below instead." : (e as Error).message;
+      setErr(msg);
+    } finally { setBusy(false); }
+  }
+
+  /** Courses we already have data for show up instantly, before the map lookup returns. */
+  function showKnownNear(lat: number, lon: number) {
+    const mi = parseFloat(radius);
+    const near = allCatalog()
+      .filter((c) => c.lat != null && c.lon != null)
+      .map((c) => ({ key: `known/${c.name}`, name: c.name, city: c.city, lat: c.lat!, lon: c.lon!, distanceMi: Math.round(haversineMi(lat, lon, c.lat!, c.lon!) * 10) / 10, osm: { type: "node" as const, id: 0 } }))
+      .filter((c) => c.distanceMi <= mi)
+      .sort((a, b) => a.distanceMi - b.distanceMi);
+    if (near.length) setList(near);
   }
 
   function nearMe() {
     if (!navigator.geolocation) return setErr("Location isn't available here. Search a city or ZIP instead.");
     setBusy(true); setErr("");
     navigator.geolocation.getCurrentPosition(
-      (p) => search({ lat: String(p.coords.latitude), lon: String(p.coords.longitude) }),
+      (p) => { showKnownNear(p.coords.latitude, p.coords.longitude); search({ lat: String(p.coords.latitude), lon: String(p.coords.longitude) }); },
       () => { setBusy(false); setErr("Couldn't get your location. Allow it, or search a city or ZIP."); },
       { timeout: 10000 },
     );
   }
 
   async function pick(c: NearbyCourse) {
+    if (c.key.startsWith("known/")) { pickKnown(allCatalog().find((k) => `known/${k.name}` === c.key)!); return; }
     const base: Course = { id: c.key, name: c.name, city: c.city, lat: c.lat, lon: c.lon, osm: c.osm, tee: "", pars: [...DEFAULT_PARS], strokeIndex: [...DEFAULT_SI] };
     onCourse(base);
     if (c.osm.type === "node") return;
@@ -47,6 +62,32 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
       onCourse({ ...base, pars: d.pars ?? base.pars, strokeIndex: d.strokeIndex ?? base.strokeIndex, parsFromMap: !!d.pars });
     } catch { /* keep defaults */ }
   }
+
+  function pickKnown(k: CatalogCourse) {
+    setSug([]); setManualTee(false);
+    onCourse({ ...blankCourse(k.name), city: k.city, lat: k.lat, lon: k.lon });
+  }
+
+  // Type-ahead on the course name: bundled courses instantly, map names after a short pause.
+  const [sug, setSug] = useState<NearbyCourse[]>([]);
+  const [local, setLocal] = useState<CatalogCourse[]>([]);
+  const [typing, setTyping] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function typeName(v: string) {
+    upd({ name: v, tee: "", slope: undefined, rating: undefined, teePar: undefined, tees: undefined });
+    setManualTee(false);
+    setLocal(searchCatalog(v));
+    if (timer.current) clearTimeout(timer.current);
+    if (v.trim().length < 3) { setSug([]); return; }
+    timer.current = setTimeout(async () => {
+      try {
+        const d = await (await fetch(`/api/courses?name=${encodeURIComponent(v.trim())}`, { signal: AbortSignal.timeout(8000) })).json();
+        setSug((d.courses ?? []).filter((c: NearbyCourse) => !findCatalog(c.name)));
+      } catch { setSug([]); }
+    }, 350);
+  }
+  useEffect(() => { if (!course) onCourse(blankCourse("")); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
   const upd = (patch: Partial<Course>) => course && onCourse({ ...course, ...patch });
   const known = useMemo(() => findCatalog(course?.name), [course?.name]);
@@ -94,7 +135,24 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
 
       {course && (
         <div className="card">
-          <Field label="Course"><input className="input" value={course.name} placeholder="Course name" onChange={(e) => upd({ name: e.target.value })} /></Field>
+          <Field label="Course">
+            <input className="input" value={course.name} placeholder="Start typing a course name" autoComplete="off" onFocus={() => { setTyping(true); setLocal(searchCatalog(course.name)); }} onBlur={() => setTimeout(() => setTyping(false), 150)} onChange={(e) => typeName(e.target.value)} />
+          </Field>
+          {typing && (local.length > 0 || sug.length > 0) && (
+            <div className="divide" style={{ marginBottom: 10, maxHeight: 240, overflowY: "auto" }}>
+              {local.map((k) => (
+                <button key={k.name} className="catalog" onMouseDown={(e) => e.preventDefault()} onClick={() => { pickKnown(k); setTyping(false); }}>
+                  <div className="grow"><div style={{ fontWeight: 700 }}>{k.name}</div><div className="small faint">{k.city}</div></div>
+                  <span className="pill live">Tees ready</span>
+                </button>
+              ))}
+              {sug.map((c) => (
+                <button key={c.key} className="catalog" onMouseDown={(e) => e.preventDefault()} onClick={() => { setSug([]); setTyping(false); pick(c); }}>
+                  <div className="grow"><div style={{ fontWeight: 700 }}>{c.name}</div><div className="small faint">{c.city}</div></div>
+                </button>
+              ))}
+            </div>
+          )}
           {known && !manualTee ? (
             <>
               <Field label="Tees">
