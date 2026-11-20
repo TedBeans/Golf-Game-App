@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Course } from "@/lib/types";
 import { blankCourse, DEFAULT_PARS, DEFAULT_SI, haversineMi, type NearbyCourse } from "@/lib/courses";
 import { totalPar } from "@/lib/handicap";
-import { allCatalog, findCatalog, searchCatalog, teeKey, teeLabel, type CatalogCourse } from "@/lib/tees";
+import { allCatalog, findCatalog, holeData, searchCatalog, teeKey, teeLabel, type CatalogCourse } from "@/lib/tees";
 import { Field, NumInput, Picker, Seg, type PickOption } from "./ui";
 
 const TEE_DOT: Record<string, string> = { black: "#18181b", gold: "#e4b43c", blue: "#3b82f6", white: "#f4f4f5", green: "#22a06b", red: "#ef4444", silver: "#a1a1aa", yellow: "#facc15", orange: "#fb923c", purple: "#a855f7" };
@@ -66,7 +66,8 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
 
   function pickKnown(k: CatalogCourse) {
     setSug([]); setManualTee(false);
-    onCourse({ ...blankCourse(k.name), city: k.city, lat: k.lat, lon: k.lon });
+    const h = holeData(k);
+    onCourse({ ...blankCourse(k.name), city: k.city, lat: k.lat, lon: k.lon, ...(h ? { ...h, holesConfirmed: true } : {}) });
   }
 
   // Type-ahead on the course name: bundled courses instantly, map names after a short pause.
@@ -75,7 +76,7 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
   const [typing, setTyping] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   function typeName(v: string) {
-    upd({ name: v, tee: "", slope: undefined, rating: undefined, teePar: undefined, tees: undefined });
+    upd({ name: v, tee: "", slope: undefined, rating: undefined, teePar: undefined, tees: undefined, holesConfirmed: false });
     setManualTee(false);
     setLocal(searchCatalog(v));
     if (timer.current) clearTimeout(timer.current);
@@ -103,7 +104,7 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
     if (v === "__manual") { setManualTee(true); upd({ tees: known.tees, teePar: undefined }); return; }
     const t = known.tees.find((x) => teeKey(x) === v);
     setManualTee(false);
-    if (t) upd({ tees: known.tees, tee: teeLabel(t), slope: t.slope, rating: t.rating, teePar: t.par ?? known.par });
+    if (t) { const h = holeData(known); upd({ tees: known.tees, tee: teeLabel(t), slope: t.slope, rating: t.rating, teePar: t.par ?? known.par, ...(h ? { ...h, holesConfirmed: true } : {}) }); }
   }
   const siOk = !course || new Set(course.strokeIndex.slice(0, 18)).size === 18;
 
@@ -176,6 +177,7 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
               {known && <button className="btn quiet sm" style={{ marginTop: 8 }} onClick={() => setManualTee(false)}>Pick from known tees</button>}
             </>
           )}
+          <HoleCheck course={course} onConfirm={() => upd({ holesConfirmed: true })} onEdit={() => setEdit(true)} />
           <Field label="Holes"><Seg value={String(holes)} options={[{ value: "18", label: "18 holes" }, { value: "9", label: "9 holes" }]} onChange={(v) => onHoles(v === "9" ? 9 : 18)} /></Field>
           <div className="row between" style={{ marginTop: 14 }}>
             <div className="small sub">Par {course.teePar ?? totalPar(course.pars, holes)}{course.parsFromMap ? " · pars from map data" : course.teePar ? "" : " · default pars, check them"}</div>
@@ -201,6 +203,19 @@ export default function CoursePicker({ course, holes, onCourse, onHoles }: Props
           )}
         </div>
       )}
+    </div>
+  );
+}
+function HoleCheck({ course, onConfirm, onEdit }: { course: Course; onConfirm: () => void; onEdit: () => void }) {
+  if (course.holesConfirmed) return <div className="small" style={{ color: "var(--accent)", margin: "10px 0 4px" }}>✓ Hole pars and handicaps verified</div>;
+  return (
+    <div className="alert" style={{ margin: "12px 0 4px" }}>
+      <b>Check the hole pars and handicaps</b>
+      <p>We don't have the scorecard for this course. Strokes land on the wrong holes if these are off, so enter them from the card.</p>
+      <div className="row" style={{ gap: 8, marginTop: 10 }}>
+        <button className="btn ghost sm" onClick={onEdit}>Edit holes</button>
+        <button className="btn sm" onClick={onConfirm}>They're correct</button>
+      </div>
     </div>
   );
 }

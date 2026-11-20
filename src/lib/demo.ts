@@ -31,7 +31,7 @@ export function demoRound(): Round {
   for (let h = 0; h < 9; h++) if (picks[h] && picks[h]!.choice !== "lone" && picks[h]!.choice !== "blind") picks[h] = { choice: partner(h, picks[h]!.choice) };
   return {
     id: uid(), createdAt: Date.now(), date: new Date().toISOString().slice(0, 10), holes: 18, demo: true, status: "active",
-    course: { id: "demo-course", name: "Demo Hills", tee: "Blue", pars: [...DEFAULT_PARS], strokeIndex: [...DEFAULT_SI], slope: 126, rating: 71.8 },
+    course: { id: "demo-course", name: "Demo Hills", tee: "Blue", pars: [...DEFAULT_PARS], strokeIndex: [...DEFAULT_SI], slope: 126, rating: 71.8, holesConfirmed: true },
     players, scores, games: [sixes, skins, wolf, stroke], wolf: { [wolf.id]: picks }, bingo: {}, sideBets: [],
   };
 }

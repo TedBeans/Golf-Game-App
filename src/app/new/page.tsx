@@ -55,7 +55,7 @@ export default function NewRound() {
     setPicked((c) => [...c, p.id]); setNName(""); setNIdx(undefined);
   };
 
-  const canNext = step === 0 ? players.length >= 2 : step === 1 ? !!course && course.name.trim().length > 0 : true;
+  const canNext = step === 0 ? players.length >= 2 : step === 1 ? !!course && course.name.trim().length > 0 && !!course.holesConfirmed : true;
   const start = () => {
     if (!course) return;
     const ids = players.map((p) => p.id);
@@ -75,7 +75,7 @@ export default function NewRound() {
   ];
   const unpicked = roster.filter((p) => !picked.includes(p.id));
   const goBack = () => (step === 0 ? router.push("/") : setStep(step - 1));
-  const label = step === 0 ? (players.length < 2 ? (players.length === 1 ? "Add one more player" : "Add at least 2 players") : `Continue with ${players.length} players`) : step === 1 ? (canNext ? "Continue" : "Pick a course") : "Start round";
+  const label = step === 0 ? (players.length < 2 ? (players.length === 1 ? "Add one more player" : "Add at least 2 players") : `Continue with ${players.length} players`) : step === 1 ? (canNext ? "Continue" : course?.name.trim() && !course.holesConfirmed ? "Confirm the hole pars first" : "Pick a course") : "Start round";
   const summary = step === 0 ? "" : step === 1 ? `${players.length} players` : `${players.length} players · ${course?.name || "Course"}${course?.tee ? " · " + course.tee : ""} · ${games.length} game${games.length === 1 ? "" : "s"}`;
 
   return (

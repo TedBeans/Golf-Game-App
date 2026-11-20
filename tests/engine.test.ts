@@ -211,3 +211,19 @@ describe("tee catalog", () => {
   });
   it("returns null for unknown courses", () => expect(findCatalog("Nowhere Links")).toBeNull());
 });
+
+import { allCatalog, holeData } from "../src/lib/tees";
+describe("course database integrity", () => {
+  for (const c of allCatalog()) {
+    it(`${c.name}: tees sane, and holes (if present) add up`, () => {
+      for (const t of c.tees) { expect(t.slope).toBeGreaterThanOrEqual(55); expect(t.slope).toBeLessThanOrEqual(155); expect(t.rating).toBeGreaterThan(55); }
+      const h = holeData(c);
+      if (c.holes) {
+        expect(h).not.toBeNull();
+        expect(h!.pars.reduce((a, b) => a + b, 0)).toBe(c.par);
+        expect([...h!.strokeIndex].sort((a, b) => a - b)).toEqual(Array.from({ length: 18 }, (_, i) => i + 1));
+        for (const t of c.tees) if (t.par) expect(t.par).toBe(c.par);
+      }
+    });
+  }
+});

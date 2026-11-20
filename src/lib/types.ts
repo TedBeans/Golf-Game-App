@@ -18,6 +18,7 @@ export type Course = {
   slope?: number;
   rating?: number;
   parsFromMap?: boolean;
+  holesConfirmed?: boolean; // hole pars + stroke indexes are verified (from the course database) or confirmed by the user
 };
 
 export type RoundPlayer = Player & { courseHcp?: number }; // courseHcp = manual override (strokes)

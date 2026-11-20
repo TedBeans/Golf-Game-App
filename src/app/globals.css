@@ -182,3 +182,5 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .strokes .s { background: var(--s2); border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; font-size: 14px; } .strokes .s b { font-weight: 800; margin-left: 6px; color: var(--accent); } .strokes .s.zero b { color: var(--faint); }
 
 .elrow { background: var(--s2); border: 1px solid var(--line); border-radius: 14px; padding: 10px; } .elrow .picker { background: var(--s1); }
+
+.alert { background: #2a2108; border: 1px solid #5c4a12; border-radius: 14px; padding: 14px; } .alert b { color: var(--warn); font-size: 14px; } .alert p { color: var(--dim); font-size: 13px; margin-top: 4px; line-height: 1.4; }
