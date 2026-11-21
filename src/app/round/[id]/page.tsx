@@ -8,7 +8,7 @@ import type { Round, SideBet } from "@/lib/types";
 import { computeRound } from "@/lib/engine";
 import { wolfOrder } from "@/lib/engine/games";
 import { makeCtx } from "@/lib/engine/ctx";
-import { playingHandicaps, totalPar } from "@/lib/handicap";
+import { courseHandicaps, playingHandicaps, totalPar } from "@/lib/handicap";
 import { money } from "@/lib/money";
 import { recapText } from "@/lib/share";
 import { CATALOG, addGame } from "@/lib/catalog";
@@ -171,8 +171,30 @@ function CardTab({ round, setHole }: { round: Round; setHole: (h: number) => voi
   const hs = Array.from({ length: round.holes }, (_, h) => h);
   const parSum = (a: number, b: number) => round.course.pars.slice(a, b).reduce((x, y) => x + y, 0);
   const wins = computeRound(round).results.filter((r) => r.holeWins?.length);
+  const ch = courseHandicaps(round), ph = playingHandicaps(round);
+  const low = round.players.length ? Math.min(...round.players.map((p) => ch[p.id])) : 0;
+  const lowNames = round.players.filter((p) => ch[p.id] === low).map((p) => p.name).join(" & ");
   return (
     <div className="stack">
+    <div className="card hcp">
+      <div className="h2" style={{ margin: "0 0 2px" }}>Handicaps</div>
+      <div className="small sub" style={{ marginBottom: 6 }}>Playing off the low man ({lowNames}). Strokes are the difference from the lowest course handicap.</div>
+      <div className="hcp-row hcp-cols"><span>Player</span><span>Index</span><span>Course</span><span>Strokes</span></div>
+      {round.players.map((p) => {
+        const got = Array.from({ length: round.holes }, (_, h) => h).filter((h) => c.strokes(p.id, h) !== 0);
+        return (
+          <div key={p.id} className="hcp-block">
+            <div className="hcp-row">
+              <span style={{ fontWeight: 700 }}>{p.name}</span>
+              <span>{Number.isFinite(p.index) ? p.index : "–"}</span>
+              <span>{ch[p.id]}</span>
+              <span className={ph[p.id] > 0 ? "hcp-str" : "faint"}>{ph[p.id] > 0 ? `+${ph[p.id]}` : "0"}</span>
+            </div>
+            {got.length > 0 && <div className="small sub hcp-holes">Holes {got.map((h) => (c.strokes(p.id, h) > 1 ? `${h + 1}\u00d7${c.strokes(p.id, h)}` : `${h + 1}`)).join(", ")}</div>}
+          </div>
+        );
+      })}
+    </div>
     <div className="card scroll" style={{ padding: 8 }}>
       <table className="tbl card-t">
         <thead><tr><th>Hole</th>{hs.map((h) => <th key={h}><button onClick={() => setHole(h)} className="btn quiet" style={{ padding: 0, color: "inherit", font: "inherit" }}>{h + 1}</button></th>)}{round.holes === 18 && <><th>OUT</th><th>IN</th></>}<th>TOT</th></tr>
