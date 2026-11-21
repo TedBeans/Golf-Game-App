@@ -1,7 +1,7 @@
 :root {
   --bg: #09090b; --s1: #101013; --s2: #17171b; --s3: #202026; --line: #26262d; --line2: #34343d;
   --text: #f4f4f5; --dim: #a1a1aa; --faint: #63636e;
-  --accent: #4cc9f0; --accent-ink: #04222b; --gain: #4cc9f0; --loss: #ff6b81; --warn: #fbbf24;
+  --accent: #4cc9f0; --accent-ink: #04222b; --gain: #34d399; --loss: #ff6b81; --warn: #fbbf24;
   --r: 16px; --r2: 12px;
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, Roboto, system-ui, sans-serif;
 }

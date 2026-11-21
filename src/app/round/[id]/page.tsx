@@ -26,7 +26,7 @@ export default function RoundPage() {
   const [hole, setHole] = useState<number | null>(null);
   const computed = useMemo(() => (round ? computeRound(round) : null), [round]);
   if (!ready) return <div className="empty">Loading…</div>;
-  if (!round || !computed) return <div className="empty">Round not found. <Link href="/" className="gain">Home</Link></div>;
+  if (!round || !computed) return <div className="empty">Round not found. <Link href="/" style={{ color: "var(--accent)" }}>Home</Link></div>;
 
   const upd: Upd = (fn) => updateRound(round.id, fn);
   const firstOpen = Math.max(0, Array.from({ length: round.holes }, (_, h) => h).find((h) => round.players.some((p) => typeof round.scores[p.id]?.[h] !== "number")) ?? round.holes - 1);
