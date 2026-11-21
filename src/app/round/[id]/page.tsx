@@ -57,7 +57,7 @@ export default function RoundPage() {
       <div style={{ height: 16 }} />
 
       {tab === "hole" && <HoleTab round={round} hole={cur} setHole={setHole} upd={upd} locked={locked} computed={computed} goMoney={() => setTab("money")} />}
-      {tab === "card" && <CardTab round={round} setHole={(h) => { setHole(h); setTab("hole"); }} />}
+      {tab === "card" && <CardTab round={round} upd={upd} locked={locked} setHole={(h) => { setHole(h); setTab("hole"); }} />}
       {tab === "money" && <MoneyTab round={round} computed={computed} upd={upd} />}
       {tab === "games" && <GamesTab round={round} upd={upd} locked={locked} />}
     </>
@@ -164,8 +164,10 @@ function HoleTab({ round, hole, setHole, upd, locked, computed, goMoney }: { rou
   );
 }
 
-function CardTab({ round, setHole }: { round: Round; setHole: (h: number) => void }) {
+function CardTab({ round, setHole, upd, locked }: { round: Round; setHole: (h: number) => void; upd: Upd; locked: boolean }) {
   const c = makeCtx(round);
+  const [editHcp, setEditHcp] = useState(false);
+  const setCh = (id: string, v: number | undefined) => upd((r) => ({ ...r, players: r.players.map((p) => (p.id === id ? { ...p, courseHcp: v } : p)) }));
   const cls = (g: number, par: number) => { const d = g - par; return d <= -1 ? "sc under" : d === 1 ? "sc over" : d >= 2 ? "sc dbl" : "sc"; };
   const sum = (pid: string, from: number, to: number, net = false) => { let t = 0, n = 0; for (let h = from; h < to; h++) { const v = net ? c.net(pid, h) : c.gross(pid, h); if (v !== null) { t += v; n++; } } return n ? t : "–"; };
   const hs = Array.from({ length: round.holes }, (_, h) => h);
@@ -177,8 +179,11 @@ function CardTab({ round, setHole }: { round: Round; setHole: (h: number) => voi
   return (
     <div className="stack">
     <div className="card hcp">
-      <div className="h2" style={{ margin: "0 0 2px" }}>Handicaps</div>
-      <div className="small sub" style={{ marginBottom: 6 }}>Playing off the low man ({lowNames}). Strokes are the difference from the lowest course handicap.</div>
+      <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+        <div className="h2" style={{ margin: "0 0 2px" }}>Handicaps</div>
+        {!locked && <button className="btn ghost sm" onClick={() => setEditHcp((v) => !v)}>{editHcp ? "Done" : "Edit"}</button>}
+      </div>
+      <div className="small sub" style={{ marginBottom: 6 }}>Playing off the low man ({lowNames}). Strokes are the difference from the lowest course handicap.{round.players.some((p) => p.courseHcp !== undefined) && " * = edited by hand."}</div>
       <div className="hcp-row hcp-cols"><span>Player</span><span>Index</span><span>Course</span><span>Strokes</span></div>
       {round.players.map((p) => {
         const got = Array.from({ length: round.holes }, (_, h) => h).filter((h) => c.strokes(p.id, h) !== 0);
@@ -187,9 +192,16 @@ function CardTab({ round, setHole }: { round: Round; setHole: (h: number) => voi
             <div className="hcp-row">
               <span style={{ fontWeight: 700 }}>{p.name}</span>
               <span>{Number.isFinite(p.index) ? p.index : "–"}</span>
-              <span>{ch[p.id]}</span>
+              {editHcp ? (
+                <span className="hcp-ed">
+                  <button aria-label={`Lower ${p.name}'s course handicap`} onClick={() => setCh(p.id, ch[p.id] - 1)}>−</button>
+                  <b>{ch[p.id]}</b>
+                  <button aria-label={`Raise ${p.name}'s course handicap`} onClick={() => setCh(p.id, ch[p.id] + 1)}>+</button>
+                </span>
+              ) : <span>{ch[p.id]}{p.courseHcp !== undefined ? <sup style={{ color: "var(--accent)" }}> *</sup> : null}</span>}
               <span className={ph[p.id] > 0 ? "hcp-str" : "faint"}>{ph[p.id] > 0 ? `+${ph[p.id]}` : "0"}</span>
             </div>
+            {editHcp && p.courseHcp !== undefined && <div className="small sub hcp-holes"><button className="btn quiet sm" style={{ padding: 0, color: "var(--accent)" }} onClick={() => setCh(p.id, undefined)}>Edited by hand · reset to calculated</button></div>}
             {got.length > 0 && <div className="small sub hcp-holes">Holes {got.map((h) => (c.strokes(p.id, h) > 1 ? `${h + 1}\u00d7${c.strokes(p.id, h)}` : `${h + 1}`)).join(", ")}</div>}
           </div>
         );
