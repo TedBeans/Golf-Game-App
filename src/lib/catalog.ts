@@ -72,3 +72,24 @@ export const CATALOG: { key: CatalogKey; title: string; blurb: string; meta: str
 ];
 
 export const GAME_LABEL: Record<GameType, string> = { match: "Match", skins: "Skins", stroke: "Stroke play", stableford: "Stableford", wolf: "Wolf", vegas: "Vegas", bingo: "Bingo Bango Bongo" };
+
+/** New games reuse the partners/teams already set up in this round, so a second Sixes doesn't silently re-pair everyone. */
+export function addGame(c: (typeof CATALOG)[number], r: Pick<Round, "players" | "holes">, existing: Game[]): Game {
+  const g = c.create(r);
+  const live = new Set(r.players.map((p) => p.id));
+  const ok = (a: string[]) => a.length > 0 && a.every((id) => live.has(id));
+  if (g.type === "match") {
+    if (g.format === "rotate") {
+      const src = existing.find((e): e is MatchGame => e.type === "match" && e.format === "rotate" && e.order.length === g.order.length && ok(e.order));
+      if (src) return { ...g, order: [...src.order] };
+    } else {
+      const src = existing.find((e): e is MatchGame => e.type === "match" && e.format === "fixed" && ok([...e.teamA, ...e.teamB]) && e.teamA.length === g.teamA.length && e.teamB.length === g.teamB.length);
+      if (src) return { ...g, teamA: [...src.teamA], teamB: [...src.teamB] };
+    }
+  }
+  if (g.type === "vegas") {
+    const src = existing.find((e) => e.type === "vegas" && ok([...e.teamA, ...e.teamB]));
+    if (src && src.type === "vegas") return { ...g, teamA: [...src.teamA], teamB: [...src.teamB] };
+  }
+  return g;
+}

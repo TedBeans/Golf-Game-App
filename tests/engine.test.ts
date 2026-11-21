@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Game, MatchGame, Round } from "../src/lib/types";
-import { CATALOG, SCORING, fixedSegments } from "../src/lib/catalog";
+import { CATALOG, SCORING, addGame, fixedSegments } from "../src/lib/catalog";
 import { computeGame, computeRound } from "../src/lib/engine";
 import { courseHandicap, courseHandicaps, playingHandicaps, strokesOnHole } from "../src/lib/handicap";
 import { settle } from "../src/lib/money";
@@ -56,6 +56,19 @@ describe("Sixes + two-point game", () => {
     g.order = ["a", "b", "c", "d"]; // a&b v c&d on holes 1-6
     r.games = [g];
     expect(computeGame(r, g).status).toMatch(/lead 4–0 pts/);
+  });
+  it("a second Sixes reuses the partner order already set, and matches the first game's numbers", () => {
+    const r = mk({ a: 0, b: 0, c: 0, d: 0 }, { a: [5, 3, 5, 3], b: [4, 3, 3, 4], c: [7, 3, 5, 4], d: [7, 3, 6, 3] });
+    const first = catalog("sixes", r) as MatchGame;
+    first.order = ["a", "b", "c", "d"]; // Cam & Teddy partners holes 1-6
+    const sixes = CATALOG.find((c) => c.key === "sixes")!;
+    const second = addGame(sixes, r, [first]) as MatchGame;
+    expect(second.order).toEqual(["a", "b", "c", "d"]);
+    r.games = [first, second];
+    const [x, y] = r.games.map((g) => computeGame(r, g).status);
+    expect(y).toMatch(/a & b lead|Cam & Teddy lead/i);
+    expect(y).toMatch(/4–0/);
+    expect(x).toMatch(/4–0/);
   });
   it("rotates partners every six holes", () => {
     const g = six(mk(FOUR, {}));

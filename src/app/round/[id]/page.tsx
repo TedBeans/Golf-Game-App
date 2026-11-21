@@ -11,7 +11,7 @@ import { makeCtx } from "@/lib/engine/ctx";
 import { playingHandicaps, totalPar } from "@/lib/handicap";
 import { money } from "@/lib/money";
 import { recapText } from "@/lib/share";
-import { CATALOG } from "@/lib/catalog";
+import { CATALOG, addGame } from "@/lib/catalog";
 import GameEditor from "@/components/GameEditor";
 import { Avatar, Net, NumInput, Seg, useToast, ConfirmSheet } from "@/components/ui";
 
@@ -275,7 +275,7 @@ function GamesTab({ round, upd, locked }: { round: Round; upd: Upd; locked: bool
         <div className="h2" style={{ marginTop: 6 }}>Add a game</div>
         <div className="card divide" style={{ padding: "4px 16px" }}>
           {CATALOG.map((c) => (
-            <button key={c.key} className="catalog" disabled={locked} onClick={() => upd((r) => ({ ...r, games: [...r.games, c.create({ players: r.players, holes: r.holes })] }))}>
+            <button key={c.key} className="catalog" disabled={locked} onClick={() => upd((r) => ({ ...r, games: [...r.games, addGame(c, { players: r.players, holes: r.holes }, r.games)] }))}>
               <span className="plus">+</span><div className="grow"><div style={{ fontWeight: 700 }}>{c.title} <span className="faint small"> · {c.meta}</span></div><div className="small sub">{c.blurb}</div></div>
             </button>
           ))}

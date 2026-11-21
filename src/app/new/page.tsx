@@ -7,7 +7,7 @@ import type { Course, Game, Round, RoundPlayer } from "@/lib/types";
 import CoursePicker from "@/components/CoursePicker";
 import GameEditor from "@/components/GameEditor";
 import { NumInput } from "@/components/ui";
-import { CATALOG } from "@/lib/catalog";
+import { CATALOG, addGame } from "@/lib/catalog";
 import { courseHandicaps, playingHandicaps } from "@/lib/handicap";
 import { range } from "@/lib/engine/ctx";
 
@@ -161,7 +161,7 @@ export default function NewRound() {
               const nm = c.create({ players, holes }).name;
               const n = games.filter((g) => g.name === nm).length;
               return (
-                <button key={c.key} className={"tile" + (n ? " hot" : "")} onClick={() => setGames((g) => [...g, c.create({ players, holes }) as unknown as Game])}>
+                <button key={c.key} className={"tile" + (n ? " hot" : "")} onClick={() => setGames((g) => [...g, addGame(c, { players, holes }, g) as unknown as Game])}>
                   {n > 0 && <span className="badge">{n}</span>}
                   <b>{c.title}</b><span className="tm">{c.meta}</span><p>{c.blurb}</p>
                 </button>
