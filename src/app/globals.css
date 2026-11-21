@@ -188,3 +188,16 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .btn.delete { background: var(--loss); color: #2a0610; }
 .rcard { position: relative; } .rcard .trash { position: absolute; right: 10px; bottom: 10px; width: 36px; height: 36px; border-radius: 10px; border: 0; background: transparent; color: var(--faint); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; } .rcard .trash:hover { color: var(--loss); background: var(--s2); }
 .rcard .row.wrap { padding-right: 38px; }
+
+/* hole-by-hole point winners */
+.hw { padding: 16px; }
+.hw-seg { margin-top: 14px; }
+.hw-seg:first-of-type { margin-top: 0; }
+.hw-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 8px; }
+.hw-tally { font-size: 22px; font-weight: 800; letter-spacing: -.5px; white-space: nowrap; }
+.hw-row { display: grid; grid-template-columns: 38px 1fr 1fr; gap: 8px; padding: 9px 0; border-top: 1px solid var(--line, rgba(255,255,255,.08)); font-size: 14px; font-weight: 600; align-items: center; }
+.hw-cols { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim, #8b95a3); font-weight: 700; }
+.hw-h { color: var(--dim, #8b95a3); font-weight: 700; }
+.hwA { color: #4cc9f0; }
+.hwB { color: #c4a6ff; }
+.hwT { color: var(--dim, #8b95a3); font-weight: 500; }

@@ -95,6 +95,8 @@ export type GameResult = {
   lines: string[];
   table?: { headers: string[]; rows: (string | number)[][] };
   warnings?: string[];
+  /** Hole-by-hole point winners for per-hole team games (shown on the Card). */
+  holeWins?: { segment: string; teams: [string, string]; rows: { hole: number; items: { label: string; winner: "A" | "B" | "tie" }[] }[] }[];
 };
 
 export type Transfer = { from: string; to: string; amount: number };

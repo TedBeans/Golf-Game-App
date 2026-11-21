@@ -170,7 +170,9 @@ function CardTab({ round, setHole }: { round: Round; setHole: (h: number) => voi
   const sum = (pid: string, from: number, to: number, net = false) => { let t = 0, n = 0; for (let h = from; h < to; h++) { const v = net ? c.net(pid, h) : c.gross(pid, h); if (v !== null) { t += v; n++; } } return n ? t : "–"; };
   const hs = Array.from({ length: round.holes }, (_, h) => h);
   const parSum = (a: number, b: number) => round.course.pars.slice(a, b).reduce((x, y) => x + y, 0);
+  const wins = computeRound(round).results.filter((r) => r.holeWins?.length);
   return (
+    <div className="stack">
     <div className="card scroll" style={{ padding: 8 }}>
       <table className="tbl card-t">
         <thead><tr><th>Hole</th>{hs.map((h) => <th key={h}><button onClick={() => setHole(h)} className="btn quiet" style={{ padding: 0, color: "inherit", font: "inherit" }}>{h + 1}</button></th>)}{round.holes === 18 && <><th>OUT</th><th>IN</th></>}<th>TOT</th></tr>
@@ -195,6 +197,36 @@ function CardTab({ round, setHole }: { round: Round; setHole: (h: number) => voi
         </tbody>
       </table>
       <div className="small faint" style={{ padding: "8px 8px 2px" }}>Dot = gets a stroke on that hole. Circle = under par, box = over.</div>
+    </div>
+    {wins.map((r) => (
+      <div key={r.gameId} className="card hw">
+        <div className="h2" style={{ margin: "0 0 2px" }}>{r.title}</div>
+        <div className="small sub" style={{ marginBottom: 10 }}>Who won each point, hole by hole (net)</div>
+        {r.holeWins!.map((seg) => {
+          const tally = { A: 0, B: 0 };
+          seg.rows.forEach((row) => row.items.forEach((it) => { if (it.winner !== "tie") tally[it.winner]++; }));
+          return (
+            <div key={seg.segment} className="hw-seg">
+              <div className="hw-head">
+                <div><b>{seg.segment}</b><div className="small sub"><span className="hwA">{seg.teams[0]}</span> vs <span className="hwB">{seg.teams[1]}</span></div></div>
+                <div className="hw-tally"><span className="hwA">{tally.A}</span><span className="faint"> – </span><span className="hwB">{tally.B}</span></div>
+              </div>
+              <div className="hw-row hw-cols"><span>Hole</span>{seg.rows[0].items.map((it) => <span key={it.label}>{it.label}</span>)}</div>
+              {seg.rows.map((row) => (
+                <div key={row.hole} className="hw-row">
+                  <span className="hw-h">{row.hole + 1}</span>
+                  {row.items.map((it) => (
+                    <span key={it.label} className={it.winner === "A" ? "hwA" : it.winner === "B" ? "hwB" : "hwT"}>
+                      {it.winner === "tie" ? "Tie" : it.winner === "A" ? seg.teams[0] : seg.teams[1]}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    ))}
     </div>
   );
 }

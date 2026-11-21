@@ -68,6 +68,7 @@ export function match(round: Round, g: MatchGame): GameResult {
   if (!g.elements.length) warnings.push("Add at least one scoring element.");
 
   let banked: Record<string, number> = {};
+  const holeWins: NonNullable<GameResult["holeWins"]> = [];
   // Carry-over: a tied element rolls into the next segment as a bigger multiplier (capped by maxCarry).
   const cap = g.maxCarry && g.maxCarry > 1 ? g.maxCarry : Infinity;
   let carry: number[] = g.elements.map(() => 0);
@@ -95,6 +96,14 @@ export function match(round: Round, g: MatchGame): GameResult {
       });
       if (complete) { carry = nextCarry; prevTo = seg.to; }
       const margin = cents(pa - pb);
+      const perHole = g.elements.filter((e) => e.method === "perHole");
+      if (perHole.length) {
+        const val = (el: Element, team: string[], h: number) => { const s = team.map((id) => c.net(id, h)!); return el.kind === "bestBall" ? Math.min(...s) : s.reduce((x, y) => x + y, 0); };
+        holeWins.push({
+          segment: seg.label, teams: [label(A), label(B)],
+          rows: finished.map((h) => ({ hole: h, items: perHole.map((el) => { const x = val(el, A, h), y = val(el, B, h); return { label: ELEMENT_LABEL[el.kind], winner: x < y ? "A" as const : y < x ? "B" as const : "tie" as const }; }) })),
+        });
+      }
       // Money is live: an unfinished segment pays out at its current score and updates after every hole.
       for (const id of A) net[id] = cents(net[id] + margin * g.stake);
       for (const id of B) net[id] = cents(net[id] - margin * g.stake);
@@ -118,5 +127,6 @@ export function match(round: Round, g: MatchGame): GameResult {
     lines,
     warnings,
     table: { headers: ["Segment", "Teams", "Scoring", "Pts", ""], rows },
+    holeWins: holeWins.length ? holeWins : undefined,
   };
 }

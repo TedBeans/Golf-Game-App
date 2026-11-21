@@ -70,6 +70,13 @@ describe("Sixes + two-point game", () => {
     expect(y).toMatch(/4–0/);
     expect(x).toMatch(/4–0/);
   });
+  it("reports who won each point hole by hole (ties included)", () => {
+    const r = mk({ a: 0, b: 0, c: 0, d: 0 }, { a: [5, 3, 5, 3], b: [4, 3, 3, 4], c: [7, 3, 5, 4], d: [7, 3, 6, 3] });
+    const g = catalog("sixes", r) as MatchGame; g.order = ["a", "b", "c", "d"]; r.games = [g];
+    const seg = computeGame(r, g).holeWins![0];
+    const flat = seg.rows.map((row) => row.items.map((i) => i.winner).join("/"));
+    expect(flat).toEqual(["A/A", "tie/tie", "A/A", "tie/tie"]); // = 4-0, holes 2 and 4 tied
+  });
   it("rotates partners every six holes", () => {
     const g = six(mk(FOUR, {}));
     expect(g.segments.map((s) => [s.from, s.to])).toEqual([[0, 6], [6, 12], [12, 18]]);
