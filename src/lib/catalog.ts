@@ -6,9 +6,9 @@ export const SCORING: { key: string; label: string; blurb: string; elements: () 
   { key: "bestBall", label: "Best ball", blurb: "Low net score of each team, totaled over the segment", elements: () => [{ id: uid(), kind: "bestBall", method: "total", points: 1 }] },
   { key: "matchPlay", label: "Match play", blurb: "Best ball, hole by hole. Win more holes, win the point", elements: () => [{ id: uid(), kind: "bestBall", method: "holes", points: 1 }] },
   { key: "combined", label: "Combined score", blurb: "Both partners' net scores added together", elements: () => [{ id: uid(), kind: "combined", method: "total", points: 1 }] },
-  { key: "twoPoint", label: "Two-point game", blurb: "1 point for combined score + 1 point for best ball", elements: () => [
-    { id: uid(), kind: "combined", method: "total", points: 1 },
-    { id: uid(), kind: "bestBall", method: "total", points: 1 },
+  { key: "twoPoint", label: "Two-point game", blurb: "Every hole: 1 point for combined score + 1 point for best ball", elements: () => [
+    { id: uid(), kind: "combined", method: "perHole", points: 1 },
+    { id: uid(), kind: "bestBall", method: "perHole", points: 1 },
   ] },
 ];
 

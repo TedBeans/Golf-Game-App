@@ -28,6 +28,13 @@ function evalElement(c: Ctx, el: Element, A: string[], B: string[], holes: numbe
   if (el.method === "total") {
     for (const h of holes) { a += val(A, h); b += val(B, h); }
     text = `${ELEMENT_LABEL[el.kind]} ${a}–${b}`;
+  } else if (el.method === "perHole") {
+    for (const h of holes) {
+      const x = val(A, h), y = val(B, h);
+      if (x < y) a++; else if (y < x) b++;
+    }
+    // every hole won is worth the element's points; ties just score nothing (no carry)
+    return { ptsA: a * el.points * mult, ptsB: b * el.points * mult, text: `${ELEMENT_LABEL[el.kind]} ${a}–${b} holes`, tie: false };
   } else {
     for (const h of holes) {
       const x = val(A, h), y = val(B, h);
@@ -105,7 +112,7 @@ export function match(round: Round, g: MatchGame): GameResult {
   return {
     gameId: g.id,
     title: g.name,
-    subtitle: g.elements.map((e) => `${e.points} pt ${ELEMENT_LABEL[e.kind].toLowerCase()}${e.method === "holes" ? " (holes)" : ""}`).join(" + "),
+    subtitle: g.elements.map((e) => `${e.points} pt ${ELEMENT_LABEL[e.kind].toLowerCase()}${e.method === "holes" ? " (holes)" : e.method === "perHole" ? " per hole" : ""}`).join(" + "),
     net,
     status: liveNote || (total ? "Settled segments counted" : "No segments settled yet"),
     lines,

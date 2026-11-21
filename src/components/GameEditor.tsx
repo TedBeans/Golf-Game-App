@@ -123,7 +123,7 @@ function MatchEditor({ g, players, holes, set }: { g: MatchGame; players: RoundP
             <div key={e.id} className="elrow">
               <div className="row" style={{ gap: 8 }}>
                 <div style={{ flex: 1, minWidth: 0 }}><Picker title="Scoring" value={e.kind} onChange={(v) => setEl(e.id, { kind: v as Element["kind"] })} options={[{ value: "bestBall", label: "Best ball", sub: "Lower of the two partners' net scores" }, { value: "combined", label: "Combined", sub: "Both partners' net scores added" }]} /></div>
-                <div style={{ flex: 1, minWidth: 0 }}><Picker title="Counted by" value={e.method} onChange={(v) => setEl(e.id, { method: v as Element["method"] })} options={[{ value: "total", label: "Total score", sub: "Lowest total over the segment wins" }, { value: "holes", label: "Holes won", sub: "Most holes won takes the point" }]} /></div>
+                <div style={{ flex: 1, minWidth: 0 }}><Picker title="Counted by" value={e.method} onChange={(v) => setEl(e.id, { method: v as Element["method"] })} options={[{ value: "total", label: "Total score", sub: "Lowest total over the segment wins" }, { value: "holes", label: "Match play", sub: "Most holes won takes the point" }, { value: "perHole", label: "Every hole", sub: "Each hole won earns the points" }]} /></div>
               </div>
               <div className="row" style={{ gap: 8, marginTop: 8 }}>
                 <span className="small faint">Worth</span>

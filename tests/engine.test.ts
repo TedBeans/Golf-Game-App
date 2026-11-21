@@ -44,7 +44,19 @@ describe("handicap: off the low man only", () => {
 });
 
 describe("Sixes + two-point game", () => {
-  const six = (r: Round) => catalog("sixes", r) as MatchGame;
+  const six = (r: Round) => {
+    const g = catalog("sixes", r) as MatchGame;
+    g.elements = g.elements.map((e) => ({ ...e, method: "total" as const })); // segment-total scoring for these tests
+    return g;
+  };
+  it("two-point game defaults to a point per hole won (combined + best ball)", () => {
+    // Real round: Cam & Teddy v Brent & Leach through 4 holes, net scores per the app
+    const r = mk({ a: 0, b: 0, c: 0, d: 0 }, { a: [5, 3, 5, 3], b: [4, 3, 3, 4], c: [7, 3, 5, 4], d: [7, 3, 6, 3] });
+    const g = catalog("sixes", r) as MatchGame;
+    g.order = ["a", "b", "c", "d"]; // a&b v c&d on holes 1-6
+    r.games = [g];
+    expect(computeGame(r, g).status).toMatch(/lead 4–0 pts/);
+  });
   it("rotates partners every six holes", () => {
     const g = six(mk(FOUR, {}));
     expect(g.segments.map((s) => [s.from, s.to])).toEqual([[0, 6], [6, 12], [12, 18]]);

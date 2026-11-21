@@ -27,7 +27,7 @@ export type Element = {
   id: string;
   kind: "bestBall" | "combined";
   /** total: lower team total over the segment wins. holes: team that wins more holes wins. */
-  method: "total" | "holes";
+  method: "total" | "holes" | "perHole";
   points: number;
 };
 
