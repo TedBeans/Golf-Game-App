@@ -65,7 +65,7 @@ export function stroke(round: Round, g: StrokeGame): GameResult {
     for (const id of ids) tot[id] += c.net(id, h)!;
   }
   const finished = counted === hs.length && hs.length > 0;
-  if (finished) {
+  if (counted > 0) { // live: the current leader holds the pot until someone passes them
     const low = Math.min(...ids.map((id) => tot[id]));
     const winners = ids.filter((id) => tot[id] === low);
     const pot = g.stake * ids.length;

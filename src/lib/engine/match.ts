@@ -95,12 +95,12 @@ export function match(round: Round, g: MatchGame): GameResult {
       });
       if (complete) { carry = nextCarry; prevTo = seg.to; }
       const margin = cents(pa - pb);
-      if (complete) {
-        for (const id of A) net[id] = cents(net[id] + margin * g.stake);
-        for (const id of B) net[id] = cents(net[id] - margin * g.stake);
-        for (const id of A) banked[id] = (banked[id] ?? 0) + margin;
-        for (const id of B) banked[id] = (banked[id] ?? 0) - margin;
-      } else {
+      // Money is live: an unfinished segment pays out at its current score and updates after every hole.
+      for (const id of A) net[id] = cents(net[id] + margin * g.stake);
+      for (const id of B) net[id] = cents(net[id] - margin * g.stake);
+      for (const id of A) banked[id] = (banked[id] ?? 0) + margin;
+      for (const id of B) banked[id] = (banked[id] ?? 0) - margin;
+      if (!complete) {
         const lead = margin > 0 ? `${label(A)} lead` : margin < 0 ? `${label(B)} lead` : "All square";
         liveNote = `${seg.label} thru ${finished.length}: ${lead}${margin ? ` ${Math.abs(margin)}–0 pts` : ""}`;
       }
@@ -114,7 +114,7 @@ export function match(round: Round, g: MatchGame): GameResult {
     title: g.name,
     subtitle: g.elements.map((e) => `${e.points} pt ${ELEMENT_LABEL[e.kind].toLowerCase()}${e.method === "holes" ? " (holes)" : e.method === "perHole" ? " per hole" : ""}`).join(" + "),
     net,
-    status: liveNote || (total ? "Settled segments counted" : "No segments settled yet"),
+    status: liveNote || (total ? "Settled" : "All square"),
     lines,
     warnings,
     table: { headers: ["Segment", "Teams", "Scoring", "Pts", ""], rows },

@@ -107,13 +107,17 @@ describe("Sixes + two-point game", () => {
     // net: a4 b5 = 9 ; c4 d5 = 9 -> push. Gross would be 10 v 9 (A loses)
     expect(computeGame(r, g).net).toEqual({ a: 0, b: 0, c: 0, d: 0 });
   });
-  it("does not pay until the segment is finished", () => {
+  it("pays live: an unfinished segment settles at its current score and moves each hole", () => {
     const r = mk(FOUR, { a: fill(4, 3), b: fill(4, 3), c: fill(4, 5), d: fill(4, 5) });
     const g = six(r); r.games = [g];
     const res = computeGame(r, g);
     expect(sum(res.net)).toBe(0);
-    expect(res.net.a).toBe(0);
+    expect(res.net.a).toBe(4); // 2 points (combined + best ball) x $2
     expect(res.status).toMatch(/thru 4/);
+    // one more hole where the other side wins it back, per-hole scoring
+    const r2 = mk(FOUR, { a: [3, 3, 3, 3, 6], b: [3, 3, 3, 3, 6], c: [5, 5, 5, 5, 4], d: [5, 5, 5, 5, 4] });
+    const g2 = catalog("sixes", r2) as MatchGame; g2.order = ["a", "b", "c", "d"]; g2.stake = 1; r2.games = [g2];
+    expect(computeGame(r2, g2).net.a).toBe(6); // 8 pts won on holes 1-4, 2 lost on hole 5 = +6 at $1
   });
   it("a tied six carries into the next one", () => {
     // holes 1-6 tie everything; holes 7-12 A&C (Mike-style rotate) -> a+c beat b+d
