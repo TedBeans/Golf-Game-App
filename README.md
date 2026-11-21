@@ -23,3 +23,15 @@ npm run typecheck
 
 ## Deploy
 Import the repo in Vercel and deploy. No configuration needed.
+
+## Accounts and cloud storage (Supabase)
+
+Without any setup the app stores rounds in the browser on that device only. To require accounts and keep rounds in the cloud, shared with your crew:
+
+1. Create a free project at supabase.com.
+2. In **SQL Editor**, paste and run `supabase/schema.sql`.
+3. In **Authentication > Providers**, keep Email enabled. For fastest testing turn off "Confirm email" (or leave it on and use the confirmation link).
+4. In **Authentication > URL Configuration**, set Site URL to your Vercel URL and add it to Redirect URLs (used by password reset and confirmation emails).
+5. In Vercel > Project Settings > Environment Variables add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Supabase > Project Settings > API), then redeploy.
+
+How it works: everyone signs in with email and password, then starts a crew or joins one with a 6 character invite code. A crew shares rounds, players and payments live between phones. Changes made with no signal are kept on the phone and upload when it reconnects. Demo rounds never leave the phone. Rounds saved on a phone before accounts existed can be added to the crew from the Home screen.

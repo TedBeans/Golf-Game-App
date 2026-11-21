@@ -3,10 +3,13 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { demoRound } from "@/lib/demo";
+import Link from "next/link";
+import { useAuth } from "@/lib/auth";
 import { Avatar, NumInput } from "@/components/ui";
 
 export default function Players() {
   const router = useRouter();
+  const { status, crew, members } = useAuth();
   const { state, ready, addPlayer, updatePlayer, removePlayer, exportJson, importJson, saveRound } = useStore();
   const [name, setName] = useState("");
   const [idx, setIdx] = useState<number | undefined>(undefined);
@@ -26,6 +29,12 @@ export default function Players() {
     <>
       <div className="top"><span className="brand">PRESS<i>.</i></span></div>
       <h1 className="title" style={{ marginBottom: 18 }}>Players</h1>
+      {status === "ready" && crew && (
+        <Link href="/crew" className="card" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+          <div><div className="label" style={{ marginBottom: 2 }}>Your crew</div><b style={{ fontSize: 17 }}>{crew.name}</b><div className="small sub">{members.length} {members.length === 1 ? "member" : "members"} · invite code {crew.invite_code}</div></div>
+          <span className="faint" style={{ fontSize: 22 }}>›</span>
+        </Link>
+      )}
       <div className="card">
         <div className="label">Add a player</div>
         <div className="row">
@@ -51,7 +60,7 @@ export default function Players() {
 
       <div className="h2">Backup and demo</div>
       <div className="card stack8">
-        <div className="sub small">Everything lives in this browser. Export a backup to move it to another phone.</div>
+        <div className="sub small">{status === "ready" ? "Your crew is saved to the cloud. A file backup is optional." : "Everything lives in this browser. Export a backup to move it to another phone."}</div>
         <div className="row wrap">
           <button className="btn ghost sm" onClick={download}>Export backup</button>
           <button className="btn ghost sm" onClick={() => file.current?.click()}>Import backup</button>

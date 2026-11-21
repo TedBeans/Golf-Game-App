@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { StoreProvider } from "@/lib/store";
 import Nav from "@/components/Nav";
+import { AuthProvider } from "@/lib/auth";
+import AuthGate from "@/components/AuthGate";
 
 const description = "Run the bets on the course. Sixes, Nassau, skins, wolf and more, with the money settled for you.";
 export const metadata: Metadata = {
@@ -18,10 +20,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <StoreProvider>
-          <div className="app">{children}</div>
-          <Nav />
-        </StoreProvider>
+        <AuthProvider>
+          <StoreProvider>
+            <AuthGate>
+              <div className="app">{children}</div>
+              <Nav />
+            </AuthGate>
+          </StoreProvider>
+        </AuthProvider>
       </body>
     </html>
   );

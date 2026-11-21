@@ -11,7 +11,7 @@ import { ConfirmSheet, Net } from "@/components/ui";
 
 export default function Home() {
   const router = useRouter();
-  const { state, ready, saveRound, deleteRound } = useStore();
+  const { state, ready, saveRound, deleteRound, sync, legacyCount, importLegacy } = useStore();
   const [del, setDel] = useState<string | null>(null);
   const delRound = state.rounds.find((r) => r.id === del);
   if (!ready) return <div className="empty">Loading…</div>;
@@ -26,10 +26,17 @@ export default function Home() {
 
   return (
     <>
-      <div className="top"><span className="brand">PRESS<i>.</i></span></div>
+      <div className="top"><span className="brand">PRESS<i>.</i></span>{sync !== "local" && <span className="small faint">{sync === "synced" ? "Saved to cloud" : sync === "saving" ? "Saving…" : "Offline · will sync"}</span>}</div>
       <h1 className="title">Play for<br />something.</h1>
       <p className="sub" style={{ margin: "10px 0 20px" }}>Sixes, Nassau, skins, wolf and more. Keep score and the money settles itself.</p>
       <Link href="/new" className="btn block" style={{ padding: 18, fontSize: 17 }}>Start a round</Link>
+      {legacyCount > 0 && (
+        <div className="card" style={{ marginTop: 12 }}>
+          <b>Rounds saved only on this phone</b>
+          <div className="small sub" style={{ margin: "4px 0 12px" }}>You have {legacyCount} {legacyCount === 1 ? "item" : "items"} from before accounts. Add them to your crew so they're backed up and shared.</div>
+          <button className="btn block ghost" onClick={importLegacy}>Add to my crew</button>
+        </div>
+      )}
 
       {active.length > 0 && (
         <>

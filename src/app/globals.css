@@ -215,3 +215,7 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .hcp-ed { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; }
 .hcp-ed b { min-width: 26px; text-align: center; }
 .hcp-ed button { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line, rgba(255,255,255,.14)); background: rgba(255,255,255,.04); color: inherit; font-size: 18px; line-height: 1; }
+
+.card.stack > .field { display: block; margin: 0; }
+.card.stack { display: flex; flex-direction: column; gap: 14px; }
+.card.stack .label { display: block; margin-bottom: 6px; }
